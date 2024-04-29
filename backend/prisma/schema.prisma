@@ -15,7 +15,12 @@ model User {
   profile  Profile?
 
   chatMessages ChatMessage[]
-  chat         Chat[]
+  chats        ChatOnUser[]
+
+  trainerWorkouts     Workout[]
+  participantWorkouts WorkoutOnUser[]
+
+  orders WorkoutOrder[]
 }
 
 model Profile {
@@ -32,8 +37,7 @@ model Chat {
   id Int @id @default(autoincrement())
 
   messages ChatMessage[]
-  user     User?         @relation(fields: [userId], references: [id])
-  userId   Int?
+  users    ChatOnUser[]
 }
 
 model ChatMessage {
@@ -42,8 +46,51 @@ model ChatMessage {
 
   message String
 
-  user   User  @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
   userId Int
-  Chat   Chat? @relation(fields: [chatId], references: [id])
+
+  chat   Chat? @relation(fields: [chatId], references: [id])
   chatId Int?
+}
+
+model Workout {
+  id Int @id @default(autoincrement())
+
+  trainer   User @relation(fields: [trainerId], references: [id])
+  trainerId Int
+
+  participants WorkoutOnUser[]
+  orders       WorkoutOrder[]
+}
+
+model ChatOnUser {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  chat   Chat @relation(fields: [chatId], references: [id])
+  chatId Int
+
+  @@id([userId, chatId])
+}
+
+model WorkoutOnUser {
+  workout   Workout @relation(fields: [workoutId], references: [id])
+  workoutId Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  @@id([workoutId, userId])
+}
+
+model WorkoutOrder {
+  id Int @id @default(autoincrement())
+
+  client   User @relation(fields: [clientId], references: [id])
+  clientId Int
+
+  status String
+
+  workout   Workout @relation(fields: [workoutId], references: [id])
+  workoutId Int
 }
