@@ -61,9 +61,13 @@ model Workout {
 
   title       String
   description String
-  maxPlaces   Int
-  dateStart   DateTime
-  dateEnd     DateTime
+  sportType   String
+
+  maxPlaces       Int
+  availablePlaces Int
+
+  dateStart DateTime
+  dateEnd   DateTime
 
   participants WorkoutOnUser[]
   orders       WorkoutOrder[]

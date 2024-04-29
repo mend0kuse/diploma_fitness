@@ -20,10 +20,8 @@ import { join } from 'path';
 /**
  * ToDo
  *
- * Workout (create, delete, edit, get, complete)
+ * Workout
  * - Group by date
- *
- * Orders (create, cancel, complete after end)
  *
  * Chat between users
  *

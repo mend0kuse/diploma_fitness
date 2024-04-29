@@ -2,18 +2,26 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { WorkoutOrder } from '@prisma/client';
 import { ORDER_STATUS } from './order';
+import { WorkoutService } from '../workout/workout.service';
 
 @Injectable()
 export class OrderService {
-    constructor(private prismaService: PrismaService) {}
+    constructor(
+        private prismaService: PrismaService,
+        private workoutService: WorkoutService
+    ) {}
 
     async createOrder(order: Omit<WorkoutOrder, 'id' | 'status'>) {
-        return this.prismaService.workoutOrder.create({
+        const created = await this.prismaService.workoutOrder.create({
             data: {
                 ...order,
                 status: ORDER_STATUS.PENDING,
             },
         });
+
+        await this.workoutService.decrementAvailablePlaceByWorkoutId(created.workoutId);
+
+        return created;
     }
 
     async getOrders() {
@@ -40,7 +48,11 @@ export class OrderService {
     }
 
     async cancelOrder(id: number) {
-        return this.editOrder(id, { status: ORDER_STATUS.CANCELLED });
+        const edited = await this.editOrder(id, { status: ORDER_STATUS.CANCELLED });
+
+        await this.workoutService.incrementAvailablePlaceByWorkoutId(edited.workoutId);
+
+        return edited;
     }
 
     async completeByWorkout(workoutId: number) {

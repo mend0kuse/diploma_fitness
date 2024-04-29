@@ -1,19 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { WorkoutService } from './workout.service';
 import { Workout } from '@prisma/client';
+import { TWorkoutQuery } from './workout';
 
 @Controller('workout')
 export class WorkoutController {
     constructor(private readonly workoutService: WorkoutService) {}
 
     @Get('')
-    async getWorkouts() {
-        return this.workoutService.getWorkouts();
-    }
-
-    @Get('user/:id')
-    async getWorkoutsUserById(@Param('id') id: number) {
-        return this.workoutService.getWorkoutsByUserId(id);
+    async getWorkouts(@Query() query: TWorkoutQuery) {
+        return this.workoutService.getWorkouts(query);
     }
 
     @Get(':id')
