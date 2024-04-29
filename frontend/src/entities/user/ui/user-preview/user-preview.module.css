@@ -1,0 +1,7 @@
+.user {
+    transition: .2s all linear;
+
+    &:hover {
+        background-color: var(--mantine-color-gray-0);
+    }
+}

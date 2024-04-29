@@ -1,0 +1,11 @@
+.footer {
+    border-top: 1px solid var(--mantine-color-gray-2);
+    height: 100%;
+}
+
+.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
