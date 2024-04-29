@@ -1,1 +1,1 @@
-export type ObjectValue<Obj> = Obj[keyof Obj];
+export type OneOfProperty<Obj> = Obj[keyof Obj];

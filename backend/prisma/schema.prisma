@@ -59,6 +59,12 @@ model Workout {
   trainer   User @relation(fields: [trainerId], references: [id])
   trainerId Int
 
+  title       String
+  description String
+  maxPlaces   Int
+  dateStart   DateTime
+  dateEnd     DateTime
+
   participants WorkoutOnUser[]
   orders       WorkoutOrder[]
 }

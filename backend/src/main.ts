@@ -16,3 +16,20 @@ import { join } from 'path';
 
     await app.listen(8000);
 })();
+
+/**
+ * ToDo
+ *
+ * Workout (create, delete, edit, get, complete)
+ * - Group by date
+ *
+ * Orders (create, cancel, complete after end)
+ *
+ * Chat between users
+ *
+ * ---
+ * Notifications
+ * - Workout cancelled
+ * - Workout completed
+ * - Chat
+ */
