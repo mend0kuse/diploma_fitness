@@ -1,4 +1,4 @@
-import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { ChatService } from './chat.service';
 
@@ -15,28 +15,24 @@ export class ChatGateway {
 
     @SubscribeMessage('join')
     async join(
-        // @ConnectedSocket() client,
+        @ConnectedSocket() client,
         @MessageBody()
-        {}: { clientId: number; apartmentId: number }
+        { users }: { users: number[] }
     ) {
-        // const founded = await this.apartmentService.getOne(apartmentId);
-        //
-        // if (!apartmentId || !clientId) {
-        //     return;
-        // }
-        //
-        // const foundedChat = founded.chats.find((chat) => {
-        //     return chat.apartmentId === apartmentId && chat.clientId === clientId;
-        // });
-        //
-        // this.answerWithRoom(client, foundedChat.id);
+        const chat = await this.chatService.getChatByUserIds(users);
+
+        if (!chat) {
+            return;
+        }
+
+        this.answerWithRoom(client, chat.id);
     }
 
     @SubscribeMessage('message')
-    async findAll(@MessageBody() { chatRoom, message, userId }: { chatRoom: string; message: string; userId: number }) {
-        const createdSMS = await this.chatService.createMessage({ chatId: Number(chatRoom), message, userId });
+    async findAll(@MessageBody() { chatId, message, userId }: { chatId: string; message: string; userId: number }) {
+        const createdSMS = await this.chatService.createMessage({ chatId: Number(chatId), message, userId });
 
-        this.server.to(chatRoom).emit('message', createdSMS);
+        this.server.to(chatId).emit('message', createdSMS);
     }
 
     private answerWithRoom(socket: any, roomId: number) {

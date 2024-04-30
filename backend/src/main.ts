@@ -20,11 +20,6 @@ import { join } from 'path';
 /**
  * ToDo
  *
- * Workout
- * - Group by date
- *
- * Chat between users
- *
  * ---
  * Notifications
  * - Workout cancelled
