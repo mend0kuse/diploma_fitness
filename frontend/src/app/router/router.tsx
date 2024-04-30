@@ -3,8 +3,7 @@ import { MainPage } from '@/pages/main';
 import { NothingFound } from '@/pages/error';
 import { ProfilePage } from '@/pages/profile/profile-page';
 import { ROUTES } from '@/shared/routing/routes';
-import { LoginPage } from '@/pages/login/login-page';
-import { RegistrationPage } from '@/pages/registration/registration-page';
+import { AuthorizationPage } from '@/pages/authorization/authorization';
 
 export const router = createBrowserRouter([
     {
@@ -17,11 +16,7 @@ export const router = createBrowserRouter([
         errorElement: <NothingFound />,
     },
     {
-        path: ROUTES.LOGIN,
-        element: <LoginPage />,
-    },
-    {
-        path: ROUTES.REGISTRATION,
-        element: <RegistrationPage />,
+        path: ROUTES.AUTHORIZATION,
+        element: <AuthorizationPage />,
     },
 ]);

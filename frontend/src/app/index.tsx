@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, createTheme } from '@mantine/core';
 
 import './styles/index.css';
 import '@mantine/core/styles.css';
@@ -16,10 +16,16 @@ if (!domNode) {
 
 const root = createRoot(domNode);
 
+const theme = createTheme({
+    fontFamily: 'Open Sans, sans-serif',
+    primaryColor: 'cyan',
+});
+
 const queryClient = new QueryClient();
+
 root.render(
     <React.StrictMode>
-        <MantineProvider>
+        <MantineProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
                 <App />
             </QueryClientProvider>

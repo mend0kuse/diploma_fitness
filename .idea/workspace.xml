@@ -5,10 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe90ddcc-0b87-4594-8f6e-923ea9f5b811" name="Changes" comment="Add grouping workouts">
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/profile/ui/profile-card/profile-card.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbarLink.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/chat/chat.gateway.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/chat/chat.gateway.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/chat/chat.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/chat/chat.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/router/router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/router/router.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/hooks/useLogin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/hooks/authorization.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-card/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-card/profile-card.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-card/profile-card.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/user-menu/user-menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/ui/user-menu/user-menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/login/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/login/login.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/registration/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/registration/lib.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/registration/registration.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/layout/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layout/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/login/login-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/authorization/authorization.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/main/ui/main/main-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/main/ui/main/main-page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/profile-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/profile-page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/registration/registration-page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/shared/routing/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/routing/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/footer/footer.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/footer/footer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/footer/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/header/header.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/header/header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/header/index.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +88,7 @@
       <recent name="$PROJECT_DIR$/backend/src/shared" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/public" />
       <recent name="$PROJECT_DIR$/backend/src/auth" />
       <recent name="$PROJECT_DIR$/backend/src/user" />
       <recent name="$PROJECT_DIR$/backend/src/user.ts" />
@@ -112,7 +139,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714469393256</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Resole dependency issue">
+      <option name="closed" value="true" />
+      <created>1714473010317</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714473010317</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Resolve dependency issue">
+      <option name="closed" value="true" />
+      <created>1714473017114</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714473017114</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,7 +164,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add nest modules" />
     <MESSAGE value="Add grouping workouts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add grouping workouts" />
+    <MESSAGE value="Resole dependency issue" />
+    <MESSAGE value="Resolve dependency issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resolve dependency issue" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

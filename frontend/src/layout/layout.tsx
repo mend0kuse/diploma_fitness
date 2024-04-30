@@ -1,23 +1,17 @@
-import { AppShell, Center } from '@mantine/core';
+import { AppShell, Center, AppShellMainProps } from '@mantine/core';
 import { ReactNode } from 'react';
-import { Header } from '@/widgets/header';
-import { Footer } from '@/widgets/footer';
-import { AppShellMainProps } from '@mantine/core';
+import { Navbar } from '@/widgets/navbar/navbar';
 
 export const Layout = ({ children, ...mainProps }: { children: ReactNode } & AppShellMainProps) => {
     return (
-        <AppShell footer={{ height: 60 }} header={{ height: 60 }} padding='xl'>
-            <AppShell.Header>
-                <Header />
-            </AppShell.Header>
+        <AppShell>
+            <AppShell.Navbar>
+                <Navbar />
+            </AppShell.Navbar>
 
-            <AppShell.Main px={'xl'} {...mainProps}>
+            <AppShell.Main px={100} py={20} {...mainProps}>
                 {children}
             </AppShell.Main>
-
-            <AppShell.Footer>
-                <Footer />
-            </AppShell.Footer>
         </AppShell>
     );
 };

@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { LOCAL_STORAGE_TOKEN, user, UserInput } from '@/entities/user';
+import { LOCAL_STORAGE_TOKEN, TUser, user, UserInput } from '@/entities/user';
 import { $api } from '@/shared/api/api';
 import { API_ENDPOINTS, QUERY_KEYS } from '@/shared/api/config';
 import { decodeToken } from '@/entities/user/user-lib';
 import { ROUTES } from '@/shared/routing/routes';
 
-export const useLogin = ({ withRedirect }: { withRedirect?: boolean }) => {
+export const authorization = ({ withRedirect }: { withRedirect?: boolean }) => {
     const navigate = useNavigate();
 
     const mutation = useMutation({
@@ -34,4 +34,22 @@ export const useLogin = ({ withRedirect }: { withRedirect?: boolean }) => {
     });
 
     return { login: mutation.mutate, ...mutation };
+};
+
+export const useRegistration = () => {
+    const navigate = useNavigate();
+
+    const mutation = useMutation({
+        mutationFn: (user: UserInput) => {
+            return $api.post<TUser>(API_ENDPOINTS.REGISTRATION, user);
+        },
+        mutationKey: [QUERY_KEYS.USER],
+        onSuccess: (data) => {
+            const userData = data.data;
+            user.setUser(userData);
+            navigate(ROUTES.PROFILE(userData.id));
+        },
+    });
+
+    return { register: mutation.mutate, ...mutation };
 };

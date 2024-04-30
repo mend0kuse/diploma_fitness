@@ -9,7 +9,7 @@ import { ROUTES } from '@/shared/routing/routes';
 export const UserMenu = observer(() => {
     if (!user.isAuthorized) {
         return (
-            <ActionIcon to={ROUTES.LOGIN} component={Link} variant='filled' aria-label='Login'>
+            <ActionIcon to={ROUTES.AUTHORIZATION} component={Link} variant='filled' aria-label='Authorization'>
                 <AiOutlineLogin />
             </ActionIcon>
         );

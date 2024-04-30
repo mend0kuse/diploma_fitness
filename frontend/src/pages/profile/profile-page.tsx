@@ -1,19 +1,18 @@
 import { useEditProfile, useGetUser } from '@/pages/profile/profile';
-import { ActionIcon, Group, LoadingOverlay, Modal, Text } from '@mantine/core';
+import { Group, LoadingOverlay, Modal, Text } from '@mantine/core';
 import { CenteredLayout, Layout } from '@/layout';
-import { ProfileCard, ProfileForm } from '@/entities/user';
+import { ProfileForm } from '@/entities/user';
 import { useDisclosure } from '@mantine/hooks';
-import { AiFillEdit } from 'react-icons/ai';
-import { ProfileInput, user as userStore } from '@/entities/user/user-model';
+import { ProfileInput } from '@/entities/user/user-model';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { convertToFormData } from '@/shared/lib/form/convertToFormData';
 import { observer } from 'mobx-react-lite';
+import { UserInfoAction } from '@/pages/profile/ui/profile-card/profile-card';
 
 export const ProfilePage = observer(() => {
     const [openedEdit, { open, close }] = useDisclosure(false);
 
     const { user, error, isFetching: isFetchingUser } = useGetUser();
-    const isHomeProfile = !!userStore.id && user?.id === userStore.id;
 
     const { editProfile, isPending, error: errorEdit } = useEditProfile({ onSuccess: close });
 
@@ -37,14 +36,8 @@ export const ProfilePage = observer(() => {
 
     return (
         <Layout>
-            <Group>
-                <ProfileCard user={user} />
-
-                {isHomeProfile && (
-                    <ActionIcon onClick={open} variant='filled' aria-label='Edit'>
-                        <AiFillEdit style={{ width: '70%', height: '70%' }} />
-                    </ActionIcon>
-                )}
+            <Group justify={'center'}>
+                <UserInfoAction user={user} onEditClick={open} />
             </Group>
 
             <Modal pos={'relative'} opened={openedEdit} onClose={close} title='Редактировать профиль'>
