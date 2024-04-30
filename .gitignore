@@ -2,3 +2,5 @@ frontend/.next
 backend/dist
 /**/*/.env
 /**/*/node_modules/
+
+workspace.xml

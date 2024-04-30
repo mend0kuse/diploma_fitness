@@ -3,10 +3,14 @@ import { WorkoutService } from './workout.service';
 import { Workout } from '@prisma/client';
 import { TWorkoutQuery } from './workout';
 import _ from 'lodash';
+import { OrderService } from '../order/order.service';
 
 @Controller('workout')
 export class WorkoutController {
-    constructor(private readonly workoutService: WorkoutService) {}
+    constructor(
+        private readonly workoutService: WorkoutService,
+        private readonly orderService: OrderService
+    ) {}
 
     @Get('')
     async getWorkouts(@Query() query: TWorkoutQuery) {
@@ -34,7 +38,7 @@ export class WorkoutController {
 
     @Put('complete/:id')
     async completeWorkout(@Param('id') id: number) {
-        return this.workoutService.completeWorkout(id);
+        return this.orderService.completeByWorkout(id);
     }
 
     @Put(':id')

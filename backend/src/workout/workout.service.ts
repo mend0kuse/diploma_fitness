@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Workout } from '@prisma/client';
-import { OrderService } from '../order/order.service';
 import { TWorkoutQuery } from './workout';
 
 @Injectable()
 export class WorkoutService {
-    constructor(
-        private prismaService: PrismaService,
-        private orderService: OrderService
-    ) {}
+    constructor(private prismaService: PrismaService) {}
 
     async createWorkout(data: Workout) {
         return this.prismaService.workout.create({
@@ -62,10 +58,6 @@ export class WorkoutService {
             where: { id },
             data: workout,
         });
-    }
-
-    async completeWorkout(id: number) {
-        return this.orderService.completeByWorkout(id);
     }
 
     private generateFindArguments({
