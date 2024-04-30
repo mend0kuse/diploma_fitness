@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { WorkoutService } from './workout.service';
 import { Workout } from '@prisma/client';
 import { TWorkoutQuery } from './workout';
+import _ from 'lodash';
 
 @Controller('workout')
 export class WorkoutController {
@@ -9,7 +10,11 @@ export class WorkoutController {
 
     @Get('')
     async getWorkouts(@Query() query: TWorkoutQuery) {
-        return this.workoutService.getWorkouts(query);
+        const result = await this.workoutService.getWorkouts(query);
+
+        return _.groupBy(result, (workout) => {
+            return workout.dateStart.toISOString().slice(0, 10);
+        });
     }
 
     @Get(':id')
