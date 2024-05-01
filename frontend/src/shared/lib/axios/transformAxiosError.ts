@@ -2,8 +2,12 @@ import { AxiosError } from 'axios';
 import { assertIsType } from '@/shared/lib/typescript/isPropertyExist';
 
 export const transformAxiosError = (error: AxiosError) => {
+    if (error.message) {
+        return error.message;
+    }
+
     if (!error.response) {
-        return '';
+        return 'Неизвестная ошибка';
     }
 
     const data = error.response.data;
@@ -12,5 +16,5 @@ export const transformAxiosError = (error: AxiosError) => {
         return data.message;
     }
 
-    return '';
+    return 'Неизвестная ошибка';
 };

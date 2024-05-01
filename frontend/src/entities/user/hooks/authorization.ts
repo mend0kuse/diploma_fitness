@@ -6,7 +6,7 @@ import { API_ENDPOINTS, QUERY_KEYS } from '@/shared/api/config';
 import { decodeToken } from '@/entities/user/user-lib';
 import { ROUTES } from '@/shared/routing/routes';
 
-export const authorization = ({ withRedirect }: { withRedirect?: boolean }) => {
+export const useLogin = ({ withRedirect }: { withRedirect?: boolean }) => {
     const navigate = useNavigate();
 
     const mutation = useMutation({

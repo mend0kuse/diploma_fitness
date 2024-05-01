@@ -66,8 +66,8 @@ model Workout {
   maxPlaces       Int
   availablePlaces Int
 
-  dateStart DateTime
-  dateEnd   DateTime
+  dateStart       DateTime
+  durationMinutes Int
 
   participants WorkoutOnUser[]
   orders       WorkoutOrder[]

@@ -4,6 +4,9 @@ import { NothingFound } from '@/pages/error';
 import { ProfilePage } from '@/pages/profile/profile-page';
 import { ROUTES } from '@/shared/routing/routes';
 import { AuthorizationPage } from '@/pages/authorization/authorization';
+import { WorkoutPage } from '@/pages/workout/workout-page';
+import { CreateWorkoutPage } from '@/pages/create-workout/create-workout-page';
+import { SchedulePage } from '@/pages/schedule/schedule-page';
 
 export const router = createBrowserRouter([
     {
@@ -18,5 +21,17 @@ export const router = createBrowserRouter([
     {
         path: ROUTES.AUTHORIZATION,
         element: <AuthorizationPage />,
+    },
+    {
+        path: '/workout/:id',
+        element: <WorkoutPage />,
+    },
+    {
+        path: ROUTES.CREATE_WORKOUT,
+        element: <CreateWorkoutPage />,
+    },
+    {
+        path: ROUTES.SCHEDULE,
+        element: <SchedulePage />,
     },
 ]);

@@ -4,37 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe90ddcc-0b87-4594-8f6e-923ea9f5b811" name="Changes" comment="Add grouping workouts">
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/profile/ui/profile-card/profile-card.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbarLink.tsx" afterDir="false" />
+    <list default="true" id="fe90ddcc-0b87-4594-8f6e-923ea9f5b811" name="Changes" comment="Set app primary color, add layout">
+      <change afterPath="$PROJECT_DIR$/frontend/src/entities/order/order-types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/entities/workout/workout-types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/create-workout/create-workout-page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/create-workout/useCreateWorkout.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/schedule/schedule-page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/workout/workout-page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/shared/lib/date/dayjs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/backend/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/delay.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/delay.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/workout/workout.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/workout/workout.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/workout/workout.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/workout/workout.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/router/router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/router/router.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/hooks/useLogin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/hooks/authorization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-card/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-card/profile-card.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-card/profile-card.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/user-menu/user-menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/ui/user-menu/user-menu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/features/login/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/features/login/login.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/features/registration/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/features/registration/lib.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/features/registration/registration.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/layout/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layout/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/login/login-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/authorization/authorization.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/main/ui/main/main-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/main/ui/main/main-page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/profile-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/profile-page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/registration/registration-page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/hooks/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/hooks/authorization.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/authorization/authorization.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/authorization/authorization.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/shared/api/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/api/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/shared/lib/axios/transformAxiosError.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/lib/axios/transformAxiosError.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/shared/routing/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/routing/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/footer/footer.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/footer/footer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/footer/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/header/header.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/header/header.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/header/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/vasilev/develop/fitness/backend/src/shared&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/vasilev/develop/fitness/frontend/src/pages&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
@@ -85,9 +76,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/pages" />
       <recent name="$PROJECT_DIR$/backend/src/shared" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/pages/create-workout" />
       <recent name="$PROJECT_DIR$/frontend/public" />
       <recent name="$PROJECT_DIR$/backend/src/auth" />
       <recent name="$PROJECT_DIR$/backend/src/user" />
@@ -106,6 +99,8 @@
       <workItem from="1714362821601" duration="1964000" />
       <workItem from="1714364799454" duration="3641000" />
       <workItem from="1714369241932" duration="1994000" />
+      <workItem from="1714538522044" duration="3330000" />
+      <workItem from="1714556221591" duration="4857000" />
     </task>
     <task id="LOCAL-00001" summary="Add nest modules">
       <option name="closed" value="true" />

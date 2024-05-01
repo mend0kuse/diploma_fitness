@@ -1,7 +1,7 @@
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { TextInput, PasswordInput, Paper, Group, Button, Divider, Anchor, Stack, Title } from '@mantine/core';
-import { authorization, useRegistration } from '@/entities/user/hooks/authorization';
+import { useLogin, useRegistration } from '@/entities/user/hooks/authorization';
 import { isValidEmail, isValidPassword } from '@/shared/lib/validator/regexp';
 import { Layout } from '@/layout';
 
@@ -10,7 +10,7 @@ export const AuthorizationPage = () => {
 
     const { register, error: registerError, isPending: isPendingRegister } = useRegistration();
 
-    const { login, isPending: isPendingLogin, error: loginError } = authorization({ withRedirect: true });
+    const { login, isPending: isPendingLogin, error: loginError } = useLogin({ withRedirect: true });
 
     const form = useForm({
         initialValues: {

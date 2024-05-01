@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { WorkoutService } from './workout.service';
 import { Workout } from '@prisma/client';
 import { TWorkoutQuery } from './workout';
 import _ from 'lodash';
 import { OrderService } from '../order/order.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { RequestWithUser } from '../user/user';
 
 @Controller('workout')
 export class WorkoutController {
@@ -27,8 +29,9 @@ export class WorkoutController {
     }
 
     @Post('')
-    async createWorkout(@Body() dto: Workout) {
-        return this.workoutService.createWorkout(dto);
+    @UseGuards(AuthGuard)
+    async createWorkout(@Req() { user }: RequestWithUser, @Body() dto: Workout) {
+        return this.workoutService.createWorkout(dto, user.id);
     }
 
     @Delete(':id')

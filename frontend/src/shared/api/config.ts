@@ -4,7 +4,11 @@ export const API_ENDPOINTS = {
 
     USER: (id: number) => `/user/${id}`,
     EDIT_PROFILE: `/user/profile`,
+
+    WORKOUT: 'workout',
 };
 export const QUERY_KEYS = {
     USER: 'user',
+    WORKOUT: 'workout',
+    ORDER: 'order',
 };

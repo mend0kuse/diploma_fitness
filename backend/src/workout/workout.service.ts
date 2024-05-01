@@ -7,9 +7,19 @@ import { TWorkoutQuery } from './workout';
 export class WorkoutService {
     constructor(private prismaService: PrismaService) {}
 
-    async createWorkout(data: Workout) {
+    async createWorkout(data: Workout, trainerId: number) {
         return this.prismaService.workout.create({
-            data,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            data: {
+                ...data,
+                availablePlaces: data.maxPlaces,
+                trainer: {
+                    connect: {
+                        id: trainerId,
+                    },
+                },
+            },
         });
     }
 
