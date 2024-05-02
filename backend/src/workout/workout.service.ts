@@ -73,7 +73,7 @@ export class WorkoutService {
     private generateFindArguments({
         sort,
         dateStart,
-        dateEnd,
+        durationMinutes,
         type,
         maxParticipants,
         limit,
@@ -105,9 +105,9 @@ export class WorkoutService {
                         gte: dateStart,
                     },
                 }),
-                ...(dateEnd && {
-                    dateEnd: {
-                        lte: dateEnd,
+                ...(durationMinutes && {
+                    durationMinutes: {
+                        lte: durationMinutes,
                     },
                 }),
             },

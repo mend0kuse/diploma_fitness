@@ -3,6 +3,6 @@ export const ROUTES = {
     PROFILE: (id: number) => `/profile/${id}`,
     AUTHORIZATION: '/authorization',
     CREATE_WORKOUT: '/create',
-    SCHEDULE: '/create',
+    SCHEDULE: '/schedule',
     WORKOUT: (id: number) => `/workout/${id}`,
 };

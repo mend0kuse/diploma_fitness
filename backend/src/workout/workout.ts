@@ -1,6 +1,6 @@
 type WorkoutQueryInternal = {
     dateStart: Date;
-    dateEnd: Date;
+    durationMinutes: number;
     trainerId: number;
     type: string;
     limit: number;
