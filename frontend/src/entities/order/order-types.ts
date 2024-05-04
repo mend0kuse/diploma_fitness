@@ -4,7 +4,9 @@ import { EnumToUnion } from '@/shared/lib/typescript/EnumToUnion';
 
 export type TOrder = {
     client: TUser;
+    clientId: number;
     workout: TWorkout;
+    workoutId: number;
     id: number;
     status: TOrderStatus;
 };

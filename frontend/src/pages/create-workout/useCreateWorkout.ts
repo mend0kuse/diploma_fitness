@@ -18,7 +18,6 @@ export const useCreateWorkout = ({ onSuccess }: { onSuccess: (workout?: TWorkout
         },
 
         onError: (error) => {
-            console.log(error);
             notifications.show({
                 withCloseButton: true,
                 autoClose: 5000,

@@ -6,6 +6,10 @@ export const convertToFormData = <T extends Record<string, any>>(obj: T, fileKey
     for (const key in obj) {
         const value = obj[key];
 
+        if (!value) {
+            continue;
+        }
+
         if (isArray(value)) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore

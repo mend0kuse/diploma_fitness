@@ -14,7 +14,7 @@ export type TWorkout = {
     maxPlaces: number;
     availablePlaces: number;
     dateStart: Date;
-    durationSeconds: number;
+    durationMinutes: number;
 };
 
 export type TWorkoutInput = {

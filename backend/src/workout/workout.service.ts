@@ -1,73 +1,93 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, Workout } from '@prisma/client';
+import { Prisma, User, Workout, WorkoutOrder } from '@prisma/client';
 import { TWorkoutQuery } from './workout';
+import { ORDER_STATUS } from '../order/order';
 
 @Injectable()
 export class WorkoutService {
     constructor(private prismaService: PrismaService) {}
 
-    async createWorkout(data: Workout, trainerId: number) {
+    private include: {
+        trainer: {
+            include: {
+                profile: true;
+            };
+        };
+        orders: {
+            include: {
+                client: {
+                    include: {
+                        profile: true;
+                    };
+                };
+            };
+        };
+    };
+
+    createWorkout(data: Workout, trainerId: number) {
         return this.prismaService.workout.create({
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             data: {
                 ...data,
-                availablePlaces: data.maxPlaces,
                 trainer: {
                     connect: {
                         id: trainerId,
                     },
                 },
             },
+            include: this.include,
         });
     }
 
     async getWorkouts(query: TWorkoutQuery = {}) {
         const args = this.generateFindArguments(query);
 
-        return this.prismaService.workout.findMany(args);
+        const result = await this.prismaService.workout.findMany({
+            ...args,
+            include: this.include,
+        });
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return result.map((item) => this.calculateParticipants(item));
     }
 
     async getWorkoutById(id: number) {
-        return this.prismaService.workout.findUnique({
+        const found = await this.prismaService.workout.findFirst({
             where: { id },
-        });
-    }
-
-    async incrementAvailablePlaceByWorkoutId(id: number) {
-        return this.prismaService.workout.update({
-            where: { id },
-            data: {
-                availablePlaces: {
-                    increment: 1,
+            include: {
+                trainer: {
+                    include: {
+                        profile: true,
+                    },
+                },
+                orders: {
+                    include: {
+                        client: {
+                            include: {
+                                profile: true,
+                            },
+                        },
+                    },
                 },
             },
         });
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return this.calculateParticipants(found);
     }
 
-    async decrementAvailablePlaceByWorkoutId(id: number) {
-        return this.prismaService.workout.update({
-            where: { id },
-            data: {
-                availablePlaces: {
-                    increment: 1,
-                },
-            },
-        });
-    }
-
-    async deleteWorkout(id: number) {
+    deleteWorkout(id: number) {
         return this.prismaService.workout.delete({
             where: { id },
         });
     }
 
-    async editWorkout(id: number, workout: Workout) {
-        return this.prismaService.workout.update({
-            where: { id },
-            data: workout,
-        });
+    editWorkout(args: Prisma.WorkoutUpdateArgs) {
+        return this.prismaService.workout.update({ ...args, include: this.include });
     }
 
     private generateFindArguments({
@@ -92,6 +112,7 @@ export class WorkoutService {
                 ...(trainerId && {
                     trainerId: { equals: trainerId },
                 }),
+                // TODO:
                 ...(hasAvailablePlaces && {
                     availablePlaces: {
                         gt: 0,
@@ -114,6 +135,15 @@ export class WorkoutService {
             ...(sort && { orderBy: { [sort]: order ?? 'asc' } }),
             ...(limit && { take: limit }),
             ...(limit && page && { take: limit, skip: (page - 1) * limit }),
+        };
+    }
+
+    private calculateParticipants(workout: Workout & { orders: (WorkoutOrder & { client: User })[] }) {
+        return {
+            ...workout,
+            participants: (workout.orders ?? [])
+                .filter((order) => order.status !== ORDER_STATUS.CANCELLED)
+                .map((order) => order.client),
         };
     }
 }

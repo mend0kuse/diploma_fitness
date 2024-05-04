@@ -4,19 +4,19 @@ import { TUser } from '@/entities/user';
 import { useParams } from 'react-router-dom';
 import { API_ENDPOINTS, QUERY_KEYS } from '@/shared/api/config';
 import { user } from '@/entities/user/user-model';
-import { isNumber } from 'lodash';
 
 export const useGetUser = () => {
     const { id } = useParams<{ id: string }>();
     const idToNumber = Number(id);
 
-    const response = useQuery({
+    return useQuery({
         queryKey: [QUERY_KEYS.USER, idToNumber],
-        queryFn: () => $api.get<TUser>(API_ENDPOINTS.USER(idToNumber)),
-        enabled: !!id && isNumber(idToNumber),
-    });
+        queryFn: async () => {
+            const response = await $api.get<TUser>(API_ENDPOINTS.USER(idToNumber));
 
-    return { ...response, user: response.data?.data };
+            return response.data;
+        },
+    });
 };
 
 export const useEditProfile = ({ onSuccess }: { onSuccess: () => void }) => {

@@ -10,8 +10,8 @@ type Props = {
 export const ProfileForm = ({ profile, onSubmit }: Props) => {
     const form = useForm<ProfileInput>({
         initialValues: {
-            name: profile?.name,
-            age: profile?.age,
+            name: profile?.name ?? '',
+            age: profile?.age ?? '',
             avatar: null,
         },
     });

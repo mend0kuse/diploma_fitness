@@ -1,30 +1,27 @@
-import { useEffect } from 'react';
 import { LOCAL_STORAGE_TOKEN, TUser, user } from '@/entities/user';
 import { decodeToken } from '@/entities/user/user-lib';
 import { $api } from '@/shared/api/api';
-import { API_ENDPOINTS } from '@/shared/api/config';
+import { API_ENDPOINTS, QUERY_KEYS } from '@/shared/api/config';
+import { useQuery } from '@tanstack/react-query';
 
 export const useSavedLogin = () => {
-    useEffect(() => {
-        (async () => {
-            const savedToken = localStorage.getItem(LOCAL_STORAGE_TOKEN);
+    const savedToken = localStorage.getItem(LOCAL_STORAGE_TOKEN);
+    if (!savedToken) {
+        return { isLoading: false };
+    }
 
-            if (!savedToken) {
-                return;
-            }
+    const savedUser = decodeToken(savedToken);
+    if (!savedUser) {
+        return { isLoading: false };
+    }
 
-            const savedUser = decodeToken(savedToken);
+    return useQuery({
+        queryKey: [QUERY_KEYS.USER, savedUser.id],
+        queryFn: async () => {
+            const response = await $api.get<TUser>(API_ENDPOINTS.USER(savedUser.id));
+            user.setUser(response.data);
 
-            if (!savedUser) {
-                return;
-            }
-
-            try {
-                const response = await $api.get<TUser>(API_ENDPOINTS.USER(savedUser?.id));
-                user.setUser(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        })();
-    }, []);
+            return response.data;
+        },
+    });
 };

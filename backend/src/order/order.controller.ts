@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { RequestWithUser } from '../user/user';
 
 @Controller('order')
 export class OrderController {
@@ -16,17 +18,18 @@ export class OrderController {
     }
 
     @Get(':id')
-    async getOrdersById(@Param('id') id: number) {
-        return this.orderService.getOrdersById(id);
+    async getOrderById(@Param('id') id: number) {
+        return this.orderService.getOrderById(id);
     }
 
-    @Post('user/:id')
-    async createOrder(@Param('id') id: number, @Body() { workoutId }: { workoutId: number }) {
-        return this.orderService.createOrder({ clientId: id, workoutId });
+    @Post(':workoutId')
+    @UseGuards(AuthGuard)
+    async createOrder(@Param('workoutId', ParseIntPipe) workoutId: number, @Req() { user }: RequestWithUser) {
+        return this.orderService.createOrder({ clientId: user.id, workoutId });
     }
 
     @Put('cancel/:id')
-    async cancelOrder(@Param('id') id: number) {
+    async cancelOrder(@Param('id', ParseIntPipe) id: number) {
         return this.orderService.cancelOrder(id);
     }
 }

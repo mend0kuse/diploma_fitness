@@ -4,9 +4,6 @@ import { MantineProvider, createTheme } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { App } from './app';
 import { DatesProvider } from '@mantine/dates';
-
-import 'dayjs/locale/ru';
-
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/dates/styles.css';
@@ -33,7 +30,9 @@ root.render(
     <React.StrictMode>
         <MantineProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
-                <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 0, weekendDays: [0], timezone: 'UTC' }}>
+                <DatesProvider
+                    settings={{ locale: 'ru', firstDayOfWeek: 0, weekendDays: [0], timezone: 'Asia/Irkutsk' }}
+                >
                     <Notifications />
                     <App />
                 </DatesProvider>
@@ -45,14 +44,15 @@ root.render(
 /**
  * ToDo
  *
- * Password https://ui.mantine.dev/component/password-strength/
+ * @maybe Password https://ui.mantine.dev/component/password-strength/
  *
  * Workout
- * - Create Form
  * - Page (order, cancel)
+ * - share socials
  *
  * Schedule
- * - Filters
+ * - filters
+ * - css for library
  *
  * Chat
  *

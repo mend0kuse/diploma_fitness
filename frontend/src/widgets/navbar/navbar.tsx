@@ -1,11 +1,12 @@
 import { Center, Stack } from '@mantine/core';
 import classes from './navbar.module.css';
 import { NavbarLink } from '@/widgets/navbar/navbarLink';
-import { AiOutlineHome, AiOutlineLogin, AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineCalendar, AiOutlineHome, AiOutlineLogin, AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
 import { user } from '@/entities/user';
 import { ROUTES } from '@/shared/routing/routes';
+import { observer } from 'mobx-react-lite';
 
-export const Navbar = () => {
+export const Navbar = observer(() => {
     return (
         <Stack className={classes.navbar}>
             <Center>
@@ -23,6 +24,7 @@ export const Navbar = () => {
 
             <Stack className={classes.navbarMain} gap={0}>
                 <NavbarLink route={ROUTES.MAIN} icon={AiOutlineHome} label={'Главная'} />
+                <NavbarLink route={ROUTES.SCHEDULE} icon={AiOutlineCalendar} label={'Расписание'} />
                 {user.id && user.isAuthorized && (
                     <NavbarLink route={ROUTES.PROFILE(user.id)} icon={AiOutlineUser} label={'Профиль'} />
                 )}
@@ -35,4 +37,4 @@ export const Navbar = () => {
             )}
         </Stack>
     );
-};
+});

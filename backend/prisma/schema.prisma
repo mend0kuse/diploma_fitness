@@ -17,8 +17,7 @@ model User {
   chatMessages ChatMessage[]
   chats        ChatOnUser[]
 
-  trainerWorkouts     Workout[]
-  participantWorkouts WorkoutOnUser[]
+  trainerWorkouts Workout[]
 
   orders WorkoutOrder[]
 }
@@ -63,14 +62,12 @@ model Workout {
   description String
   sportType   String
 
-  maxPlaces       Int
-  availablePlaces Int
+  maxPlaces Int
 
   dateStart       DateTime
   durationMinutes Int
 
-  participants WorkoutOnUser[]
-  orders       WorkoutOrder[]
+  orders WorkoutOrder[]
 }
 
 model ChatOnUser {
@@ -81,16 +78,6 @@ model ChatOnUser {
   chatId Int
 
   @@id([userId, chatId])
-}
-
-model WorkoutOnUser {
-  workout   Workout @relation(fields: [workoutId], references: [id])
-  workoutId Int
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
-
-  @@id([workoutId, userId])
 }
 
 model WorkoutOrder {

@@ -4,16 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe90ddcc-0b87-4594-8f6e-923ea9f5b811" name="Changes" comment="Add create-workout-page.tsx">
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/schedule/schedule-page.module.css" afterDir="false" />
+    <list default="true" id="418cf5ae-bc97-4f76-bec3-c0680fde3fd3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/schedule/useGetWorkouts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/workout/lib/useCancelOrder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/workout/lib/useCreateOrder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/workout/lib/useGetWorkout.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/shared/ui/error/error.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/fitness.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fitness.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/backend/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/delay.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/delay.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/order/order.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/order/order.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/order/order.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/order/order.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/shared/lib/excludeFields.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/shared/lib/excludeFields.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/workout/workout.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/workout/workout.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/workout/workout.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/workout/workout.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/workout/workout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/workout/workout.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/error/error-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/error/error-page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/order/order-types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/order/order-types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/hooks/useSavedLogin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/hooks/useSavedLogin.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-form/profile-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/user/ui/profile-form/profile-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/entities/workout/workout-types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/entities/workout/workout-types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/authorization/authorization.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/authorization/authorization.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/create-workout/useCreateWorkout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/create-workout/useCreateWorkout.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/profile-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/profile-page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/profile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/profile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/ui/profile-card/profile-card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/ui/profile-card/profile-card.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/schedule/schedule-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/schedule/schedule-page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/shared/routing/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/routing/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/workout/workout-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/workout/workout-page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/shared/api/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/api/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/shared/lib/date/dayjs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/lib/date/dayjs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/shared/lib/form/convertToFormData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/shared/lib/form/convertToFormData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/widgets/navbar/navbar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +55,7 @@
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
 }</component>
-  <component name="ProjectId" id="2fiCrerktl7IHYO7QhqpCrtiFIf" />
+  <component name="ProjectId" id="2fzbSx5NmS43S2ZFuRpRaifkyCT" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -47,16 +72,17 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/vasilev/develop/fitness/frontend/src/pages&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/vasilev/develop/fitness/frontend/src/pages/workout&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;/Users/vasilev/develop/fullstack-estate-agency/frontend/node_modules/stylelint&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;/Users/vasilev/develop/fitness/frontend/node_modules/stylelint&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/vasilev/develop/fitness/backend/node_modules/prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Users/vasilev/develop/fitness/backend/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -64,112 +90,27 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/frontend/src/pages" />
-      <recent name="$PROJECT_DIR$/backend/src/shared" />
+      <recent name="$PROJECT_DIR$/frontend/src/pages/workout" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/frontend/src/pages/create-workout" />
-      <recent name="$PROJECT_DIR$/frontend/public" />
-      <recent name="$PROJECT_DIR$/backend/src/auth" />
-      <recent name="$PROJECT_DIR$/backend/src/user" />
-      <recent name="$PROJECT_DIR$/backend/src/user.ts" />
+      <recent name="$PROJECT_DIR$/frontend/src/pages/workout/lib" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fe90ddcc-0b87-4594-8f6e-923ea9f5b811" name="Changes" comment="" />
-      <created>1714274712220</created>
+      <changelist id="418cf5ae-bc97-4f76-bec3-c0680fde3fd3" name="Changes" comment="" />
+      <created>1714806856917</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1714274712220</updated>
-      <workItem from="1714274713539" duration="22427000" />
-      <workItem from="1714362821601" duration="1964000" />
-      <workItem from="1714364799454" duration="3641000" />
-      <workItem from="1714369241932" duration="1994000" />
-      <workItem from="1714538522044" duration="3330000" />
-      <workItem from="1714556221591" duration="5605000" />
-      <workItem from="1714613537023" duration="2139000" />
+      <updated>1714806856917</updated>
+      <workItem from="1714806858164" duration="180000" />
+      <workItem from="1714807051803" duration="9685000" />
+      <workItem from="1714819055581" duration="2072000" />
     </task>
-    <task id="LOCAL-00001" summary="Add nest modules">
-      <option name="closed" value="true" />
-      <created>1714370179187</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1714370179187</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Add nest modules">
-      <option name="closed" value="true" />
-      <created>1714371144262</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1714371144262</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Add nest modules">
-      <option name="closed" value="true" />
-      <created>1714371209034</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1714371209034</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Add grouping workouts">
-      <option name="closed" value="true" />
-      <created>1714469393256</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1714469393256</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Resole dependency issue">
-      <option name="closed" value="true" />
-      <created>1714473010317</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1714473010317</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Resolve dependency issue">
-      <option name="closed" value="true" />
-      <created>1714473017114</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1714473017114</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Add create-workout-page.tsx">
-      <option name="closed" value="true" />
-      <created>1714561137607</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1714561137607</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add nest modules" />
-    <MESSAGE value="Add grouping workouts" />
-    <MESSAGE value="Resole dependency issue" />
-    <MESSAGE value="Resolve dependency issue" />
-    <MESSAGE value="Add create-workout-page.tsx" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add create-workout-page.tsx" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/frontend/src/pages/create-apartment/ui.tsx</url>
-          <line>36</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

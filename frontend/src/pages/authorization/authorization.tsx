@@ -35,6 +35,8 @@ export const AuthorizationPage = () => {
         }
     };
 
+    const isLoading = isPendingRegister || isPendingLogin;
+
     return (
         <Layout>
             <Paper radius='md' p='xl' maw={800} withBorder>
@@ -43,7 +45,7 @@ export const AuthorizationPage = () => {
                 <Divider labelPosition='center' my='lg' />
 
                 <form onSubmit={form.onSubmit(onSubmit)}>
-                    <Stack>
+                    <Stack pos={'relative'}>
                         <TextInput
                             required
                             label='Email'
@@ -69,7 +71,7 @@ export const AuthorizationPage = () => {
                         <Anchor component='button' type='button' c='dimmed' onClick={() => toggle()} size='xs'>
                             {isRegister ? 'Уже есть аккаунт? Войдите' : 'Нет аккаунта? Зарегистрируйтесь'}
                         </Anchor>
-                        <Button type='submit' radius='xl'>
+                        <Button disabled={isLoading} loading={isLoading} type='submit' radius='xl'>
                             {upperFirst(type)}
                         </Button>
                     </Group>

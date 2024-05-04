@@ -1,5 +1,5 @@
 import { useEditProfile, useGetUser } from '@/pages/profile/profile';
-import { Group, LoadingOverlay, Modal, Text } from '@mantine/core';
+import { Group, Loader, LoadingOverlay, Modal, Text } from '@mantine/core';
 import { CenteredLayout, Layout } from '@/layout';
 import { ProfileForm } from '@/entities/user';
 import { useDisclosure } from '@mantine/hooks';
@@ -12,7 +12,7 @@ import { UserInfoAction } from '@/pages/profile/ui/profile-card/profile-card';
 export const ProfilePage = observer(() => {
     const [openedEdit, { open, close }] = useDisclosure(false);
 
-    const { user, error, isFetching: isFetchingUser } = useGetUser();
+    const { data, error, isError, isLoading } = useGetUser();
 
     const { editProfile, isPending, error: errorEdit } = useEditProfile({ onSuccess: close });
 
@@ -20,7 +20,15 @@ export const ProfilePage = observer(() => {
         editProfile(convertToFormData(profile, 'avatar'));
     };
 
-    if (!user) {
+    if (isLoading) {
+        return (
+            <CenteredLayout>
+                <Loader />
+            </CenteredLayout>
+        );
+    }
+
+    if (isError || !data) {
         return (
             <CenteredLayout>
                 <Text c={'red'} size='lg'>
@@ -30,19 +38,15 @@ export const ProfilePage = observer(() => {
         );
     }
 
-    if (!user) {
-        return null;
-    }
-
     return (
         <Layout>
             <Group justify={'center'}>
-                <UserInfoAction user={user} onEditClick={open} />
+                <UserInfoAction user={data} isWithEdit={true} onEditClick={open} />
             </Group>
 
             <Modal pos={'relative'} opened={openedEdit} onClose={close} title='Редактировать профиль'>
                 <LoadingOverlay visible={isPending} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />
-                <ProfileForm onSubmit={onSubmit} profile={user.profile} />
+                <ProfileForm onSubmit={onSubmit} profile={data.profile} />
                 {errorEdit && <Text c={'red'}>{transformAxiosError(errorEdit)}</Text>}
             </Modal>
         </Layout>
