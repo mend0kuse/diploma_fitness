@@ -44,14 +44,20 @@ export class WorkoutService {
     async getWorkouts(query: TWorkoutQuery = {}) {
         const args = this.generateFindArguments(query);
 
-        const result = await this.prismaService.workout.findMany({
+        const workouts = await this.prismaService.workout.findMany({
             ...args,
             include: this.include,
         });
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return result.map((item) => this.calculateParticipants(item));
+        const result = workouts.map((item) => this.calculateParticipants(item));
+
+        if (!query.hasAvailablePlaces) {
+            return result;
+        }
+
+        return result?.filter((item) => item.participants.length !== item.maxPlaces);
     }
 
     async getWorkoutById(id: number) {
@@ -93,43 +99,25 @@ export class WorkoutService {
     private generateFindArguments({
         sort,
         dateStart,
-        durationMinutes,
         type,
-        maxParticipants,
         limit,
         order,
         page,
-        hasAvailablePlaces,
+        dateEnd,
         trainerId,
         userId,
     }: TWorkoutQuery): Prisma.WorkoutFindManyArgs {
         return {
             where: {
                 ...(userId && {
-                    participants: { some: { userId } },
+                    participants: { some: { userId: Number(userId) } },
                 }),
                 ...(type && { sportType: { equals: type } }),
                 ...(trainerId && {
-                    trainerId: { equals: trainerId },
-                }),
-                // TODO:
-                ...(hasAvailablePlaces && {
-                    availablePlaces: {
-                        gt: 0,
-                    },
-                }),
-                ...(maxParticipants && {
-                    maxPlaces: { gte: maxParticipants },
+                    trainerId: { equals: Number(trainerId) },
                 }),
                 ...(dateStart && {
-                    dateStart: {
-                        gte: dateStart,
-                    },
-                }),
-                ...(durationMinutes && {
-                    durationMinutes: {
-                        lte: durationMinutes,
-                    },
+                    AND: [{ dateStart: { gte: new Date(dateStart) } }, { dateStart: { lte: new Date(dateEnd) } }],
                 }),
             },
             ...(sort && { orderBy: { [sort]: order ?? 'asc' } }),

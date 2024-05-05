@@ -20,7 +20,7 @@ export type ProfileInput = { age?: string; name?: string; avatar?: File | null }
 
 export const USER_ROLE = {
     USER: 'user',
-    MANAGER: 'manager',
+    TRAINER: 'trainer',
 } as const;
 
 export type TUserRole = EnumToUnion<typeof USER_ROLE>;
@@ -36,8 +36,8 @@ export class User {
         this.data = data;
     }
 
-    get isManager() {
-        return this.data?.role === 'manager';
+    get isTrainer() {
+        return this.data?.role === USER_ROLE.TRAINER;
     }
 
     get isAuthorized() {

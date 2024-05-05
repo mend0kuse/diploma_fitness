@@ -18,6 +18,13 @@ export class UserService {
         });
     }
 
+    async getMany(args: Prisma.UserFindManyArgs) {
+        return this.prisma.user.findMany({
+            ...args,
+            include: this.include,
+        });
+    }
+
     async createUser(data: Prisma.UserCreateInput) {
         const found = await this.getOne({ email: data.email });
 

@@ -1,6 +1,6 @@
 type WorkoutQueryInternal = {
     dateStart: Date;
-    durationMinutes: number;
+    dateEnd: Date;
     trainerId: number;
     type: string;
     limit: number;
@@ -8,7 +8,6 @@ type WorkoutQueryInternal = {
     order: 'asc' | 'desc';
     sort: 'dateStart' | 'dateEnd' | 'trainerId' | 'type';
     hasAvailablePlaces: boolean;
-    maxParticipants: number;
     userId: number;
 };
 

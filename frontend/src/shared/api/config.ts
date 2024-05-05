@@ -4,6 +4,7 @@ export const API_ENDPOINTS = {
 
     USER: (id: number) => `/user/${id}`,
     EDIT_PROFILE: `/user/profile`,
+    TRAINER: `/user/trainer`,
 
     WORKOUT: '/workout',
     WORKOUT_BY_ID: (id: number | string) => `/workout/${id}`,
@@ -14,6 +15,7 @@ export const API_ENDPOINTS = {
 };
 export const QUERY_KEYS = {
     USER: 'user',
+    TRAINER: 'trainer',
     WORKOUT: 'workout',
     WORKOUT_BY_ID: (id: string | number) => `workout_${id}`,
     ORDER: 'order',

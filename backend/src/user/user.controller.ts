@@ -43,6 +43,11 @@ export class UserController {
         });
     }
 
+    @Get('trainer')
+    async getTrainers() {
+        return this.userService.getMany({ where: { role: { equals: 'trainer' } } });
+    }
+
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
         const found = await this.userService.getOne({ id });

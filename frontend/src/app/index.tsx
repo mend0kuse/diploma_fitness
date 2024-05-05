@@ -42,13 +42,10 @@ root.render(
 );
 
 /**
- * ToDo
- *
- * @maybe Password https://ui.mantine.dev/component/password-strength/
+ * TODO:
  *
  * Workout
- * - Page (order, cancel)
- * - share socials
+ * @maybe share socials
  *
  * Schedule
  * - filters
