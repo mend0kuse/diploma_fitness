@@ -26,9 +26,8 @@ model Profile {
   id      Int     @id @default(autoincrement())
   userId  Int?    @unique
   name    String?
-  age     String?
+  status     String?
   avatar  String?
-  country String?
   user    User?   @relation(fields: [userId], references: [id])
 }
 

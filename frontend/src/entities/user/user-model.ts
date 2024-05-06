@@ -1,22 +1,24 @@
 import { EnumToUnion } from '@/shared/lib/typescript/EnumToUnion';
 import { makeAutoObservable } from 'mobx';
 import { LOCAL_STORAGE_TOKEN } from '@/entities/user/user-config';
+import { TOrder } from '../order/order-types';
 
 export type TUser = {
     id: number;
     email: string;
     role: TUserRole;
     profile: TProfile;
+    orders: TOrder[];
 };
 
 export type TProfile = {
     name: string;
-    age: string; // TODO: birth
+    status: string;
     avatar: string;
 };
 
 export type UserInput = { password: string; email: string };
-export type ProfileInput = { age?: string; name?: string; avatar?: File | null };
+export type ProfileInput = { status?: string; name?: string; avatar?: File | null };
 
 export const USER_ROLE = {
     USER: 'user',

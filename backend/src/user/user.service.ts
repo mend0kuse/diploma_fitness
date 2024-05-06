@@ -9,6 +9,19 @@ export class UserService {
 
     include = {
         profile: true,
+        orders: {
+            include: {
+                workout: {
+                    include: {
+                        trainer: {
+                            include: {
+                                profile: true,
+                            },
+                        },
+                    },
+                },
+            },
+        },
     };
 
     async getOne({ id, email }: { id?: number; email?: string }) {

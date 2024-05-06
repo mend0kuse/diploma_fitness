@@ -10,7 +10,7 @@ export const useGetUser = () => {
     const idToNumber = Number(id);
 
     return useQuery({
-        queryKey: [QUERY_KEYS.USER, idToNumber],
+        queryKey: [`user_${idToNumber}`],
         queryFn: async () => {
             const response = await $api.get<TUser>(API_ENDPOINTS.USER(idToNumber));
 
@@ -19,7 +19,7 @@ export const useGetUser = () => {
     });
 };
 
-export const useEditProfile = ({ onSuccess }: { onSuccess: () => void }) => {
+export const useEditProfile = ({ onSuccess }: { onSuccess?: () => void }) => {
     const queryClient = useQueryClient();
 
     const editProfile = useMutation({
@@ -32,7 +32,7 @@ export const useEditProfile = ({ onSuccess }: { onSuccess: () => void }) => {
             user.setUser(updatedUser);
             await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
 
-            onSuccess();
+            onSuccess?.();
         },
     });
 
