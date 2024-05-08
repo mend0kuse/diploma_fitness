@@ -2,13 +2,19 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma, Profile } from '@prisma/client';
 import { excludeFields } from 'src/shared/lib/excludeFields';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { mapUserChat } from 'src/shared/lib/mapChat';
 
 @Injectable()
 export class UserService {
     constructor(private prisma: PrismaService) {}
 
-    include = {
+    private include = {
         profile: true,
+        chats: {
+            include: {
+                chat: { include: { messages: true, users: { include: { user: { include: { profile: true } } } } } },
+            },
+        },
         orders: {
             include: {
                 workout: {
@@ -25,10 +31,14 @@ export class UserService {
     };
 
     async getOne({ id, email }: { id?: number; email?: string }) {
-        return this.prisma.user.findFirst({
+        const result = await this.prisma.user.findFirst({
             where: { OR: [{ id: { equals: id } }, { email: { equals: email } }] },
             include: this.include,
         });
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return mapUserChat(result);
     }
 
     async getMany(args: Prisma.UserFindManyArgs) {

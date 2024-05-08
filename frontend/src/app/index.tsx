@@ -10,6 +10,7 @@ import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './styles/index.css';
 import { Notifications } from '@mantine/notifications';
+import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 
 const domNode = document.getElementById('root');
 
@@ -48,12 +49,5 @@ root.render(
  * @maybe share socials
  *
  * Schedule
- * - filters
  * - css for library
- *
- * Chat
- *
- * Profile
- * - workout history
- * - chat with another user
  */

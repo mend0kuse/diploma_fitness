@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { ChatMessage, User } from '@prisma/client';
 
 @Injectable()
 export class ChatService {
     constructor(private prismaService: PrismaService) {}
+
+    private chatInclude = {
+        users: {
+            include: {
+                user: { include: { profile: true } },
+            },
+        },
+        messages: true,
+    };
 
     createMessage({ userId, message, chatId }: { chatId: number; userId: number; message: string }) {
         return this.prismaService.chatMessage.create({
@@ -40,6 +48,7 @@ export class ChatService {
                     }),
                 },
             },
+            include: this.chatInclude,
         });
     }
 
@@ -56,6 +65,7 @@ export class ChatService {
                     },
                 },
             },
+            include: this.chatInclude,
         });
     }
 }
