@@ -25,7 +25,7 @@ const theme = createTheme({
     primaryColor: 'cyan',
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 2, retryOnMount: false } } });
 
 root.render(
     <React.StrictMode>

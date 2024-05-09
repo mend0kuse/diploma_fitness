@@ -13,7 +13,7 @@ type NavbarLinkProps = {
 };
 
 export const NavbarLink = ({ icon: Icon, label, route, active, onClick }: NavbarLinkProps) => (
-    <Tooltip label={label} position='right' transitionProps={{ duration: 0 }}>
+    <Tooltip zIndex={9999999} label={label} position='right' transitionProps={{ duration: 0 }}>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         <UnstyledButton

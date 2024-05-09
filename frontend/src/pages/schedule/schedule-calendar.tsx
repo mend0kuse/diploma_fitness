@@ -11,8 +11,6 @@ export const ScheduleCalendar = memo(
     ({ events, onModalOpen }: { events: EventSourceInput | undefined; onModalOpen: (event: EventImpl) => void }) => {
         const calendarRef = useRef() as LegacyRef<FullCalendar>;
 
-        console.log('render');
-
         return (
             <FullCalendar
                 ref={calendarRef}

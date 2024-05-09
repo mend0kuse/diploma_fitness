@@ -19,16 +19,28 @@ model User {
 
   trainerWorkouts Workout[]
 
-  orders WorkoutOrder[]
+  orders  WorkoutOrder[]
+  reviews TrainerReview[]
+}
+
+model TrainerReview {
+  id Int @id @default(autoincrement())
+
+  rating     Int
+  text       String
+  isHiddenUser Boolean
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 model Profile {
-  id      Int     @id @default(autoincrement())
-  userId  Int?    @unique
-  name    String?
-  status     String?
-  avatar  String?
-  user    User?   @relation(fields: [userId], references: [id])
+  id     Int     @id @default(autoincrement())
+  userId Int?    @unique
+  name   String?
+  status String?
+  avatar String?
+  user   User?   @relation(fields: [userId], references: [id])
 }
 
 model Chat {

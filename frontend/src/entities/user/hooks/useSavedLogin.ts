@@ -18,10 +18,17 @@ export const useSavedLogin = () => {
     return useQuery({
         queryKey: [`user_${savedUser.id}`],
         queryFn: async () => {
-            const response = await $api.get<TUser>(API_ENDPOINTS.USER(savedUser.id));
-            user.setUser(response.data);
+            try {
+                const response = await $api.get<TUser>(API_ENDPOINTS.USER(savedUser.id));
+                user.setUser(response.data);
 
-            return response.data;
+                return response.data;
+            } catch (error) {
+                localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                throw new Error(error);
+            }
         },
     });
 };

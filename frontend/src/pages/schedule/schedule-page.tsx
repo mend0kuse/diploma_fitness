@@ -16,6 +16,7 @@ import { QUERY_KEYS, API_ENDPOINTS } from '@/shared/api/config';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { pickBy } from 'lodash';
+import { Error } from '@/shared/ui/error/error';
 
 export type TFilters = {
     dateStart: Date | null;
@@ -120,12 +121,12 @@ export const SchedulePage = () => {
     if (isError) {
         return (
             <CenteredLayout>
-                <Text c='red'>{transformAxiosError(error)}</Text>
+                <Error onTryAgain={refetch} message={transformAxiosError(error)} />
             </CenteredLayout>
         );
     }
 
-    const isShowManagement = true; // TODO: trainer
+    const isShowManagement = true; // TODO: isTrainer
 
     return (
         <Layout>
