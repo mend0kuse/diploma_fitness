@@ -11,8 +11,13 @@ export class ReviewController {
         return this.reviewService.getReviewsByUserId(userId);
     }
 
+    @Get('/author/:authorId')
+    getReviewsByAuthorId(authorId: number) {
+        return this.reviewService.getReviewsByAuthorId(authorId);
+    }
+
     @Post('')
     getReviewsByTrainerId(@Body() data: Omit<TrainerReview, 'id'>) {
-        return this.reviewService.createReview(data);
+        return this.reviewService.createReview({ ...data });
     }
 }

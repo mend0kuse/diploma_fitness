@@ -1,18 +1,19 @@
 import { useEditProfile, useGetActiveChat, useGetUser } from '@/pages/profile/profile-hooks';
-import { Group, Loader, LoadingOverlay, Tabs, Text } from '@mantine/core';
+import { Group, Loader, LoadingOverlay, Stack, Tabs, Text, Title } from '@mantine/core';
 import { CenteredLayout, Layout } from '@/layout';
 import { ProfileForm } from '@/entities/user';
 import { ProfileInput, user } from '@/entities/user/user-model';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { convertToFormData } from '@/shared/lib/form/convertToFormData';
 import { observer } from 'mobx-react-lite';
-import { UserInfoAction } from '@/pages/profile/ui/profile-card/profile-card';
+import { ProfileCard } from '@/pages/profile/ui/profile-card/profile-card';
 import { AiOutlineHeart, AiOutlineProfile, AiOutlineWechat } from 'react-icons/ai';
 import { OrdersList } from './ui/orders-list';
 import { Chat } from '@/entities/chat/chat';
 import { ConversationList, Conversation, Avatar, MainContainer, Sidebar } from '@chatscope/chat-ui-kit-react';
 import { TChat } from '@/entities/chat/chat-model';
 import { useEffect, useState } from 'react';
+import { ReviewsList } from './ui/reviews-list';
 
 const TABS_SECTION = {
     PROFILE: 'profile',
@@ -34,6 +35,10 @@ export const ProfilePage = observer(() => {
     };
 
     const isHomeProfile = user.id === data?.id;
+    const isGuestProfile = !isHomeProfile;
+    // const isTrainerProfile = data?.role === 'trainer';
+    const isTrainerProfile = true;
+
     const chats = data?.chats;
 
     useEffect(() => {
@@ -63,8 +68,15 @@ export const ProfilePage = observer(() => {
     return (
         <Layout>
             <Group justify={'center'}>
-                <UserInfoAction user={data} />
+                <ProfileCard user={data} />
             </Group>
+
+            {isGuestProfile && isTrainerProfile && !!data.myReviews && (
+                <Stack>
+                    <Title>Отзывы</Title>
+                    <ReviewsList reviews={data.myReviews} />
+                </Stack>
+            )}
 
             {isHomeProfile && (
                 <Tabs

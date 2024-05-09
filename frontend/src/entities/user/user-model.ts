@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 import { LOCAL_STORAGE_TOKEN } from '@/entities/user/user-config';
 import { TOrder } from '../order/order-types';
 import { TChat } from '../chat/chat-model';
+import { TReview } from '../review/review-types';
 
 export type TUser = {
     id: number;
@@ -11,6 +12,8 @@ export type TUser = {
     profile: TProfile;
     orders: TOrder[];
     chats: TChat[];
+    myReviews: TReview[];
+    leavedReviews: TReview[];
 };
 
 export type TProfile = {

@@ -19,19 +19,24 @@ model User {
 
   trainerWorkouts Workout[]
 
-  orders  WorkoutOrder[]
-  reviews TrainerReview[]
+  orders WorkoutOrder[]
+
+  myReviews     TrainerReview[] @relation(name: "my")
+  leavedReviews TrainerReview[] @relation(name: "leaved")
 }
 
 model TrainerReview {
   id Int @id @default(autoincrement())
 
-  rating     Int
-  text       String
+  rating       Int
+  text         String
   isHiddenUser Boolean
 
-  user   User? @relation(fields: [userId], references: [id])
+  user   User? @relation(fields: [userId], references: [id], name: "my")
   userId Int?
+
+  author   User? @relation(fields: [authorId], references: [id], name: "leaved")
+  authorId Int?
 }
 
 model Profile {

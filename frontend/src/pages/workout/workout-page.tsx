@@ -3,7 +3,7 @@ import { useGetWorkoutById } from '@/pages/workout/lib/useGetWorkout';
 import { Box, Button, Group, Loader, Stack, Text, Title } from '@mantine/core';
 import { Error } from '@/shared/ui/error/error';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
-import { UserInfoAction } from '@/pages/profile/ui/profile-card/profile-card';
+import { ProfileCard } from '@/pages/profile/ui/profile-card/profile-card';
 import { dayjs } from '@/shared/lib/date/dayjs';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { observer } from 'mobx-react-lite';
@@ -51,7 +51,7 @@ export const WorkoutPage = observer(() => {
         <Layout>
             <Group align={'start'}>
                 <Stack>
-                    <UserInfoAction user={workout.trainer} />
+                    <ProfileCard user={workout.trainer} />
                 </Stack>
                 <Stack>
                     <Title>

@@ -10,6 +10,24 @@ export class UserService {
 
     private include = {
         profile: true,
+        myReviews: {
+            include: {
+                author: {
+                    include: {
+                        profile: true,
+                    },
+                },
+            },
+        },
+        leavedReviews: {
+            include: {
+                author: {
+                    include: {
+                        profile: true,
+                    },
+                },
+            },
+        },
         chats: {
             include: {
                 chat: {
