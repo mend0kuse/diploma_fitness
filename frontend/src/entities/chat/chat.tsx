@@ -9,10 +9,15 @@ import {
 import { user } from '../user';
 import { TChat } from './chat-model';
 import { observer } from 'mobx-react-lite';
+import { useChat } from './useChat';
 
-export const Chat = observer(({ chat: { messages, users, id } }: { chat: TChat }) => {
+export const Chat = observer(({ chat }: { chat: TChat }) => {
+    const { users } = chat;
+
     const ownIndex = users.findIndex((chatUser) => chatUser.id === user.id);
     const oppositeUser = users[ownIndex === 0 ? 1 : 0];
+
+    const { messages, sendMessage } = useChat({ chat, users });
 
     return (
         <ChatContainer>
@@ -39,7 +44,7 @@ export const Chat = observer(({ chat: { messages, users, id } }: { chat: TChat }
                         );
                     })}
             </MessageList>
-            <MessageInput autoFocus onSend={() => {}} attachButton={false} placeholder='Type message here' />
+            <MessageInput autoFocus onSend={sendMessage} attachButton={false} placeholder='...' />
         </ChatContainer>
     );
 });

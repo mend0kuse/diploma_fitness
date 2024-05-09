@@ -117,8 +117,10 @@ export const ProfilePage = observer(() => {
                                                     onClick={() => setSelectedChat(chat)}
                                                     key={`conversation-${id}`}
                                                     info={lastMessage?.message ?? 'Сообщений нет'}
-                                                    lastSenderName={lastMessage?.user.profile.name}
-                                                    name={oppositeUser.profile.name}
+                                                    lastSenderName={
+                                                        lastMessage?.user.profile.name ?? lastMessage?.user.email
+                                                    }
+                                                    name={oppositeUser.profile.name ?? oppositeUser.email}
                                                 >
                                                     <Avatar src={oppositeUser.profile.avatar} />
                                                 </Conversation>

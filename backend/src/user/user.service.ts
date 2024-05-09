@@ -12,7 +12,12 @@ export class UserService {
         profile: true,
         chats: {
             include: {
-                chat: { include: { messages: true, users: { include: { user: { include: { profile: true } } } } } },
+                chat: {
+                    include: {
+                        messages: { include: { user: { include: { profile: true } } } },
+                        users: { include: { user: { include: { profile: true } } } },
+                    },
+                },
             },
         },
         orders: {
