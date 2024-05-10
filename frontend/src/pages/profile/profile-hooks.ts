@@ -2,7 +2,7 @@ import { $api } from '@/shared/api/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { TUser } from '@/entities/user';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { API_ENDPOINTS, QUERY_KEYS } from '@/shared/api/config';
+import { API_ENDPOINTS } from '@/shared/api/config';
 import { user } from '@/entities/user/user-model';
 import { TChat } from '@/entities/chat/chat-model';
 
@@ -28,10 +28,9 @@ export const useEditProfile = ({ onSuccess }: { onSuccess?: () => void }) => {
             return $api.patch<TUser>(API_ENDPOINTS.EDIT_PROFILE, profile);
         },
 
-        onSuccess: async (response) => {
-            const updatedUser = response.data;
-            user.setUser(updatedUser);
-            await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
+        onSuccess: async ({ data }) => {
+            user.setUser(data);
+            await queryClient.invalidateQueries({ queryKey: [`user_${data.id}`] });
 
             onSuccess?.();
         },

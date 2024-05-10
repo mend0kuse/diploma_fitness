@@ -4,6 +4,8 @@ import { LOCAL_STORAGE_TOKEN } from '@/entities/user/user-config';
 import { TOrder } from '../order/order-types';
 import { TChat } from '../chat/chat-model';
 import { TReview } from '../review/review-types';
+import { TPayment } from '../payment/payments';
+import _ from 'lodash';
 
 export type TUser = {
     id: number;
@@ -14,6 +16,7 @@ export type TUser = {
     chats: TChat[];
     myReviews: TReview[];
     leavedReviews: TReview[];
+    payments: TPayment[];
 };
 
 export type TProfile = {
@@ -69,6 +72,14 @@ export class User {
 
     get id() {
         return this.data?.id;
+    }
+
+    get hasAccessToTraining() {
+        return !!this.data?.payments.find((payment) => new Date(payment.expiresAt) > new Date());
+    }
+
+    get expiredTicketDate() {
+        return _.maxBy(this.data?.payments, (payment) => payment.expiresAt)?.expiresAt;
     }
 
     logout() {

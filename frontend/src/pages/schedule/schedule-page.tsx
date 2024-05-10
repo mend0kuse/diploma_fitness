@@ -1,6 +1,5 @@
 import { CenteredLayout, Layout } from '@/layout';
-import { Box, Button, Group, LoadingOverlay, Modal, Text } from '@mantine/core';
-import classes from './schedule-page.module.css';
+import { Button, Container, Group, LoadingOverlay, Modal, Text } from '@mantine/core';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -130,7 +129,7 @@ export const SchedulePage = () => {
 
     return (
         <Layout>
-            <Box pos={'relative'} className={classes.schedulePage}>
+            <Container size={'xl'} pos={'relative'}>
                 <LoadingOverlay
                     visible={isLoading || isFetching || isLoadingTrainers}
                     zIndex={1000}
@@ -138,7 +137,9 @@ export const SchedulePage = () => {
                 />
 
                 <Filters trainers={trainers ?? []} filters={filters} setFilters={setFilters} />
-                <Button onClick={() => refetch()}>Применить</Button>
+                <Button mt={20} onClick={() => refetch()}>
+                    Применить фильтры
+                </Button>
 
                 {isShowManagement && (
                     <Group>
@@ -159,7 +160,7 @@ export const SchedulePage = () => {
                         Подробнее
                     </Button>
                 </Modal>
-            </Box>
+            </Container>
         </Layout>
     );
 };

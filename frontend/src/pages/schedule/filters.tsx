@@ -15,17 +15,10 @@ export const Filters = ({
     setFilters: React.Dispatch<React.SetStateAction<TFilters>>;
 }) => {
     return (
-        <Group>
-            <Switch
-                onChange={(event) =>
-                    setFilters((prev) => ({ ...prev, hasAvailablePlaces: event.currentTarget.checked }))
-                }
-                checked={filters.hasAvailablePlaces}
-                label='Есть свободные места'
-            />
+        <Group align='start'>
             <Select
                 onChange={(type) => setFilters((prev) => ({ ...prev, type }))}
-                label='Тип тренировки'
+                label='Тренировка'
                 value={filters.type}
                 data={Object.values(WORKOUT_TYPE)}
             />
@@ -50,6 +43,17 @@ export const Filters = ({
                 onChange={(dates) => {
                     setFilters((prev) => ({ ...prev, dateStart: dates[0], dateEnd: dates[1] }));
                 }}
+            />
+            <Switch
+                styles={{
+                    body: { flexDirection: 'column-reverse', alignItems: 'start' },
+                    label: { padding: 0, marginBottom: 3, fontWeight: 500, lineHeight: 1.55 },
+                }}
+                onChange={(event) =>
+                    setFilters((prev) => ({ ...prev, hasAvailablePlaces: event.currentTarget.checked }))
+                }
+                checked={filters.hasAvailablePlaces}
+                label='Свободные места'
             />
         </Group>
     );

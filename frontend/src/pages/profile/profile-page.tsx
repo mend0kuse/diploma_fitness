@@ -1,5 +1,5 @@
 import { useEditProfile, useGetActiveChat, useGetUser } from '@/pages/profile/profile-hooks';
-import { Group, Loader, LoadingOverlay, Stack, Tabs, Text, Title } from '@mantine/core';
+import { Container, Group, Loader, LoadingOverlay, Stack, Tabs, Text, Title } from '@mantine/core';
 import { CenteredLayout, Layout } from '@/layout';
 import { ProfileForm } from '@/entities/user';
 import { ProfileInput, user } from '@/entities/user/user-model';
@@ -67,90 +67,92 @@ export const ProfilePage = observer(() => {
 
     return (
         <Layout>
-            <Group justify={'center'}>
-                <ProfileCard user={data} />
-            </Group>
+            <Container size={'xl'}>
+                <Group justify={'center'}>
+                    <ProfileCard user={data} />
+                </Group>
 
-            {isGuestProfile && isTrainerProfile && !!data.myReviews && (
-                <Stack>
-                    <Title>Отзывы</Title>
-                    <ReviewsList reviews={data.myReviews} />
-                </Stack>
-            )}
+                {isGuestProfile && isTrainerProfile && !!data.myReviews && (
+                    <Stack>
+                        <Title>Отзывы</Title>
+                        <ReviewsList reviews={data.myReviews} />
+                    </Stack>
+                )}
 
-            {isHomeProfile && (
-                <Tabs
-                    styles={{
-                        root: { height: 600 },
-                        panel: { paddingTop: 30, position: 'relative', height: '100%' },
-                    }}
-                    defaultValue={activeChatId ? TABS_SECTION.CHAT : TABS_SECTION.PROFILE}
-                >
-                    <Tabs.List>
-                        <Tabs.Tab value={TABS_SECTION.PROFILE} leftSection={<AiOutlineProfile />}>
-                            Профиль
-                        </Tabs.Tab>
-                        <Tabs.Tab value={TABS_SECTION.CHAT} leftSection={<AiOutlineWechat />}>
-                            Чаты
-                        </Tabs.Tab>
-                        <Tabs.Tab value={TABS_SECTION.HISTORY} leftSection={<AiOutlineHeart />}>
-                            Тренировки
-                        </Tabs.Tab>
-                    </Tabs.List>
+                {isHomeProfile && (
+                    <Tabs
+                        styles={{
+                            root: { height: 600 },
+                            panel: { paddingTop: 30, position: 'relative', height: '100%' },
+                        }}
+                        defaultValue={activeChatId ? TABS_SECTION.CHAT : TABS_SECTION.PROFILE}
+                    >
+                        <Tabs.List>
+                            <Tabs.Tab value={TABS_SECTION.PROFILE} leftSection={<AiOutlineProfile />}>
+                                Профиль
+                            </Tabs.Tab>
+                            <Tabs.Tab value={TABS_SECTION.CHAT} leftSection={<AiOutlineWechat />}>
+                                Чаты
+                            </Tabs.Tab>
+                            <Tabs.Tab value={TABS_SECTION.HISTORY} leftSection={<AiOutlineHeart />}>
+                                Тренировки
+                            </Tabs.Tab>
+                        </Tabs.List>
 
-                    <Tabs.Panel value={TABS_SECTION.PROFILE}>
-                        <LoadingOverlay
-                            visible={isPendingEdit}
-                            zIndex={1000}
-                            overlayProps={{ radius: 'sm', blur: 2 }}
-                        />
-                        <ProfileForm onSubmit={onSubmit} profile={data.profile} />
-                        {errorEdit && <Text c={'red'}>{transformAxiosError(errorEdit)}</Text>}
-                    </Tabs.Panel>
+                        <Tabs.Panel value={TABS_SECTION.PROFILE}>
+                            <LoadingOverlay
+                                visible={isPendingEdit}
+                                zIndex={1000}
+                                overlayProps={{ radius: 'sm', blur: 2 }}
+                            />
+                            <ProfileForm onSubmit={onSubmit} profile={data.profile} />
+                            {errorEdit && <Text c={'red'}>{transformAxiosError(errorEdit)}</Text>}
+                        </Tabs.Panel>
 
-                    <Tabs.Panel value={TABS_SECTION.CHAT}>
-                        {!chats && <Text c={'red'}>Ошибка при загрузке чатов</Text>}
+                        <Tabs.Panel value={TABS_SECTION.CHAT}>
+                            {!chats && <Text c={'red'}>Ошибка при загрузке чатов</Text>}
 
-                        {chats && (
-                            <MainContainer>
-                                <Sidebar position='left'>
-                                    <ConversationList>
-                                        {chats.length === 0 && <Text>Пока пусто</Text>}
-                                        {chats.map((chat) => {
-                                            const { messages, users, id } = chat;
+                            {chats && (
+                                <MainContainer>
+                                    <Sidebar position='left'>
+                                        <ConversationList>
+                                            {chats.length === 0 && <Text>Пока пусто</Text>}
+                                            {chats.map((chat) => {
+                                                const { messages, users, id } = chat;
 
-                                            const ownIndex = users.findIndex((chatUser) => chatUser.id === user.id);
-                                            const oppositeUser = users[ownIndex === 0 ? 1 : 0];
-                                            const lastMessage = messages.at(-1);
+                                                const ownIndex = users.findIndex((chatUser) => chatUser.id === user.id);
+                                                const oppositeUser = users[ownIndex === 0 ? 1 : 0];
+                                                const lastMessage = messages.at(-1);
 
-                                            return (
-                                                <Conversation
-                                                    active={selectedChat?.id === id}
-                                                    onClick={() => setSelectedChat(chat)}
-                                                    key={`conversation-${id}`}
-                                                    info={lastMessage?.message ?? 'Сообщений нет'}
-                                                    lastSenderName={
-                                                        lastMessage?.user.profile.name ?? lastMessage?.user.email
-                                                    }
-                                                    name={oppositeUser.profile.name ?? oppositeUser.email}
-                                                >
-                                                    <Avatar src={oppositeUser.profile.avatar} />
-                                                </Conversation>
-                                            );
-                                        })}
-                                    </ConversationList>
-                                </Sidebar>
+                                                return (
+                                                    <Conversation
+                                                        active={selectedChat?.id === id}
+                                                        onClick={() => setSelectedChat(chat)}
+                                                        key={`conversation-${id}`}
+                                                        info={lastMessage?.message ?? 'Сообщений нет'}
+                                                        lastSenderName={
+                                                            lastMessage?.user.profile.name ?? lastMessage?.user.email
+                                                        }
+                                                        name={oppositeUser.profile.name ?? oppositeUser.email}
+                                                    >
+                                                        <Avatar src={oppositeUser.profile.avatar} />
+                                                    </Conversation>
+                                                );
+                                            })}
+                                        </ConversationList>
+                                    </Sidebar>
 
-                                {selectedChat && <Chat key={selectedChat.id} chat={selectedChat} />}
-                            </MainContainer>
-                        )}
-                    </Tabs.Panel>
+                                    {selectedChat && <Chat key={selectedChat.id} chat={selectedChat} />}
+                                </MainContainer>
+                            )}
+                        </Tabs.Panel>
 
-                    <Tabs.Panel value={TABS_SECTION.HISTORY}>
-                        <OrdersList orders={data.orders ?? []} />
-                    </Tabs.Panel>
-                </Tabs>
-            )}
+                        <Tabs.Panel value={TABS_SECTION.HISTORY}>
+                            <OrdersList orders={data.orders ?? []} />
+                        </Tabs.Panel>
+                    </Tabs>
+                )}
+            </Container>
         </Layout>
     );
 });

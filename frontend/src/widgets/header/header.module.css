@@ -1,0 +1,19 @@
+.link {
+    text-decoration: none;
+    color: black !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.header {
+    backdrop-filter: blur(10px);
+}
+
+.linkInverted {
+    color: white !important;
+}

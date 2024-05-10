@@ -5,4 +5,5 @@ export const ROUTES = {
     CREATE_WORKOUT: '/create',
     SCHEDULE: '/schedule',
     WORKOUT: (id: number) => `/workout/${id}`,
+    PAYMENT_FINISH: '/payment-finish',
 };

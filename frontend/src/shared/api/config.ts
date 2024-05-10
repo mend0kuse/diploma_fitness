@@ -18,9 +18,15 @@ export const API_ENDPOINTS = {
     ORDER: '/order',
     ORDER_BY_WORKOUT_ID: (id: number | string) => `/order/${id}`,
     CANCEL_ORDER_BY_ID: (id: number | string) => `/order/cancel/${id}`,
+
+    PAYMENT: '/payment',
+    PAYMENT_BY_TICKET_ID: (id: number | string) => `/payment/${id}`,
+    PAYMENT_BY_ORDER_ID: (id: number | string) => `/payment/${id}`,
 };
+
 export const QUERY_KEYS = {
     REVIEW: 'review',
+    PAYMENT: 'payment',
     USER: 'user',
     TRAINER: 'trainer',
     CHAT: 'chat',

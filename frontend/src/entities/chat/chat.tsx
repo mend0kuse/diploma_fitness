@@ -44,7 +44,7 @@ export const Chat = observer(({ chat }: { chat: TChat }) => {
                         );
                     })}
             </MessageList>
-            <MessageInput autoFocus onSend={sendMessage} attachButton={false} placeholder='...' />
+            <MessageInput onSend={sendMessage} attachButton={false} placeholder='...' />
         </ChatContainer>
     );
 });

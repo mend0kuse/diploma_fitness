@@ -19,6 +19,7 @@ export class UserService {
                 },
             },
         },
+        payments: true,
         leavedReviews: {
             include: {
                 author: {

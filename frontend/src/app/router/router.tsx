@@ -7,6 +7,7 @@ import { AuthorizationPage } from '@/pages/authorization/authorization';
 import { WorkoutPage } from '@/pages/workout/workout-page';
 import { CreateWorkoutPage } from '@/pages/create-workout/create-workout-page';
 import { SchedulePage } from '@/pages/schedule/schedule-page';
+import { PaymentFinishPage } from '@/pages/payment-finish/payment-finish-page';
 
 export const router = createBrowserRouter([
     {
@@ -33,5 +34,9 @@ export const router = createBrowserRouter([
     {
         path: ROUTES.SCHEDULE,
         element: <SchedulePage />,
+    },
+    {
+        path: ROUTES.PAYMENT_FINISH,
+        element: <PaymentFinishPage />,
     },
 ]);

@@ -29,20 +29,22 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
     return (
         <>
             <Paper ta={'center'} pos={'relative'} radius='md' withBorder p='lg' bg='var(--mantine-color-body)'>
-                <Stack>
+                <Stack gap={2}>
                     <LoadingOverlay visible={isPending} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />
 
                     <Avatar src={profile.avatar} size={120} radius={120} mx='auto' />
 
-                    <Text fz='lg' fw={500} mt='md'>
-                        {profile.name}
-                    </Text>
+                    {profile.name && (
+                        <Text fz='lg' fw={500} mt='md'>
+                            {profile.name}
+                        </Text>
+                    )}
 
                     <Text c='dimmed' fz='sm'>
                         {email} • {role === 'user' ? 'Спортсмен' : 'Тренер'}
                     </Text>
 
-                    <Text>{profile.status}</Text>
+                    {profile.status && <Text>{profile.status}</Text>}
 
                     {myReviews.length > 0 && (
                         <Center>
@@ -51,8 +53,6 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
                     )}
 
                     {!isOwnProfile && userStore.isAuthorized && userStore.id && (
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
                         <Button
                             onClick={() => createChat({ userIds: [id, userStore.id ?? -1] })}
                             variant='default'

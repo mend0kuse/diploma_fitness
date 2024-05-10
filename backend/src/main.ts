@@ -16,13 +16,3 @@ import { join } from 'path';
 
     await app.listen(8000);
 })();
-
-/**
- * ToDo
- *
- * ---
- * Notifications
- * - Workout cancelled
- * - Workout completed
- * - Chat
- */
