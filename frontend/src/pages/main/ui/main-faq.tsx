@@ -7,7 +7,7 @@ export function FaqSimple() {
                 Часто задаваемы вопросы
             </Title>
 
-            <Accordion styles={{ root: { width: 800 } }} variant='separated'>
+            <Accordion styles={{ root: { width: 925 } }} variant='separated'>
                 <Accordion.Item value='shape'>
                     <Accordion.Control>Нужно ли мне быть в форме, чтобы начать посещать фитнес-клуб?</Accordion.Control>
                     <Accordion.Panel>

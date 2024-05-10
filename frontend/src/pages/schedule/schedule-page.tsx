@@ -125,8 +125,6 @@ export const SchedulePage = () => {
         );
     }
 
-    const isShowManagement = true; // TODO: isTrainer
-
     return (
         <Layout>
             <Container size={'xl'} pos={'relative'}>
@@ -141,13 +139,7 @@ export const SchedulePage = () => {
                     Применить фильтры
                 </Button>
 
-                {isShowManagement && (
-                    <Group>
-                        <Button component={Link} to={ROUTES.CREATE_WORKOUT}>
-                            Создать тренировку
-                        </Button>
-                    </Group>
-                )}
+
 
                 <ScheduleCalendar events={data} onModalOpen={onModalOpen} />
 

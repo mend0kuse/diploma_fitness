@@ -7,7 +7,7 @@ import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { convertToFormData } from '@/shared/lib/form/convertToFormData';
 import { observer } from 'mobx-react-lite';
 import { ProfileCard } from '@/pages/profile/ui/profile-card/profile-card';
-import { AiOutlineHeart, AiOutlineProfile, AiOutlineWechat } from 'react-icons/ai';
+import { AiFillHeart, AiFillProfile, AiFillSchedule, AiOutlineWechat } from 'react-icons/ai';
 import { OrdersList } from './ui/orders-list';
 import { Chat } from '@/entities/chat/chat';
 import { ConversationList, Conversation, Avatar, MainContainer, Sidebar } from '@chatscope/chat-ui-kit-react';
@@ -36,8 +36,7 @@ export const ProfilePage = observer(() => {
 
     const isHomeProfile = user.id === data?.id;
     const isGuestProfile = !isHomeProfile;
-    // const isTrainerProfile = data?.role === 'trainer';
-    const isTrainerProfile = true;
+    const isTrainerProfile = data?.role === 'trainer';
 
     const chats = data?.chats;
 
@@ -88,13 +87,13 @@ export const ProfilePage = observer(() => {
                         defaultValue={activeChatId ? TABS_SECTION.CHAT : TABS_SECTION.PROFILE}
                     >
                         <Tabs.List>
-                            <Tabs.Tab value={TABS_SECTION.PROFILE} leftSection={<AiOutlineProfile />}>
+                            <Tabs.Tab value={TABS_SECTION.PROFILE} leftSection={<AiFillProfile size={25} />}>
                                 Профиль
                             </Tabs.Tab>
-                            <Tabs.Tab value={TABS_SECTION.CHAT} leftSection={<AiOutlineWechat />}>
+                            <Tabs.Tab value={TABS_SECTION.CHAT} leftSection={<AiOutlineWechat size={25} />}>
                                 Чаты
                             </Tabs.Tab>
-                            <Tabs.Tab value={TABS_SECTION.HISTORY} leftSection={<AiOutlineHeart />}>
+                            <Tabs.Tab value={TABS_SECTION.HISTORY} leftSection={<AiFillSchedule size={25} />}>
                                 Тренировки
                             </Tabs.Tab>
                         </Tabs.List>

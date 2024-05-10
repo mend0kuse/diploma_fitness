@@ -63,6 +63,7 @@ export const MainTariffs = observer(() => {
             <Card p={0} withBorder radius='md'>
                 <Stack gap={20} p={'lg'} align='center'>
                     <List
+                        styles={{ itemLabel: { lineHeight: 1.4 } }}
                         spacing='xs'
                         size='sm'
                         center

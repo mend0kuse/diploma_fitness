@@ -26,6 +26,8 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
 
     const rating = _.meanBy(myReviews, (review) => review.rating);
 
+    const isTrainerProfile = role === 'trainer';
+
     return (
         <>
             <Paper ta={'center'} pos={'relative'} radius='md' withBorder p='lg' bg='var(--mantine-color-body)'>
@@ -63,8 +65,7 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
                         </Button>
                     )}
 
-                    {/* isTrainerProfile */}
-                    {!isOwnProfile && userStore.isAuthorized && userStore.id && (
+                    {isTrainerProfile && !isOwnProfile && userStore.isAuthorized && (
                         <Button onClick={open} variant='default' fullWidth mt='md'>
                             Написать отзыв
                         </Button>

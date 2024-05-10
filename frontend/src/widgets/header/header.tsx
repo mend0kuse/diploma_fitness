@@ -20,11 +20,19 @@ export const Header = observer(({ inverted }: { inverted: boolean }) => {
                 <Link className={linkClassName} to={ROUTES.SCHEDULE}>
                     Расписание
                 </Link>
+
+                {user.isTrainer && (
+                    <Link className={linkClassName} to={ROUTES.CREATE_WORKOUT}>
+                        Создать тренировку
+                    </Link>
+                )}
+
                 {user.id && user.isAuthorized && (
                     <Link className={linkClassName} to={ROUTES.PROFILE(user.id)}>
                         Профиль
                     </Link>
                 )}
+
                 {user.isAuthorized ? (
                     <UnstyledButton className={linkClassName} onClick={() => user.logout()}>
                         Выход

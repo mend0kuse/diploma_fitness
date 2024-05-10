@@ -43,7 +43,7 @@ export const CreateWorkoutPage = () => {
         initialValues,
 
         validate: () => {
-            return {}; // TODO: validate
+            return {};
         },
     });
 
