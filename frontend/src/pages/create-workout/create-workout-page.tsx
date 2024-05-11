@@ -26,7 +26,7 @@ import { useCreateWorkout } from '@/pages/create-workout/useCreateWorkout';
 const initialValues: TWorkoutInput = {
     title: '',
     description: '',
-    sportType: 'Бег',
+    sportType: 'Фитнес',
 
     dateStart: new Date(),
     durationMinutes: dayjs.duration({ minutes: 60 }).asMinutes(),

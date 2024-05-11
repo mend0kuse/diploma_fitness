@@ -1,7 +1,7 @@
 import { Avatar, Text, Button, Paper, LoadingOverlay, Modal, Rating, Center, Stack } from '@mantine/core';
 import { TUser, user as userStore } from '@/entities/user';
 import { observer } from 'mobx-react-lite';
-import { useCreateChat } from '../../profile-hooks';
+import { useCreateChat } from '../profile-hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/shared/routing/routes';
 import { useDisclosure } from '@mantine/hooks';
@@ -48,7 +48,7 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
 
                     {profile.status && <Text>{profile.status}</Text>}
 
-                    {myReviews.length > 0 && (
+                    {myReviews?.length && (
                         <Center>
                             <Rating readOnly defaultValue={rating} fractions={3} />
                         </Center>

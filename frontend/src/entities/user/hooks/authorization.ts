@@ -5,6 +5,8 @@ import { $api } from '@/shared/api/api';
 import { API_ENDPOINTS, QUERY_KEYS } from '@/shared/api/config';
 import { decodeToken } from '@/entities/user/user-lib';
 import { ROUTES } from '@/shared/routing/routes';
+import { notifications } from '@mantine/notifications';
+import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 
 export const useLogin = ({ withRedirect }: { withRedirect?: boolean }) => {
     const navigate = useNavigate();
@@ -31,6 +33,15 @@ export const useLogin = ({ withRedirect }: { withRedirect?: boolean }) => {
                 navigate(ROUTES.PROFILE(userDecoded.id));
             }
         },
+        onError: (error) => {
+            notifications.show({
+                withCloseButton: true,
+                autoClose: 5000,
+                color: 'red',
+                title: 'Ошибка при авторизации',
+                message: transformAxiosError(error),
+            });
+        },
     });
 
     return { login: mutation.mutate, ...mutation };
@@ -48,6 +59,15 @@ export const useRegistration = () => {
             const userData = data.data;
             user.setUser(userData);
             navigate(ROUTES.PROFILE(userData.id));
+        },
+        onError: (error) => {
+            notifications.show({
+                withCloseButton: true,
+                autoClose: 5000,
+                color: 'red',
+                title: 'Ошибка при авторизации',
+                message: transformAxiosError(error),
+            });
         },
     });
 

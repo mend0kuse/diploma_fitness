@@ -1,3 +1,4 @@
+import { EnumToUnion } from '@/shared/lib/typescript/EnumToUnion';
 import { TUser } from '../user';
 
 export type TPayment = {
@@ -5,7 +6,7 @@ export type TPayment = {
     order_id: string;
     ticketId: number;
 
-    status: string;
+    status: TPaymentStatus;
     paid: boolean;
     description: string;
     value: string;
@@ -19,3 +20,11 @@ export type TPayment = {
 
     confirmation: string;
 };
+
+const PAYMENT_STATUS = {
+    PENDING: 'pending',
+    CANCELED: 'canceled',
+    SUCCEED: 'succeed',
+} as const;
+
+export type TPaymentStatus = EnumToUnion<typeof PAYMENT_STATUS>;

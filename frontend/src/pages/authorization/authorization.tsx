@@ -8,9 +8,9 @@ import { Layout } from '@/layout';
 export const AuthorizationPage = () => {
     const [type, toggle] = useToggle(['Войти', 'Зарегистрироваться']);
 
-    const { register, error: registerError, isPending: isPendingRegister } = useRegistration();
+    const { register, isPending: isPendingRegister } = useRegistration();
 
-    const { login, isPending: isPendingLogin, error: loginError } = useLogin({ withRedirect: true });
+    const { login, isPending: isPendingLogin } = useLogin({ withRedirect: true });
 
     const form = useForm({
         initialValues: {

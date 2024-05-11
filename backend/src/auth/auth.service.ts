@@ -38,7 +38,7 @@ export class AuthService {
         // @ts-ignore
         return this.usersService.createUser({
             ...user,
-            role: 'trainer',
+            role: 'user',
             password: hashed,
         });
     }

@@ -1,5 +1,5 @@
 import { CenteredLayout, Layout } from '@/layout';
-import { Button, Container, Group, LoadingOverlay, Modal, Text } from '@mantine/core';
+import { Button, Container, LoadingOverlay, Modal, Stack, Text, Title } from '@mantine/core';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -40,13 +40,13 @@ export const SchedulePage = () => {
         queryKey: [QUERY_KEYS.WORKOUT],
         enabled: false,
         queryFn: async () => {
-            const truthy = pickBy(filters, Boolean);
+            const truthyFilters = pickBy(filters, Boolean);
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            const searchParams = new URLSearchParams(truthy);
-
-            const response = await $api.get<TWorkout[]>(`${API_ENDPOINTS.WORKOUT}?${searchParams.toString()}`);
+            const response = await $api.get<TWorkout[]>(
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                `${API_ENDPOINTS.WORKOUT}?${new URLSearchParams(truthyFilters).toString()}`
+            );
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result: any[] = [];
@@ -135,22 +135,21 @@ export const SchedulePage = () => {
                 />
 
                 <Filters trainers={trainers ?? []} filters={filters} setFilters={setFilters} />
-                <Button mt={20} onClick={() => refetch()}>
+
+                <Button mt={10} mb={30} onClick={() => refetch()}>
                     Применить фильтры
                 </Button>
 
-
-
                 <ScheduleCalendar events={data} onModalOpen={onModalOpen} />
 
-                <Modal opened={opened && !!selectedWorkoutInfo} onClose={close} title='Тренировка'>
-                    {/** TODO: layout/styles */}
-                    <Text>{selectedWorkoutInfo?.title}</Text>
-                    <Text>{selectedWorkoutInfo?.sportType}</Text>
-                    <Text>{selectedWorkoutInfo?.description}</Text>
-                    <Button component={Link} to={ROUTES.WORKOUT(selectedWorkoutInfo?.id)}>
-                        Подробнее
-                    </Button>
+                <Modal centered opened={opened && !!selectedWorkoutInfo} onClose={close} title='Тренировка'>
+                    <Stack>
+                        <Title>{selectedWorkoutInfo?.title}</Title>
+                        <Text>{selectedWorkoutInfo?.sportType}</Text>
+                        <Button component={Link} to={ROUTES.WORKOUT(selectedWorkoutInfo?.id)}>
+                            Подробнее
+                        </Button>
+                    </Stack>
                 </Modal>
             </Container>
         </Layout>

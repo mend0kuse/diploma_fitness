@@ -6,7 +6,7 @@ export const MainPreview = () => {
             <BackgroundImage h={'100vh'} src='./Hero.png'>
                 <Overlay backgroundOpacity={0.4} zIndex={1} />
                 <Center pos={'relative'} style={{ zIndex: 2 }} h={'100%'} px={'lg'}>
-                    <Stack align='center'>
+                    <Stack gap={100} align='center'>
                         <Title fw={900} fz={50} tt={'uppercase'} c={'white'} ta={'center'}>
                             Раскройте свой потенциал
                         </Title>

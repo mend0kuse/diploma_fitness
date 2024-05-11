@@ -1,9 +1,9 @@
 import { CenteredLayout, Layout } from '@/layout';
 import { useGetWorkoutById } from '@/pages/workout/lib/useGetWorkout';
-import { Box, Button, Group, Loader, Stack, Text, Title } from '@mantine/core';
+import { Box, Button, Container, Group, Loader, Stack, Text, Title } from '@mantine/core';
 import { Error } from '@/shared/ui/error/error';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
-import { ProfileCard } from '@/pages/profile/ui/profile-card/profile-card';
+import { ProfileCard } from '@/pages/profile/ui/profile-card';
 import { dayjs } from '@/shared/lib/date/dayjs';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { observer } from 'mobx-react-lite';
@@ -38,6 +38,7 @@ export const WorkoutPage = observer(() => {
 
     const userOrder = workout.orders.find((order) => order.client.id === user.id && order.status !== 'CANCELLED');
     const isUserParticipant = !!userOrder;
+    const isOwner = workout.trainer.id === user.id;
 
     const createOrder = () => {
         createOrderMutation();
@@ -49,34 +50,41 @@ export const WorkoutPage = observer(() => {
 
     return (
         <Layout>
-            <Group align={'start'}>
-                <Stack>
-                    <ProfileCard user={workout.trainer} />
-                </Stack>
-                <Stack>
-                    <Title>
-                        {workout.sportType} - {workout.title}
-                    </Title>
-                    <Box>
-                        <Group align={'center'}>
-                            <AiOutlineClockCircle />
-                            <Stack gap={1}>
-                                <Text>{dayjs(workout.dateStart).format('DD MMMM · HH:mm')}· </Text>
-                                <Text>{dayjs.duration(workout.durationMinutes, 'minutes').humanize(true)}</Text>
-                            </Stack>
-                        </Group>
-                    </Box>
-                </Stack>
-                {isUserParticipant ? (
-                    <Button color='red' loading={isCancelPending} onClick={cancelOrder}>
-                        Отменить запись
-                    </Button>
-                ) : (
-                    <Button loading={isCreatePending} onClick={createOrder}>
-                        Записаться
-                    </Button>
-                )}
-            </Group>
+            <Container size={'xl'}>
+                <Group align={'start'}>
+                    <Stack>
+                        <ProfileCard user={workout.trainer} />
+                    </Stack>
+                    <Stack>
+                        <Title>
+                            {workout.sportType} - {workout.title}
+                        </Title>
+                        <Box>
+                            <Group align={'center'}>
+                                <AiOutlineClockCircle />
+                                <Stack gap={1}>
+                                    <Text>{dayjs(workout.dateStart).format('DD MMMM · HH:mm')}· </Text>
+                                    <Text>{dayjs.duration(workout.durationMinutes, 'minutes').humanize(true)}</Text>
+                                </Stack>
+                            </Group>
+                        </Box>
+                        <Text>Свободные места - {workout.maxPlaces - workout.participants.length}</Text>
+                    </Stack>
+                    {!isOwner && (
+                        <>
+                            {isUserParticipant ? (
+                                <Button color='red' loading={isCancelPending} onClick={cancelOrder}>
+                                    Отменить запись
+                                </Button>
+                            ) : (
+                                <Button loading={isCreatePending} onClick={createOrder}>
+                                    Записаться
+                                </Button>
+                            )}
+                        </>
+                    )}
+                </Group>
+            </Container>
         </Layout>
     );
 });

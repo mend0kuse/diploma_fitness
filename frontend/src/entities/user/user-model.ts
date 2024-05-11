@@ -6,6 +6,7 @@ import { TChat } from '../chat/chat-model';
 import { TReview } from '../review/review-types';
 import { TPayment } from '../payment/payments';
 import _ from 'lodash';
+import { TWorkout } from '../workout/workout-types';
 
 export type TUser = {
     id: number;
@@ -13,6 +14,7 @@ export type TUser = {
     role: TUserRole;
     profile: TProfile;
     orders: TOrder[];
+    trainerWorkouts: TWorkout[];
     chats: TChat[];
     myReviews: TReview[];
     leavedReviews: TReview[];

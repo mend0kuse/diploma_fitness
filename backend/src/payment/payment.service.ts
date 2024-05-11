@@ -35,6 +35,11 @@ const TICKETS = {
     },
 } as const;
 
+/**
+ * FIXME:
+ * Succeed status only with return to site after payment. Need refactor save payment flow
+ */
+
 @Injectable()
 export class PaymentService {
     constructor(
@@ -59,6 +64,10 @@ export class PaymentService {
                 order_id: orderId,
             },
         });
+    }
+
+    updatePayment(data: Prisma.PaymentUpdateArgs) {
+        return this.prismaService.payment.update(data);
     }
 
     async createPaymentUrl(ticketId: number, userId: number) {
@@ -127,6 +136,8 @@ export class PaymentService {
                     Authorization: `Basic ${this.auth}`,
                 },
             });
+
+            await this.updatePayment({ where: { id: result.data.id }, data: { status: result.data.status } });
 
             return result.data;
         } catch (err) {

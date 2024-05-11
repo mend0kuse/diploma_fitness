@@ -6,20 +6,22 @@ import { ProfileInput, user } from '@/entities/user/user-model';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { convertToFormData } from '@/shared/lib/form/convertToFormData';
 import { observer } from 'mobx-react-lite';
-import { ProfileCard } from '@/pages/profile/ui/profile-card/profile-card';
-import { AiFillHeart, AiFillProfile, AiFillSchedule, AiOutlineWechat } from 'react-icons/ai';
+import { ProfileCard } from '@/pages/profile/ui/profile-card';
+import { AiFillDollarCircle, AiFillProfile, AiFillSchedule, AiOutlineWechat } from 'react-icons/ai';
 import { OrdersList } from './ui/orders-list';
 import { Chat } from '@/entities/chat/chat';
 import { ConversationList, Conversation, Avatar, MainContainer, Sidebar } from '@chatscope/chat-ui-kit-react';
 import { TChat } from '@/entities/chat/chat-model';
 import { useEffect, useState } from 'react';
 import { ReviewsList } from './ui/reviews-list';
+import { PaymentsList } from './ui/payments-list';
+import { WorkoutsList } from './ui/workouts-list';
 
 const TABS_SECTION = {
     PROFILE: 'profile',
     CHAT: 'chat',
     HISTORY: 'history',
-    STATS: 'stats',
+    PAYMENTS: 'payments',
 } as const;
 
 export const ProfilePage = observer(() => {
@@ -37,8 +39,6 @@ export const ProfilePage = observer(() => {
     const isHomeProfile = user.id === data?.id;
     const isGuestProfile = !isHomeProfile;
     const isTrainerProfile = data?.role === 'trainer';
-
-    const chats = data?.chats;
 
     useEffect(() => {
         if (data && activeChatId) {
@@ -64,6 +64,8 @@ export const ProfilePage = observer(() => {
         );
     }
 
+    const chats = data.chats;
+
     return (
         <Layout>
             <Container size={'xl'}>
@@ -87,6 +89,11 @@ export const ProfilePage = observer(() => {
                         defaultValue={activeChatId ? TABS_SECTION.CHAT : TABS_SECTION.PROFILE}
                     >
                         <Tabs.List>
+                            {!isTrainerProfile && (
+                                <Tabs.Tab value={TABS_SECTION.PAYMENTS} leftSection={<AiFillDollarCircle size={25} />}>
+                                    Покупки
+                                </Tabs.Tab>
+                            )}
                             <Tabs.Tab value={TABS_SECTION.PROFILE} leftSection={<AiFillProfile size={25} />}>
                                 Профиль
                             </Tabs.Tab>
@@ -108,10 +115,18 @@ export const ProfilePage = observer(() => {
                             {errorEdit && <Text c={'red'}>{transformAxiosError(errorEdit)}</Text>}
                         </Tabs.Panel>
 
-                        <Tabs.Panel value={TABS_SECTION.CHAT}>
-                            {!chats && <Text c={'red'}>Ошибка при загрузке чатов</Text>}
+                        {!isTrainerProfile && (
+                            <Tabs.Panel value={TABS_SECTION.PAYMENTS}>
+                                {data.payments.length > 0 ? (
+                                    <PaymentsList payments={data.payments} />
+                                ) : (
+                                    <Text>Покупок нет</Text>
+                                )}
+                            </Tabs.Panel>
+                        )}
 
-                            {chats && (
+                        <Tabs.Panel value={TABS_SECTION.CHAT}>
+                            {chats.length > 0 ? (
                                 <MainContainer>
                                     <Sidebar position='left'>
                                         <ConversationList>
@@ -143,11 +158,17 @@ export const ProfilePage = observer(() => {
 
                                     {selectedChat && <Chat key={selectedChat.id} chat={selectedChat} />}
                                 </MainContainer>
+                            ) : (
+                                <Text>Пока пусто</Text>
                             )}
                         </Tabs.Panel>
 
                         <Tabs.Panel value={TABS_SECTION.HISTORY}>
-                            <OrdersList orders={data.orders ?? []} />
+                            {isTrainerProfile ? (
+                                <WorkoutsList workouts={data.trainerWorkouts} />
+                            ) : (
+                                <OrdersList orders={data.orders} />
+                            )}
                         </Tabs.Panel>
                     </Tabs>
                 )}

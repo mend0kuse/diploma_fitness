@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const signUpDto = z
     .object({
-        email: z.string().email(),
-        password: z.string().min(7, { message: 'Password must contain at least 7 character(s)' }),
+        email: z.string().email({ message: 'Невалидная почта' }),
+        password: z.string().min(7, { message: 'Пароль должен содержать минимум 7 символов' }),
     })
     .required();
 

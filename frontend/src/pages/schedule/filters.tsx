@@ -47,7 +47,7 @@ export const Filters = ({
             <Switch
                 styles={{
                     body: { flexDirection: 'column-reverse', alignItems: 'start' },
-                    label: { padding: 0, marginBottom: 3, fontWeight: 500, lineHeight: 1.55 },
+                    label: { padding: 0, marginBottom: 12, fontWeight: 500, lineHeight: 1.55 },
                 }}
                 onChange={(event) =>
                     setFilters((prev) => ({ ...prev, hasAvailablePlaces: event.currentTarget.checked }))

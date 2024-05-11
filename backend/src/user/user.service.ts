@@ -3,6 +3,7 @@ import { Prisma, Profile } from '@prisma/client';
 import { excludeFields } from 'src/shared/lib/excludeFields';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { mapUserChat } from 'src/shared/lib/mapChat';
+import { calculateParticipants } from 'src/shared/lib/calculateParticipants';
 
 @Injectable()
 export class UserService {
@@ -10,6 +11,15 @@ export class UserService {
 
     private include = {
         profile: true,
+        trainerWorkouts: {
+            include: {
+                orders: {
+                    include: {
+                        client: true,
+                    },
+                },
+            },
+        },
         myReviews: {
             include: {
                 author: {
@@ -60,9 +70,15 @@ export class UserService {
             include: this.include,
         });
 
+        if (!result) {
+            return null;
+        }
+
+        const withMappedWorkouts = { ...result, trainerWorkouts: result.trainerWorkouts.map(calculateParticipants) };
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return mapUserChat(result);
+        return mapUserChat(withMappedWorkouts);
     }
 
     async getMany(args: Prisma.UserFindManyArgs) {
@@ -116,6 +132,8 @@ export class UserService {
             include: this.include,
         });
 
-        return excludeFields(updated, ['password']);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return excludeFields(mapUserChat(updated), ['password']);
     }
 }

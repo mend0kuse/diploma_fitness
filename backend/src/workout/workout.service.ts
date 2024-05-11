@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, User, Workout, WorkoutOrder } from '@prisma/client';
+import { Prisma, Workout } from '@prisma/client';
 import { TWorkoutQuery } from './workout';
-import { ORDER_STATUS } from '../order/order';
+import { calculateParticipants } from 'src/shared/lib/calculateParticipants';
 
 @Injectable()
 export class WorkoutService {
@@ -12,6 +12,7 @@ export class WorkoutService {
         trainer: {
             include: {
                 profile: true;
+                myReviews: true;
             };
         };
         orders: {
@@ -51,7 +52,7 @@ export class WorkoutService {
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const result = workouts.map((item) => this.calculateParticipants(item));
+        const result = workouts.map((item) => calculateParticipants(item));
 
         if (!query.hasAvailablePlaces) {
             return result;
@@ -81,9 +82,7 @@ export class WorkoutService {
             },
         });
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return this.calculateParticipants(found);
+        return calculateParticipants(found);
     }
 
     deleteWorkout(id: number) {
@@ -123,15 +122,6 @@ export class WorkoutService {
             ...(sort && { orderBy: { [sort]: order ?? 'asc' } }),
             ...(limit && { take: limit }),
             ...(limit && page && { take: limit, skip: (page - 1) * limit }),
-        };
-    }
-
-    private calculateParticipants(workout: Workout & { orders: (WorkoutOrder & { client: User })[] }) {
-        return {
-            ...workout,
-            participants: (workout.orders ?? [])
-                .filter((order) => order.status !== ORDER_STATUS.CANCELLED)
-                .map((order) => order.client),
         };
     }
 }

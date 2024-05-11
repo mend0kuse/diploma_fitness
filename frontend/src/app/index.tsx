@@ -42,3 +42,9 @@ root.render(
         </MantineProvider>
     </React.StrictMode>
 );
+
+/**
+ * TODO:
+ * - Schedule styles
+ * - Freeze ticket
+ */

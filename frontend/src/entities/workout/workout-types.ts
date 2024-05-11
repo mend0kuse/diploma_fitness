@@ -12,7 +12,6 @@ export type TWorkout = {
     description: string;
     sportType: TWorkoutType;
     maxPlaces: number;
-    availablePlaces: number;
     dateStart: Date;
     durationMinutes: number;
 };
@@ -27,10 +26,10 @@ export type TWorkoutInput = {
 };
 
 export const WORKOUT_TYPE = {
-    RUNNING: 'Бег',
-    CYCLING: 'Вело',
-    SWIMMING: 'Плаванье',
-    WALKING: 'Ходьба',
+    YOGA: 'Йога',
+    PILATES: 'Пилатес',
+    FITNESS: 'Фитнес',
+    BOX: 'Бокс',
 } as const;
 
 export type TWorkoutType = EnumToUnion<typeof WORKOUT_TYPE>;

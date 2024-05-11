@@ -2,9 +2,9 @@ import { AxiosError } from 'axios';
 import { assertIsType } from '@/shared/lib/typescript/isPropertyExist';
 
 export const transformAxiosError = (error: AxiosError) => {
-    if (error.message) {
-        return error.message;
-    }
+    // if (error.message) {
+    //     return error.message;
+    // }
 
     if (!error.response) {
         return 'Неизвестная ошибка';
