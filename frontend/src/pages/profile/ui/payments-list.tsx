@@ -4,7 +4,7 @@ import { Table, Text } from '@mantine/core';
 const TEXT_BY_STATUS: Record<TPaymentStatus, string> = {
     pending: 'Ожидает оплаты',
     canceled: 'Отменен',
-    succeed: 'Успешно оплачен',
+    succeeded: 'Успешно оплачен',
 } as const;
 
 export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
@@ -22,6 +22,8 @@ export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
                 </Table.Thead>
                 <Table.Tbody>
                     {payments.map(({ status, id, createdAt, expiresAt, description, value }) => {
+                        console.log(status);
+
                         return (
                             <Table.Tr key={id}>
                                 <Table.Td>

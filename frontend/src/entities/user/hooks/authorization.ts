@@ -51,14 +51,23 @@ export const useRegistration = () => {
     const navigate = useNavigate();
 
     const mutation = useMutation({
-        mutationFn: (user: UserInput) => {
-            return $api.post<TUser>(API_ENDPOINTS.REGISTRATION, user);
+        mutationFn: async (user: UserInput) => {
+            await $api.post<TUser>(API_ENDPOINTS.REGISTRATION, user);
+            return $api.post<{ access_token: string }>(API_ENDPOINTS.LOGIN, user);
         },
         mutationKey: [QUERY_KEYS.USER],
-        onSuccess: (data) => {
-            const userData = data.data;
-            user.setUser(userData);
-            navigate(ROUTES.PROFILE(userData.id));
+        onSuccess: ({ data }) => {
+            const token = data.access_token;
+            const userDecoded = decodeToken(token);
+
+            if (!userDecoded) {
+                return;
+            }
+
+            localStorage.setItem(LOCAL_STORAGE_TOKEN, `Bearer ${token}`);
+            user.setUser(userDecoded);
+
+            navigate(ROUTES.PROFILE(userDecoded.id));
         },
         onError: (error) => {
             notifications.show({

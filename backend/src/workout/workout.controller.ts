@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { WorkoutService } from './workout.service';
 import { Workout } from '@prisma/client';
 import { TWorkoutQuery } from './workout';
@@ -29,14 +29,15 @@ export class WorkoutController {
         return this.workoutService.createWorkout(dto, user.id);
     }
 
+    @Put('complete/:id')
+    async completeWorkout(@Param('id', ParseIntPipe) id: number) {
+        await this.orderService.completeByWorkout(id);
+        return this.workoutService.editWorkout({ where: { id }, data: { status: 'completed' } });
+    }
+
     @Delete(':id')
     deleteWorkout(@Param('id') id: number) {
         return this.workoutService.deleteWorkout(id);
-    }
-
-    @Put('complete/:id')
-    completeWorkout(@Param('id') id: number) {
-        return this.orderService.completeByWorkout(id);
     }
 
     @Put(':id')

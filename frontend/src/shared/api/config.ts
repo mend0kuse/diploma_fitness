@@ -7,6 +7,7 @@ export const API_ENDPOINTS = {
     TRAINER: `/user/trainer`,
 
     WORKOUT: '/workout',
+    COMPLETE_WORKOUT_BY_ID: (id: number | string) => `/workout/complete/${id}`,
     WORKOUT_BY_ID: (id: number | string) => `/workout/${id}`,
 
     CHAT: `/chat`,

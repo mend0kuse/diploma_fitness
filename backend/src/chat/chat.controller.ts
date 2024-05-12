@@ -6,8 +6,8 @@ export class ChatController {
     constructor(private chatService: ChatService) {}
 
     @Post()
-    createChat(@Body() { userIds }: { userIds: number[] }) {
-        const founded = this.chatService.getChatByUserIds(userIds);
+    async createChat(@Body() { userIds }: { userIds: number[] }) {
+        const founded = await this.chatService.getChatByUserIds(userIds);
 
         if (founded) {
             return founded;

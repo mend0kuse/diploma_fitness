@@ -34,11 +34,9 @@ export class AuthService {
     async signUp(user: SignUpDto) {
         const hashed = await bcrypt.hash(user.password, JWT.SALT_OR_ROUNDS);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         return this.usersService.createUser({
-            ...user,
-            role: 'user',
+            email: user.email,
+            role: 'trainer',
             password: hashed,
         });
     }

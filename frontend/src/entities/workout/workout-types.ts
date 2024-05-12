@@ -9,6 +9,7 @@ export type TWorkout = {
     id: number;
     trainerId: number;
     title: string;
+    status: 'pending' | 'completed';
     description: string;
     sportType: TWorkoutType;
     maxPlaces: number;

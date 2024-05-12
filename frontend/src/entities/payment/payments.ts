@@ -24,7 +24,7 @@ export type TPayment = {
 const PAYMENT_STATUS = {
     PENDING: 'pending',
     CANCELED: 'canceled',
-    SUCCEED: 'succeed',
+    SUCCEED: 'succeeded',
 } as const;
 
 export type TPaymentStatus = EnumToUnion<typeof PAYMENT_STATUS>;

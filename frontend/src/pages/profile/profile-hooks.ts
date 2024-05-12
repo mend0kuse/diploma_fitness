@@ -5,6 +5,8 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { API_ENDPOINTS } from '@/shared/api/config';
 import { user } from '@/entities/user/user-model';
 import { TChat } from '@/entities/chat/chat-model';
+import { TWorkout } from '@/entities/workout/workout-types';
+import { notifications } from '@mantine/notifications';
 
 export const useGetUser = () => {
     const { id } = useParams<{ id: string }>();
@@ -44,8 +46,8 @@ export const useCreateChat = ({ onSuccess }: { onSuccess?: (chatId: number) => v
         mutationFn: ({ userIds }: { userIds: number[] }) => {
             return $api.post<TChat>(API_ENDPOINTS.CHAT, { userIds });
         },
-
-        onSuccess: async ({ data }) => {
+        mutationKey: [`user_${user.id}`],
+        onSuccess: ({ data }) => {
             onSuccess?.(data.id);
         },
     });
@@ -59,4 +61,21 @@ export const useGetActiveChat = () => {
     const activeChatId = searchParams.get('chatId');
 
     return activeChatId ?? null;
+};
+
+export const useCompleteWorkout = () => {
+    return useMutation({
+        mutationFn: ({ workoutId }: { workoutId: number }) => {
+            return $api.put<TWorkout>(API_ENDPOINTS.COMPLETE_WORKOUT_BY_ID(workoutId));
+        },
+        mutationKey: [`user_${user.id}`],
+        onError: () => {
+            notifications.show({
+                withCloseButton: true,
+                autoClose: 5000,
+                color: 'red',
+                message: 'Ошибка при завершении',
+            });
+        },
+    });
 };

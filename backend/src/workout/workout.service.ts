@@ -32,6 +32,7 @@ export class WorkoutService {
             // @ts-ignore
             data: {
                 ...data,
+                status: 'pending',
                 trainer: {
                     connect: {
                         id: trainerId,

@@ -1,8 +1,11 @@
 import { TWorkout } from '@/entities/workout/workout-types';
 import { dayjs } from '@/shared/lib/date/dayjs';
-import { Table, Text } from '@mantine/core';
+import { Button, Table, Text } from '@mantine/core';
+import { useCompleteWorkout } from '../profile-hooks';
 
 export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
+    const { mutate, isPending } = useCompleteWorkout();
+
     return (
         <Table.ScrollContainer minWidth={800}>
             <Table verticalSpacing='xs'>
@@ -16,7 +19,7 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>
-                    {workouts.map(({ sportType, participants, dateStart, durationMinutes, id }) => {
+                    {workouts.map(({ sportType, participants, dateStart, durationMinutes, id, status }) => {
                         return (
                             <Table.Tr key={id}>
                                 <Table.Td>
@@ -32,8 +35,15 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                                     <Text>{dayjs.duration(durationMinutes, 'minutes').humanize()}</Text>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Text>{new Date() > dateStart ? 'Прошедшая' : 'Предстоящая'}</Text>
+                                    <Text>{status === 'pending' ? 'Предстоящая' : 'Завершена'}</Text>
                                 </Table.Td>
+                                {status === 'pending' && (
+                                    <Table.Td>
+                                        <Button loading={isPending} onClick={() => mutate({ workoutId: id })}>
+                                            Завершить
+                                        </Button>
+                                    </Table.Td>
+                                )}
                             </Table.Tr>
                         );
                     })}

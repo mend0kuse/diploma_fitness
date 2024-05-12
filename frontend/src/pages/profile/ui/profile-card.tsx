@@ -20,7 +20,7 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
         router(`${ROUTES.PROFILE(userStore.id)}?chatId=${chatId}`);
     };
 
-    const [isModalOpened, { close, open }] = useDisclosure(false);
+    const [isReviewOpened, { close: closeReview, open: openReview }] = useDisclosure(false);
 
     const { createChat, isPending } = useCreateChat({ onSuccess: redirectToChat });
 
@@ -48,7 +48,7 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
 
                     {profile.status && <Text>{profile.status}</Text>}
 
-                    {myReviews?.length && (
+                    {myReviews?.length > 0 && (
                         <Center>
                             <Rating readOnly defaultValue={rating} fractions={3} />
                         </Center>
@@ -66,13 +66,13 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
                     )}
 
                     {isTrainerProfile && !isOwnProfile && userStore.isAuthorized && (
-                        <Button onClick={open} variant='default' fullWidth mt='md'>
+                        <Button onClick={openReview} variant='default' fullWidth mt='md'>
                             Написать отзыв
                         </Button>
                     )}
 
-                    <Modal opened={isModalOpened} onClose={close}>
-                        <CreateReviewForm userId={id} onCreate={close} />
+                    <Modal title='Оставьте отзыв о сотруднике' centered opened={isReviewOpened} onClose={closeReview}>
+                        <CreateReviewForm userId={id} onCreate={closeReview} />
                     </Modal>
                 </Stack>
             </Paper>

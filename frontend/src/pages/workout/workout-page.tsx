@@ -48,6 +48,8 @@ export const WorkoutPage = observer(() => {
         userOrder && cancelOrderMutation(userOrder.id.toString());
     };
 
+    const availablePlaces = workout.maxPlaces - workout.participants.length;
+
     return (
         <Layout>
             <Container size={'xl'}>
@@ -68,21 +70,27 @@ export const WorkoutPage = observer(() => {
                                 </Stack>
                             </Group>
                         </Box>
-                        <Text>Свободные места - {workout.maxPlaces - workout.participants.length}</Text>
+
+                        <Text>Свободные места - {availablePlaces}</Text>
+
+                        {!isOwner && (
+                            <>
+                                {isUserParticipant ? (
+                                    <Button color='red' loading={isCancelPending} onClick={cancelOrder}>
+                                        Отменить запись
+                                    </Button>
+                                ) : (
+                                    <>
+                                        {availablePlaces > 0 && user.isAuthorized && (
+                                            <Button loading={isCreatePending} onClick={createOrder}>
+                                                Записаться
+                                            </Button>
+                                        )}
+                                    </>
+                                )}
+                            </>
+                        )}
                     </Stack>
-                    {!isOwner && (
-                        <>
-                            {isUserParticipant ? (
-                                <Button color='red' loading={isCancelPending} onClick={cancelOrder}>
-                                    Отменить запись
-                                </Button>
-                            ) : (
-                                <Button loading={isCreatePending} onClick={createOrder}>
-                                    Записаться
-                                </Button>
-                            )}
-                        </>
-                    )}
                 </Group>
             </Container>
         </Layout>
