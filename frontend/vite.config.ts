@@ -13,6 +13,7 @@ export default defineConfig({
     test: {
         globals: true,
         environment: 'jsdom',
+        setupFiles: './setup.ts',
     },
     plugins: [react(), tsconfigPaths(), svgr({ exportAsDefault: true }), checker({ typescript: true })],
 });

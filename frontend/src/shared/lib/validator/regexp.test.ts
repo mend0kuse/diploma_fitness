@@ -9,7 +9,7 @@ describe('Тестирование регулярных выражений', () 
             expect(isValidEmail('.ru')).toBe(false);
         });
 
-        it('Должен возвращать true валадном email', () => {
+        it('Должен возвращать true валидном email', () => {
             expect(isValidEmail('asd@mail.ru')).toBe(true);
             expect(isValidEmail('asd@asd.asd')).toBe(true);
         });
