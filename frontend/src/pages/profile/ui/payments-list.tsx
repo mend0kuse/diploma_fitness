@@ -22,7 +22,7 @@ export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
                 </Table.Thead>
                 <Table.Tbody>
                     {payments.map(({ status, id, createdAt, expiresAt, description, value }) => {
-                        console.log(status);
+                        const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString();
 
                         return (
                             <Table.Tr key={id}>
@@ -33,10 +33,10 @@ export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
                                     <Text>{value} рублей</Text>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Text>{new Date(createdAt).toLocaleDateString()}</Text>
+                                    <Text>{formatDate(createdAt)}</Text>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Text>{new Date(expiresAt).toLocaleDateString()}</Text>
+                                    <Text>{formatDate(expiresAt)}</Text>
                                 </Table.Td>
                                 <Table.Td>
                                     <Text>{TEXT_BY_STATUS[status]}</Text>

@@ -10,9 +10,7 @@ export const PaymentFinishPage = () => {
     const [searchParams] = useSearchParams();
     const orderId = searchParams.get('order_id');
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const { data, isPending, isLoading, isFetching, isError, refetch } = useGetOrderInfo(orderId);
+    const { data, isPending, isLoading, isFetching, isError, refetch } = useGetOrderInfo(Number(orderId));
 
     if (isPending || isLoading || isFetching) {
         return (

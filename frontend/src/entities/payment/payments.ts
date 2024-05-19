@@ -12,8 +12,8 @@ export type TPayment = {
     value: string;
     currency: string;
 
-    createdAt: Date;
-    expiresAt: Date;
+    createdAt: string;
+    expiresAt: string;
 
     user: TUser;
     userId: number;

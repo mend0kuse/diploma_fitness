@@ -24,26 +24,22 @@ export const ScheduleCalendar = memo(
                 plugins={[dayGridPlugin]}
                 events={events ?? []}
                 eventContent={({ event }) => {
-                    // TODO: layout
-                    // TODO: colorScheme for events
+                    const info = event.extendedProps.info;
+                    const availablePlaces = info.availablePlaces;
 
                     return (
                         <Box c={'white'} bg={event.extendedProps.mainColor} p={5} h='100%' w='100%'>
                             <Group justify={'space-between'}>
                                 <Text fz={10}>{dayjs(event.start).format('HH:mm')}</Text>
-                                <Text fz={10}>
-                                    {dayjs
-                                        .duration(event.extendedProps.info.durationMinutes, 'minutes')
-                                        .format('HHч:mmм')}
-                                </Text>
+                                <Text fz={10}>{dayjs.duration(info.durationMinutes, 'minutes').format('HHч:mmм')}</Text>
                             </Group>
 
                             <Text fw={800} fz={10}>
                                 {event.title}
                             </Text>
 
-                            {event.extendedProps.info.availablePlaces > 0 ? (
-                                <Text fz={10}>Места - {event.extendedProps.info.availablePlaces}</Text>
+                            {availablePlaces > 0 ? (
+                                <Text fz={10}>Места - {availablePlaces}</Text>
                             ) : (
                                 <Text>Мест нет</Text>
                             )}

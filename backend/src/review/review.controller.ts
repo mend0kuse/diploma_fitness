@@ -18,6 +18,6 @@ export class ReviewController {
 
     @Post('')
     getReviewsByTrainerId(@Body() data: Omit<TrainerReview, 'id'>) {
-        return this.reviewService.createReview({ ...data });
+        return this.reviewService.createReview(data);
     }
 }
