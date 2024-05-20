@@ -66,6 +66,17 @@ export class PaymentService {
         });
     }
 
+    freezePayment(id: string) {
+        return this.prismaService.payment.update({
+            where: {
+                id,
+            },
+            data: {
+                freezeEndDate: dayjs().add(1, 'months').toDate(),
+            },
+        });
+    }
+
     updatePayment(data: Prisma.PaymentUpdateArgs) {
         return this.prismaService.payment.update(data);
     }

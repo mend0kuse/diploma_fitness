@@ -7,6 +7,7 @@ import { user } from '@/entities/user/user-model';
 import { TChat } from '@/entities/chat/chat-model';
 import { TWorkout } from '@/entities/workout/workout-types';
 import { notifications } from '@mantine/notifications';
+import { TPayment } from '@/entities/payment/payments';
 
 export const useGetUser = () => {
     const { id } = useParams<{ id: string }>();
@@ -75,6 +76,23 @@ export const useCompleteWorkout = () => {
                 autoClose: 5000,
                 color: 'red',
                 message: 'Ошибка при завершении',
+            });
+        },
+    });
+};
+
+export const useFreezePayment = () => {
+    return useMutation({
+        mutationFn: ({ paymentId }: { paymentId: string }) => {
+            return $api.put<TPayment>(API_ENDPOINTS.PAYMENT_FREEZE_BY_PAYMENT_ID(paymentId));
+        },
+        mutationKey: [`user_${user.id}`],
+        onError: () => {
+            notifications.show({
+                withCloseButton: true,
+                autoClose: 5000,
+                color: 'red',
+                message: 'Ошибка при заморозке',
             });
         },
     });

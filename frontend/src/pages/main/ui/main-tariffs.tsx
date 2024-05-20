@@ -46,7 +46,6 @@ export const MainTariffs = observer(() => {
             });
 
             setIsVisibleAuthorize(true);
-
             return;
         }
 
@@ -88,10 +87,20 @@ export const MainTariffs = observer(() => {
                         <List.Item>Дополнительные Услуги: Доступ к сауне, бассейну, спа и другим удобствам.</List.Item>
                     </List>
 
-                    {user.hasAccessToTraining && user.expiredTicketDate ? (
-                        <Text fz={25} fw={800}>
-                            Ваш абонемент закончится {new Date(user.expiredTicketDate).toLocaleDateString()}
-                        </Text>
+                    {user.actualPayment ? (
+                        <>
+                            {user.frozenPayment ? (
+                                <Text fz={25} fw={800}>
+                                    Ваш абонемент заморожен до{' '}
+                                    {new Date(user.frozenPayment.freezeEndDate).toLocaleDateString()}
+                                </Text>
+                            ) : (
+                                <Text fz={25} fw={800}>
+                                    Ваш абонемент закончится{' '}
+                                    {new Date(user.actualPayment.expiresAt).toLocaleDateString()}
+                                </Text>
+                            )}
+                        </>
                     ) : (
                         <>
                             <SegmentedControl

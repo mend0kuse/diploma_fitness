@@ -36,7 +36,7 @@ export class AuthService {
 
         return this.usersService.createUser({
             email: user.email,
-            role: 'trainer',
+            role: 'user',
             password: hashed,
         });
     }

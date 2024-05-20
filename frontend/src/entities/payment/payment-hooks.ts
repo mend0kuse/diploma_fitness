@@ -14,7 +14,7 @@ export const useCreatePayment = () => {
     });
 };
 
-export const useGetOrderInfo = (orderId: number) => {
+export const useGetOrderInfo = (orderId: string) => {
     return useQuery({
         queryKey: [],
         queryFn: async () => {

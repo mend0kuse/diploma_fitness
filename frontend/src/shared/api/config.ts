@@ -21,6 +21,7 @@ export const API_ENDPOINTS = {
     CANCEL_ORDER_BY_ID: (id: number | string) => `/order/cancel/${id}`,
 
     PAYMENT: '/payment',
+    PAYMENT_FREEZE_BY_PAYMENT_ID: (id: number | string) => `/payment/freeze/${id}`,
     PAYMENT_BY_TICKET_ID: (id: number | string) => `/payment/${id}`,
     PAYMENT_BY_ORDER_ID: (id: number | string) => `/payment/${id}`,
 };

@@ -14,6 +14,7 @@ export type TPayment = {
 
     createdAt: string;
     expiresAt: string;
+    freezeEndDate: string;
 
     user: TUser;
     userId: number;

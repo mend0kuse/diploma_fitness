@@ -11,6 +11,7 @@ import { user } from '@/entities/user';
 import { useParams } from 'react-router-dom';
 import { useCreateOrder } from '@/pages/workout/lib/useCreateOrder';
 import { useCancelOrder } from './lib/useCancelOrder';
+import { notifications } from '@mantine/notifications';
 
 export const WorkoutPage = observer(() => {
     const { id } = useParams<{ id: string }>();
@@ -41,6 +42,18 @@ export const WorkoutPage = observer(() => {
     const isOwner = workout.trainer.id === user.id;
 
     const createOrder = () => {
+        if (!user.hasAccessToTraining) {
+            notifications.show({
+                withCloseButton: true,
+                autoClose: 5000,
+                color: 'red',
+                title: 'Нет доступа.',
+                message: 'Нет доступа. Купите абонемент или дождитесь окончания заморозки',
+            });
+
+            return;
+        }
+
         createOrderMutation();
     };
 

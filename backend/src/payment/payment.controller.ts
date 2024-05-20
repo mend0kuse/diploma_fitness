@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { RequestWithUser } from 'src/user/user';
@@ -14,9 +14,12 @@ export class PaymentController {
     }
 
     @Get('/:orderId')
-    async getOrderInfo(@Param('orderId') orderId: string) {
-        const result = await this.paymentService.getOrderInfoById(orderId);
+    getOrderInfo(@Param('orderId') orderId: string) {
+        return this.paymentService.getOrderInfoById(orderId);
+    }
 
-        return result;
+    @Put('freeze/:paymentId')
+    freezePayment(@Param('paymentId') paymentId: string) {
+        return this.paymentService.freezePayment(paymentId);
     }
 }

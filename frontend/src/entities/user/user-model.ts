@@ -77,7 +77,19 @@ export class User {
     }
 
     get hasAccessToTraining() {
-        return !!this.data?.payments.find((payment) => new Date(payment.expiresAt) > new Date());
+        if (this.frozenPayment) {
+            return false;
+        }
+
+        return !!this.actualPayment;
+    }
+
+    get frozenPayment() {
+        return this.data?.payments?.find((payment) => new Date(payment.freezeEndDate) > new Date());
+    }
+
+    get actualPayment() {
+        return this.data?.payments?.find((payment) => new Date(payment.expiresAt) > new Date());
     }
 
     get expiredTicketDate() {

@@ -8,7 +8,7 @@ interface TestObject {
 }
 
 describe('excludeFields', () => {
-    it('should exclude specified fields', () => {
+    it('Должен удалять указанные ключи', () => {
         const obj: TestObject = {
             id: 1,
             name: 'John Doe',
@@ -28,7 +28,7 @@ describe('excludeFields', () => {
         expect(result).toEqual(expected);
     });
 
-    it('should return the same object if no keys are excluded', () => {
+    it('Должен вернуть тот же объект, если ключи не были переданы', () => {
         const obj: TestObject = {
             id: 1,
             name: 'John Doe',
@@ -43,7 +43,7 @@ describe('excludeFields', () => {
         expect(result).toEqual(obj);
     });
 
-    it('should handle excluding non-existent keys gracefully', () => {
+    it('Должен корректно обрабатывать передачу несуществующих ключей', () => {
         const obj: TestObject = {
             id: 1,
             name: 'John Doe',
@@ -58,7 +58,7 @@ describe('excludeFields', () => {
         expect(result).toEqual(obj);
     });
 
-    it('should handle excluding all keys', () => {
+    it('Должен удалять все ключи', () => {
         const obj: TestObject = {
             id: 1,
             name: 'John Doe',
@@ -75,7 +75,7 @@ describe('excludeFields', () => {
         expect(result).toEqual(expected);
     });
 
-    it('should handle empty objects', () => {
+    it('Должен корректно отрабатывать при пустом объекте', () => {
         const obj: Record<string, string> = {};
         const keysToExclude: Array<string> = ['id', 'name'];
 
