@@ -6,8 +6,6 @@ import * as dayjs from 'dayjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuidv4 } from 'uuid';
 
-const TEST_CARD = 2202474301322987;
-
 const TICKETS = {
     1: {
         amount: {

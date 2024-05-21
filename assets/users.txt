@@ -1,0 +1,13 @@
+--- User
+Email: user0@mail.ru
+Password: user1234
+Status: Люблю спорт!
+
+--- Trainer
+Email: trainer0@mail.ru
+Password: trainer1234
+Status: Приведем вас к результату!
+
+
+--- Test card
+2202474301322987
