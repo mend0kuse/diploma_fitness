@@ -7,7 +7,7 @@ import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { convertToFormData } from '@/shared/lib/form/convertToFormData';
 import { observer } from 'mobx-react-lite';
 import { ProfileCard } from '@/pages/profile/ui/profile-card';
-import { AiFillDollarCircle, AiFillProfile, AiFillSchedule, AiOutlineWechat } from 'react-icons/ai';
+import { AiFillDollarCircle, AiFillMessage, AiFillProfile, AiFillSchedule, AiOutlineWechat } from 'react-icons/ai';
 import { OrdersList } from './ui/orders-list';
 import { Chat } from '@/entities/chat/chat';
 import { ConversationList, Conversation, Avatar, MainContainer, Sidebar } from '@chatscope/chat-ui-kit-react';
@@ -21,6 +21,7 @@ const TABS_SECTION = {
     PROFILE: 'profile',
     CHAT: 'chat',
     HISTORY: 'history',
+    REVIEWS: 'reviews',
     PAYMENTS: 'payments',
 } as const;
 
@@ -103,6 +104,11 @@ export const ProfilePage = observer(() => {
                             <Tabs.Tab value={TABS_SECTION.HISTORY} leftSection={<AiFillSchedule size={25} />}>
                                 Тренировки
                             </Tabs.Tab>
+                            {isTrainerProfile && (
+                                <Tabs.Tab value={TABS_SECTION.REVIEWS} leftSection={<AiFillMessage size={25} />}>
+                                    Отзывы
+                                </Tabs.Tab>
+                            )}
                         </Tabs.List>
 
                         <Tabs.Panel value={TABS_SECTION.PROFILE}>
@@ -115,15 +121,21 @@ export const ProfilePage = observer(() => {
                             {errorEdit && <Text c={'red'}>{transformAxiosError(errorEdit)}</Text>}
                         </Tabs.Panel>
 
-                        {!isTrainerProfile && (
-                            <Tabs.Panel value={TABS_SECTION.PAYMENTS}>
-                                {data.payments.length > 0 ? (
-                                    <PaymentsList payments={data.payments} />
-                                ) : (
-                                    <Text>Покупок нет</Text>
-                                )}
-                            </Tabs.Panel>
-                        )}
+                        <Tabs.Panel value={TABS_SECTION.PAYMENTS}>
+                            {data.payments.length > 0 ? (
+                                <PaymentsList payments={data.payments} />
+                            ) : (
+                                <Text>Покупок нет</Text>
+                            )}
+                        </Tabs.Panel>
+
+                        <Tabs.Panel value={TABS_SECTION.REVIEWS}>
+                            {data.myReviews.length > 0 ? (
+                                <ReviewsList reviews={data.myReviews} />
+                            ) : (
+                                <Text>Отзывов нет</Text>
+                            )}
+                        </Tabs.Panel>
 
                         <Tabs.Panel value={TABS_SECTION.CHAT}>
                             {chats.length > 0 ? (

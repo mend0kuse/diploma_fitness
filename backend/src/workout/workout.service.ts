@@ -8,22 +8,22 @@ import { calculateParticipants } from 'src/shared/lib/calculateParticipants';
 export class WorkoutService {
     constructor(private prismaService: PrismaService) {}
 
-    private include: {
+    private include = {
         trainer: {
             include: {
-                profile: true;
-                myReviews: true;
-            };
-        };
+                profile: true,
+                myReviews: true,
+            },
+        },
         orders: {
             include: {
                 client: {
                     include: {
-                        profile: true;
-                    };
-                };
-            };
-        };
+                        profile: true,
+                    },
+                },
+            },
+        },
     };
 
     createWorkout(data: Workout, trainerId: number) {
@@ -51,8 +51,6 @@ export class WorkoutService {
             include: this.include,
         });
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         const result = workouts.map((item) => calculateParticipants(item));
 
         if (!query.hasAvailablePlaces) {

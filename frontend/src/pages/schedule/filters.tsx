@@ -28,7 +28,7 @@ export const Filters = ({
                 label='Тренер'
                 data={
                     trainers?.map((trainer) => {
-                        return { label: trainer.email, value: trainer.id.toString() };
+                        return { label: trainer.profile.name ?? trainer.email, value: trainer.id.toString() };
                     }) ?? []
                 }
                 onChange={(trainerId) => {

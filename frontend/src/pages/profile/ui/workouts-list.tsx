@@ -1,7 +1,9 @@
 import { TWorkout } from '@/entities/workout/workout-types';
 import { dayjs } from '@/shared/lib/date/dayjs';
-import { Button, Table, Text } from '@mantine/core';
+import { Anchor, Avatar, AvatarGroup, Button, Table, Text, Tooltip } from '@mantine/core';
 import { useCompleteWorkout } from '../profile-hooks';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/shared/routing/routes';
 
 export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
     const { mutate, isPending } = useCompleteWorkout();
@@ -12,7 +14,7 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                 <Table.Thead>
                     <Table.Tr>
                         <Table.Th>Тренировка</Table.Th>
-                        <Table.Th>Кол-во участников</Table.Th>
+                        <Table.Th>Участники</Table.Th>
                         <Table.Th>Дата</Table.Th>
                         <Table.Th>Длительность</Table.Th>
                         <Table.Th>Статус</Table.Th>
@@ -23,10 +25,30 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                         return (
                             <Table.Tr key={id}>
                                 <Table.Td>
-                                    <Text>{sportType}</Text>
+                                    <Text>
+                                        <Anchor component={Link} to={ROUTES.WORKOUT(id)}>
+                                            {sportType}
+                                        </Anchor>
+                                    </Text>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Text>{participants.length}</Text>
+                                    <AvatarGroup spacing={'sm'}>
+                                        {participants.map((participant) => {
+                                            return (
+                                                <Tooltip
+                                                    key={participant.id}
+                                                    label={participant.profile?.name ?? participant.email}
+                                                >
+                                                    <Avatar
+                                                        component={Link}
+                                                        to={ROUTES.PROFILE(participant.id)}
+                                                        size={'sm'}
+                                                        src={participant.profile?.avatar}
+                                                    />
+                                                </Tooltip>
+                                            );
+                                        })}
+                                    </AvatarGroup>
                                 </Table.Td>
                                 <Table.Td>
                                     <Text>{dayjs(dateStart).format('HH:mm - DD.MM.YYYY')}</Text>

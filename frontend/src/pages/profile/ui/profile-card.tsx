@@ -28,6 +28,8 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
 
     const isTrainerProfile = role === 'trainer';
 
+    console.log(profile);
+
     return (
         <>
             <Paper ta={'center'} pos={'relative'} radius='md' withBorder p='lg' bg='var(--mantine-color-body)'>

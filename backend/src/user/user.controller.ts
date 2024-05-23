@@ -19,6 +19,8 @@ import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { makeImagePath } from '../shared/lib/makeImagePath';
 import { Profile } from '@prisma/client';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('user')
 export class UserController {
@@ -26,7 +28,21 @@ export class UserController {
 
     @Patch('profile')
     @UseGuards(AuthGuard)
-    @UseInterceptors(FileInterceptor('avatar', { dest: 'uploads/' }))
+    @UseInterceptors(
+        FileInterceptor('avatar', {
+            storage: diskStorage({
+                destination: 'uploads/',
+                filename: (req, file, cb) => {
+                    const randomName = Array(32)
+                        .fill(null)
+                        .map(() => Math.round(Math.random() * 16).toString(16))
+                        .join('');
+
+                    cb(null, `${randomName}${extname(file.originalname)}`);
+                },
+            }),
+        })
+    )
     updateProfile(
         @Req() request: RequestWithUser,
         @Body() dto: Profile,

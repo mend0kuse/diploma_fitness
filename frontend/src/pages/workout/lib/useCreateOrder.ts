@@ -25,7 +25,7 @@ export const useCreateOrder = (id: undefined | string) => {
                 withCloseButton: true,
                 autoClose: 5000,
                 title: 'Заявка создана успешно',
-                message: `Id заявки ${order.id}`,
+                message: `Ждем вас на тренировке`,
             });
         },
         onError: (error) => {

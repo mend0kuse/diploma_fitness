@@ -1,6 +1,8 @@
 import { TPayment, TPaymentStatus } from '@/entities/payment/payments';
-import { Table, Text, Button } from '@mantine/core';
+import { Table, Text, Button, Modal, Group, Tooltip, Stack } from '@mantine/core';
 import { useFreezePayment } from '../profile-hooks';
+import { useDisclosure } from '@mantine/hooks';
+import { useState } from 'react';
 
 const TEXT_BY_STATUS: Record<TPaymentStatus, string> = {
     pending: 'Ожидает оплаты',
@@ -10,6 +12,12 @@ const TEXT_BY_STATUS: Record<TPaymentStatus, string> = {
 
 export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
     const { isPending, mutate } = useFreezePayment();
+    const [opened, { open, close }] = useDisclosure(false);
+    const [paymentToFrozeId, setPaymentToFrozeId] = useState<string | null>(null);
+
+    const confirmFreeze = () => {
+        paymentToFrozeId && mutate({ paymentId: paymentToFrozeId });
+    };
 
     return (
         <Table.ScrollContainer minWidth={800}>
@@ -24,7 +32,9 @@ export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>
-                    {payments.map(({ status, id, createdAt, expiresAt, description, value, freezeEndDate }) => {
+                    {payments.map((payment) => {
+                        const { status, id, createdAt, expiresAt, description, value, freezeEndDate } = payment;
+
                         const now = new Date();
                         const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString();
 
@@ -54,11 +64,35 @@ export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
                                 </Table.Td>
                                 {isCurrent && !isFrozen && (
                                     <Table.Td>
-                                        <Button loading={isPending} onClick={() => mutate({ paymentId: id })}>
-                                            Заморозить
-                                        </Button>
+                                        <Tooltip label='На месяц'>
+                                            <Button
+                                                onClick={() => {
+                                                    setPaymentToFrozeId(payment.id);
+                                                    open();
+                                                }}
+                                            >
+                                                Заморозить
+                                            </Button>
+                                        </Tooltip>
                                     </Table.Td>
                                 )}
+
+                                <Modal centered opened={opened} onClose={close} title='Подтверждение'>
+                                    <Stack>
+                                        <Text fw={500}>
+                                            Заморозку нельзя отменить. Срок заморозки - 1 месяц. Вы уверены?
+                                        </Text>
+                                        <Group justify='flex-end'>
+                                            <Button onClick={close} loading={isPending}>
+                                                Отменить
+                                            </Button>
+
+                                            <Button color='red' loading={isPending} onClick={confirmFreeze}>
+                                                Заморозить
+                                            </Button>
+                                        </Group>
+                                    </Stack>
+                                </Modal>
                             </Table.Tr>
                         );
                     })}

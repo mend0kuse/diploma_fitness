@@ -28,9 +28,16 @@ export const Header = observer(({ inverted }: { inverted: boolean }) => {
                 )}
 
                 {user.id && user.isAuthorized && (
-                    <Link className={linkClassName} to={ROUTES.PROFILE(user.id)}>
-                        Профиль
-                    </Link>
+                    <>
+                        {!user.hasAccessToTraining && (
+                            <a className={linkClassName} href={'/#tariffs'}>
+                                Купить абонемент
+                            </a>
+                        )}
+                        <Link className={linkClassName} to={ROUTES.PROFILE(user.id)}>
+                            Профиль
+                        </Link>
+                    </>
                 )}
 
                 {user.isAuthorized ? (

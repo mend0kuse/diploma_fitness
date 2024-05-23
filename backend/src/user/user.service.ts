@@ -15,7 +15,11 @@ export class UserService {
             include: {
                 orders: {
                     include: {
-                        client: true,
+                        client: {
+                            include: {
+                                profile: true,
+                            },
+                        },
                     },
                 },
             },

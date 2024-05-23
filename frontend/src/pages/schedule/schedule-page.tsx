@@ -16,8 +16,6 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { pickBy } from 'lodash';
 import { Error } from '@/shared/ui/error/error';
-import { user } from '@/entities/user';
-import { notifications } from '@mantine/notifications';
 import { observer } from 'mobx-react-lite';
 
 export type TFilters = {
@@ -112,18 +110,6 @@ export const SchedulePage = observer(() => {
     const selectedWorkoutInfo = selectedWorkout ? selectedWorkout.extendedProps.info : null;
 
     const onModalOpen = useCallback((evt: EventImpl) => {
-        if (!user.hasAccessToTraining) {
-            notifications.show({
-                withCloseButton: true,
-                autoClose: 5000,
-                color: 'red',
-                title: 'Нет доступа.',
-                message: 'Купите абонемент или дождитесь окончания заморозки',
-            });
-
-            return;
-        }
-
         open();
         setSelectedWorkout(evt);
     }, []);

@@ -11,7 +11,7 @@ import { join } from 'path';
         origin: 'http://localhost:3000',
     };
 
-    app.useStaticAssets(join(__dirname, '..', 'uploads'));
+    app.useStaticAssets(join(__dirname, '..', '..', 'uploads'));
     app.enableCors(corsOptions);
 
     await app.listen(8000);

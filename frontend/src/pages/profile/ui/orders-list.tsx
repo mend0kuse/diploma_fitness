@@ -1,6 +1,8 @@
 import { ORDER_STATUS_COLOR, ORDER_STATUS_TEXT, TOrder } from '@/entities/order/order-types';
 import { dayjs } from '@/shared/lib/date/dayjs';
-import { Table, Text } from '@mantine/core';
+import { ROUTES } from '@/shared/routing/routes';
+import { Anchor, Avatar, Table, Text, Tooltip } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 export const OrdersList = ({ orders }: { orders: TOrder[] }) => {
     return (
@@ -20,10 +22,18 @@ export const OrdersList = ({ orders }: { orders: TOrder[] }) => {
                         return (
                             <Table.Tr key={id}>
                                 <Table.Td>
-                                    <Text>{workout.sportType}</Text>
+                                    <Anchor to={ROUTES.WORKOUT(workout.id)} component={Link}>
+                                        {workout.sportType}
+                                    </Anchor>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Text>{workout.trainer.profile.name ?? ''}</Text>
+                                    <Tooltip label={workout.trainer.profile.name ?? workout.trainer.email}>
+                                        <Avatar
+                                            component={Link}
+                                            to={ROUTES.PROFILE(workout.trainer.id)}
+                                            src={workout.trainer.profile.avatar}
+                                        />
+                                    </Tooltip>
                                 </Table.Td>
                                 <Table.Td>
                                     <Text>{dayjs(workout.dateStart).format('HH:mm - DD.MM.YYYY')}</Text>

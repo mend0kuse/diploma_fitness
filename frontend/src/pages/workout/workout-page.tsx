@@ -1,6 +1,6 @@
 import { CenteredLayout, Layout } from '@/layout';
 import { useGetWorkoutById } from '@/pages/workout/lib/useGetWorkout';
-import { Box, Button, Container, Group, Loader, Stack, Text, Title } from '@mantine/core';
+import { Avatar, AvatarGroup, Box, Button, Container, Group, Loader, Stack, Text, Title, Tooltip } from '@mantine/core';
 import { Error } from '@/shared/ui/error/error';
 import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { ProfileCard } from '@/pages/profile/ui/profile-card';
@@ -8,10 +8,11 @@ import { dayjs } from '@/shared/lib/date/dayjs';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { observer } from 'mobx-react-lite';
 import { user } from '@/entities/user';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useCreateOrder } from '@/pages/workout/lib/useCreateOrder';
 import { useCancelOrder } from './lib/useCancelOrder';
 import { notifications } from '@mantine/notifications';
+import { ROUTES } from '@/shared/routing/routes';
 
 export const WorkoutPage = observer(() => {
     const { id } = useParams<{ id: string }>();
@@ -79,12 +80,32 @@ export const WorkoutPage = observer(() => {
                                 <AiOutlineClockCircle />
                                 <Stack gap={1}>
                                     <Text>{dayjs(workout.dateStart).format('DD MMMM · HH:mm')}· </Text>
-                                    <Text>{dayjs.duration(workout.durationMinutes, 'minutes').humanize(true)}</Text>
+                                    <Text>{dayjs.duration(workout.durationMinutes, 'minutes').format('HHч:mmм')}</Text>
                                 </Stack>
                             </Group>
                         </Box>
 
                         <Text>Свободные места - {availablePlaces}</Text>
+
+                        <Stack gap={5}>
+                            <Title order={3}>Участники</Title>
+                            <AvatarGroup>
+                                {workout.participants.map((participant) => {
+                                    return (
+                                        <Tooltip
+                                            key={participant.id}
+                                            label={participant.profile?.name ?? participant.email}
+                                        >
+                                            <Avatar
+                                                component={Link}
+                                                to={ROUTES.PROFILE(participant.id)}
+                                                src={participant.profile?.avatar}
+                                            />
+                                        </Tooltip>
+                                    );
+                                })}
+                            </AvatarGroup>
+                        </Stack>
 
                         {!isOwner && (
                             <>
