@@ -29,7 +29,7 @@ export const Header = observer(({ inverted }: { inverted: boolean }) => {
 
                 {user.id && user.isAuthorized && (
                     <>
-                        {!user.hasAccessToTraining && (
+                        {!user.hasAccessToTraining && user.isClient && (
                             <a className={linkClassName} href={'/#tariffs'}>
                                 Купить абонемент
                             </a>

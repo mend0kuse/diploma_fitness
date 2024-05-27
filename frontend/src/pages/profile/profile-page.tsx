@@ -15,7 +15,6 @@ import { TChat } from '@/entities/chat/chat-model';
 import { useEffect, useState } from 'react';
 import { ReviewsList } from './ui/reviews-list';
 import { PaymentsList } from './ui/payments-list';
-import { WorkoutsList } from './ui/workouts-list';
 
 const TABS_SECTION = {
     PROFILE: 'profile',
@@ -101,9 +100,11 @@ export const ProfilePage = observer(() => {
                             <Tabs.Tab value={TABS_SECTION.CHAT} leftSection={<AiOutlineWechat size={25} />}>
                                 Чаты
                             </Tabs.Tab>
-                            <Tabs.Tab value={TABS_SECTION.HISTORY} leftSection={<AiFillSchedule size={25} />}>
-                                Тренировки
-                            </Tabs.Tab>
+                            {!user.isTrainer && (
+                                <Tabs.Tab value={TABS_SECTION.HISTORY} leftSection={<AiFillSchedule size={25} />}>
+                                    Тренировки
+                                </Tabs.Tab>
+                            )}
                             {isTrainerProfile && (
                                 <Tabs.Tab value={TABS_SECTION.REVIEWS} leftSection={<AiFillMessage size={25} />}>
                                     Отзывы
@@ -176,11 +177,7 @@ export const ProfilePage = observer(() => {
                         </Tabs.Panel>
 
                         <Tabs.Panel value={TABS_SECTION.HISTORY}>
-                            {isTrainerProfile ? (
-                                <WorkoutsList workouts={data.trainerWorkouts} />
-                            ) : (
-                                <OrdersList orders={data.orders} />
-                            )}
+                            <OrdersList orders={data.orders} />
                         </Tabs.Panel>
                     </Tabs>
                 )}

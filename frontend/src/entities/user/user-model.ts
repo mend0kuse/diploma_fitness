@@ -52,6 +52,10 @@ export class User {
         return this.data?.role === USER_ROLE.TRAINER;
     }
 
+    get isClient() {
+        return this.data?.role === USER_ROLE.USER;
+    }
+
     get isAuthorized() {
         return !!this.data;
     }
