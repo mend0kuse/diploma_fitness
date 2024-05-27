@@ -90,7 +90,7 @@ export const ProfilePage = observer(() => {
                         defaultValue={activeChatId ? TABS_SECTION.CHAT : TABS_SECTION.PROFILE}
                     >
                         <Tabs.List>
-                            {!isTrainerProfile && (
+                            {user.isClient && (
                                 <Tabs.Tab value={TABS_SECTION.PAYMENTS} leftSection={<AiFillDollarCircle size={25} />}>
                                     Покупки
                                 </Tabs.Tab>

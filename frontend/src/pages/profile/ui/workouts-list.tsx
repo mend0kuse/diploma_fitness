@@ -25,6 +25,7 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                     <Table.Thead>
                         <Table.Tr>
                             <Table.Th>Тренировка</Table.Th>
+                            <Table.Th>Тренер</Table.Th>
                             <Table.Th>Участники</Table.Th>
                             <Table.Th>Дата</Table.Th>
                             <Table.Th>Длительность</Table.Th>
@@ -33,7 +34,8 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                     </Table.Thead>
                     <Table.Tbody>
                         {workouts.map((workout) => {
-                            const { sportType, participants, dateStart, durationMinutes, id, status } = workout;
+                            const { sportType, participants, dateStart, durationMinutes, id, status, trainer } =
+                                workout;
 
                             return (
                                 <Table.Tr key={id}>
@@ -43,6 +45,16 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                                                 {sportType}
                                             </Anchor>
                                         </Text>
+                                    </Table.Td>
+                                    <Table.Td>
+                                        <Tooltip label={trainer.profile?.name ?? trainer.email}>
+                                            <Avatar
+                                                component={Link}
+                                                to={ROUTES.PROFILE(trainer.id)}
+                                                size={'sm'}
+                                                src={trainer.profile?.avatar}
+                                            />
+                                        </Tooltip>
                                     </Table.Td>
                                     <Table.Td>
                                         <AvatarGroup spacing={'sm'}>
@@ -67,7 +79,7 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                                         <Text>{dayjs(dateStart).format('HH:mm - DD.MM.YYYY')}</Text>
                                     </Table.Td>
                                     <Table.Td>
-                                        <Text>{dayjs.duration(durationMinutes, 'minutes').humanize()}</Text>
+                                        <Text>{dayjs.duration(durationMinutes, 'minutes').format('HHч:mmм')}</Text>
                                     </Table.Td>
                                     <Table.Td>
                                         <Text>{status === 'pending' ? 'Предстоящая' : 'Завершена'}</Text>

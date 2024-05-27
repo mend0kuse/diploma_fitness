@@ -14,7 +14,7 @@ export const useGetUser = () => {
     const idToNumber = Number(id);
 
     return useQuery({
-        queryKey: [`user_${idToNumber}`],
+        queryKey: [`user_${id}`],
         queryFn: async () => {
             const response = await $api.get<TUser>(API_ENDPOINTS.USER(idToNumber));
 
@@ -76,6 +76,13 @@ export const useCompleteWorkout = () => {
                 autoClose: 5000,
                 color: 'red',
                 message: 'Ошибка при завершении',
+            });
+        },
+        onSuccess: () => {
+            notifications.show({
+                withCloseButton: true,
+                autoClose: 5000,
+                message: 'Успешно',
             });
         },
     });

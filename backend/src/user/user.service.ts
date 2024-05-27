@@ -85,7 +85,11 @@ export class UserService {
         }
 
         const workouts = await this.prisma.workout.findMany({
-            include: { orders: { include: { client: { include: { profile: true } } } } },
+            where: { status: 'pending' },
+            include: {
+                trainer: { include: { profile: true } },
+                orders: { include: { client: { include: { profile: true } } } },
+            },
         });
         const withMappedWorkouts = { ...result, adminWorkouts: workouts.map(calculateParticipants) };
 

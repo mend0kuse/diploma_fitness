@@ -8,6 +8,12 @@ import { useDisclosure } from '@mantine/hooks';
 import { CreateReviewForm } from '@/entities/review/create-review-form';
 import _ from 'lodash';
 
+const TEXT_BY_ROLE = {
+    user: 'Спортсмен',
+    trainer: 'Тренер',
+    admin: 'Администратор',
+};
+
 export const ProfileCard = observer(({ user: { profile, email, role, id, myReviews } }: { user: TUser }) => {
     const isOwnProfile = userStore.id === id;
     const router = useNavigate();
@@ -28,8 +34,6 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
 
     const isTrainerProfile = role === 'trainer';
 
-    console.log(profile);
-
     return (
         <>
             <Paper ta={'center'} pos={'relative'} radius='md' withBorder p='lg' bg='var(--mantine-color-body)'>
@@ -45,7 +49,7 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
                     )}
 
                     <Text c='dimmed' fz='sm'>
-                        {email} • {role === 'user' ? 'Спортсмен' : 'Тренер'}
+                        {email} • {TEXT_BY_ROLE[role]}
                     </Text>
 
                     {profile.status && <Text>{profile.status}</Text>}

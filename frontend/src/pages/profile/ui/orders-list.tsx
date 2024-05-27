@@ -39,7 +39,7 @@ export const OrdersList = ({ orders }: { orders: TOrder[] }) => {
                                     <Text>{dayjs(workout.dateStart).format('HH:mm - DD.MM.YYYY')}</Text>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Text>{dayjs.duration(workout.durationMinutes, 'minutes').humanize()}</Text>
+                                    <Text>{dayjs.duration(workout.durationMinutes, 'minutes').format('HHч:mmм')}</Text>
                                 </Table.Td>
                                 <Table.Td>
                                     <Text c={ORDER_STATUS_COLOR[status]}>{ORDER_STATUS_TEXT[status]}</Text>
