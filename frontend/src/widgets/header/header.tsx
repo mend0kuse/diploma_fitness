@@ -21,7 +21,7 @@ export const Header = observer(({ inverted }: { inverted: boolean }) => {
                     Расписание
                 </Link>
 
-                {user.isTrainer && (
+                {user.isAdmin && (
                     <Link className={linkClassName} to={ROUTES.CREATE_WORKOUT}>
                         Создать тренировку
                     </Link>

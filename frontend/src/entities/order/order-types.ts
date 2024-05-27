@@ -15,10 +15,12 @@ export const ORDER_STATUS = {
     PENDING: 'PENDING',
     COMPLETED: 'COMPLETED',
     CANCELLED: 'CANCELLED',
+    MISSING: 'MISSING',
 } as const;
 
 export const ORDER_STATUS_TEXT: Record<TOrderStatus, string> = {
     PENDING: 'Ожидание',
+    MISSING: 'Пропущено',
     COMPLETED: 'Проведено',
     CANCELLED: 'Отменено',
 } as const;
@@ -27,6 +29,7 @@ export const ORDER_STATUS_COLOR: Record<TOrderStatus, string> = {
     PENDING: 'gray',
     COMPLETED: 'green',
     CANCELLED: 'red',
+    MISSING: 'red',
 } as const;
 
 export type TOrderStatus = EnumToUnion<typeof ORDER_STATUS>;

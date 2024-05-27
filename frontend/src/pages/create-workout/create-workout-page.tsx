@@ -13,15 +13,17 @@ import {
     Box,
     Anchor,
     Paper,
+    Loader,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Layout } from '@/layout';
+import { CenteredLayout, Layout } from '@/layout';
 import { DateTimePicker } from '@mantine/dates';
 import { dayjs } from '@/shared/lib/date/dayjs';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/shared/routing/routes';
 import { TWorkoutInput, WORKOUT_TYPE } from '@/entities/workout/workout-types';
 import { useCreateWorkout } from '@/pages/create-workout/useCreateWorkout';
+import { useGetTrainers } from '../schedule/useGetTrainers';
 
 const initialValues: TWorkoutInput = {
     title: '',
@@ -32,19 +34,16 @@ const initialValues: TWorkoutInput = {
     durationMinutes: dayjs.duration({ minutes: 60 }).asMinutes(),
 
     maxPlaces: 10,
+    trainerId: null,
 };
 
 export const CreateWorkoutPage = () => {
     const [step, setStep] = useState(0);
+    const { data: trainers, isLoading: isLoadingTrainers } = useGetTrainers();
 
     const form = useForm({
         mode: 'uncontrolled',
-
         initialValues,
-
-        validate: () => {
-            return {};
-        },
     });
 
     const {
@@ -86,6 +85,14 @@ export const CreateWorkoutPage = () => {
         createWorkout(form.getValues());
     };
 
+    if (isLoadingTrainers) {
+        return (
+            <CenteredLayout>
+                <Loader />
+            </CenteredLayout>
+        );
+    }
+
     return (
         <Layout>
             <Center mih={'100%'}>
@@ -109,6 +116,14 @@ export const CreateWorkoutPage = () => {
                                         placeholder='Выберите значение'
                                         data={Object.values(WORKOUT_TYPE)}
                                         {...form.getInputProps('sportType')}
+                                    />
+                                    <Select
+                                        label='Тренер'
+                                        data={(trainers ?? []).map((trainer) => ({
+                                            label: trainer.profile.name ?? trainer.email,
+                                            value: trainer.id.toString(),
+                                        }))}
+                                        {...form.getInputProps('trainerId')}
                                     />
                                 </Stack>
                             </Paper>

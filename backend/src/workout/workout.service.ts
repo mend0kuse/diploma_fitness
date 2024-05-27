@@ -26,7 +26,7 @@ export class WorkoutService {
         },
     };
 
-    createWorkout(data: Workout, trainerId: number) {
+    createWorkout({ trainerId, ...data }: Workout) {
         return this.prismaService.workout.create({
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
@@ -35,7 +35,7 @@ export class WorkoutService {
                 status: 'pending',
                 trainer: {
                     connect: {
-                        id: trainerId,
+                        id: Number(trainerId),
                     },
                 },
             },

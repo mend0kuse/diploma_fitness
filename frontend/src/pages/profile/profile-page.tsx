@@ -15,6 +15,7 @@ import { TChat } from '@/entities/chat/chat-model';
 import { useEffect, useState } from 'react';
 import { ReviewsList } from './ui/reviews-list';
 import { PaymentsList } from './ui/payments-list';
+import { WorkoutsList } from './ui/workouts-list';
 
 const TABS_SECTION = {
     PROFILE: 'profile',
@@ -177,7 +178,11 @@ export const ProfilePage = observer(() => {
                         </Tabs.Panel>
 
                         <Tabs.Panel value={TABS_SECTION.HISTORY}>
-                            <OrdersList orders={data.orders} />
+                            {user.isAdmin ? (
+                                <WorkoutsList workouts={data.adminWorkouts ?? []} />
+                            ) : (
+                                <OrdersList orders={data.orders} />
+                            )}
                         </Tabs.Panel>
                     </Tabs>
                 )}

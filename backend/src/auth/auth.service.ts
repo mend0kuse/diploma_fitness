@@ -5,6 +5,7 @@ import { excludeFields } from 'src/shared/lib/excludeFields';
 import { UserService } from 'src/user/user.service';
 import { JWT } from './constans';
 import { SignInDto, SignUpDto } from './schemas/profile-schemas';
+import { USER_ROLE } from './roles';
 
 @Injectable()
 export class AuthService {
@@ -36,7 +37,7 @@ export class AuthService {
 
         return this.usersService.createUser({
             email: user.email,
-            role: 'trainer',
+            role: USER_ROLE.ADMIN,
             password: hashed,
         });
     }

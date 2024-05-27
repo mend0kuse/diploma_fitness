@@ -15,6 +15,7 @@ export type TUser = {
     profile: TProfile;
     orders: TOrder[];
     trainerWorkouts: TWorkout[];
+    adminWorkouts?: TWorkout[];
     chats: TChat[];
     myReviews: TReview[];
     leavedReviews: TReview[];
@@ -33,6 +34,7 @@ export type ProfileInput = { status?: string; name?: string; avatar?: File | nul
 export const USER_ROLE = {
     USER: 'user',
     TRAINER: 'trainer',
+    ADMIN: 'admin',
 } as const;
 
 export type TUserRole = EnumToUnion<typeof USER_ROLE>;
@@ -54,6 +56,10 @@ export class User {
 
     get isClient() {
         return this.data?.role === USER_ROLE.USER;
+    }
+
+    get isAdmin() {
+        return this.data?.role === USER_ROLE.ADMIN;
     }
 
     get isAuthorized() {

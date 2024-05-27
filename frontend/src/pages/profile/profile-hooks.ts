@@ -66,8 +66,8 @@ export const useGetActiveChat = () => {
 
 export const useCompleteWorkout = () => {
     return useMutation({
-        mutationFn: ({ workoutId }: { workoutId: number }) => {
-            return $api.put<TWorkout>(API_ENDPOINTS.COMPLETE_WORKOUT_BY_ID(workoutId));
+        mutationFn: ({ workoutId, visitedUserIds }: { workoutId: number; visitedUserIds: number[] }) => {
+            return $api.put<TWorkout>(API_ENDPOINTS.COMPLETE_WORKOUT_BY_ID(workoutId), { visitedUserIds });
         },
         mutationKey: [`user_${user.id}`],
         onError: () => {

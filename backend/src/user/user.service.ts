@@ -78,7 +78,16 @@ export class UserService {
             return null;
         }
 
-        const withMappedWorkouts = { ...result, trainerWorkouts: result.trainerWorkouts.map(calculateParticipants) };
+        if (result.role !== 'admin') {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            return mapUserChat(result);
+        }
+
+        const workouts = await this.prisma.workout.findMany({
+            include: { orders: { include: { client: { include: { profile: true } } } } },
+        });
+        const withMappedWorkouts = { ...result, adminWorkouts: workouts.map(calculateParticipants) };
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

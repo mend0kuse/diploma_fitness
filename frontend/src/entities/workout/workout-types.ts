@@ -24,6 +24,7 @@ export type TWorkoutInput = {
     dateStart: Date;
     durationMinutes: number;
     maxPlaces: number;
+    trainerId: number | null;
 };
 
 export const WORKOUT_TYPE = {

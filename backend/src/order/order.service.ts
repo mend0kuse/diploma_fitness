@@ -43,11 +43,18 @@ export class OrderService {
         return this.editOrder(id, { status: ORDER_STATUS.CANCELLED });
     }
 
-    async completeByWorkout(workoutId: number) {
-        return this.prismaService.workoutOrder.updateMany({
-            where: { workoutId },
+    async completeByWorkout(workoutId: number, userIds: number[]) {
+        await this.prismaService.workoutOrder.updateMany({
+            where: { AND: [{ workoutId }, { clientId: { in: userIds } }] },
             data: {
                 status: ORDER_STATUS.COMPLETED,
+            },
+        });
+
+        return this.prismaService.workoutOrder.updateMany({
+            where: { AND: [{ workoutId }, { clientId: { notIn: userIds } }] },
+            data: {
+                status: ORDER_STATUS.MISSING,
             },
         });
     }

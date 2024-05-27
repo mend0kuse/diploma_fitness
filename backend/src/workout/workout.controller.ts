@@ -24,14 +24,16 @@ export class WorkoutController {
     }
 
     @Post('')
-    @UseGuards(AuthGuard)
-    createWorkout(@Req() { user }: RequestWithUser, @Body() dto: Workout) {
-        return this.workoutService.createWorkout(dto, user.id);
+    createWorkout(@Body() dto: Workout) {
+        return this.workoutService.createWorkout(dto);
     }
 
     @Put('complete/:id')
-    async completeWorkout(@Param('id', ParseIntPipe) id: number) {
-        await this.orderService.completeByWorkout(id);
+    async completeWorkout(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() { visitedUserIds }: { visitedUserIds: number[] }
+    ) {
+        await this.orderService.completeByWorkout(id, visitedUserIds);
         return this.workoutService.editWorkout({ where: { id }, data: { status: 'completed' } });
     }
 
