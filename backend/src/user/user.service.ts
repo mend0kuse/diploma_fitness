@@ -58,6 +58,11 @@ export class UserService {
                         },
                     },
                 },
+                orderBy: {
+                    workout: {
+                        dateStart: 'desc',
+                    },
+                },
             });
         }
 
@@ -66,6 +71,9 @@ export class UserService {
             include: {
                 trainer: { include: { profile: true } },
                 orders: { include: { client: { include: { profile: true } } } },
+            },
+            orderBy: {
+                dateStart: 'desc',
             },
         });
 
