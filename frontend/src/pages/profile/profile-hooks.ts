@@ -8,6 +8,7 @@ import { TChat } from '@/entities/chat/chat-model';
 import { TWorkout } from '@/entities/workout/workout-types';
 import { notifications } from '@mantine/notifications';
 import { TPayment } from '@/entities/payment/payments';
+import { TOrder } from '@/entities/order/order-types';
 
 export const useGetUser = () => {
     const { id } = useParams<{ id: string }>();
@@ -20,6 +21,21 @@ export const useGetUser = () => {
 
             return response.data;
         },
+    });
+};
+
+export const useGetUserOrders = () => {
+    const { id } = useParams<{ id: string }>();
+    const idToNumber = Number(id);
+
+    return useQuery({
+        queryKey: [`user_${user.id}_order`],
+        queryFn: async () => {
+            const response = await $api.get<TOrder[] | TWorkout[]>(API_ENDPOINTS.USER_ORDERS);
+
+            return response.data;
+        },
+        enabled: idToNumber === user.id,
     });
 };
 
@@ -73,11 +89,12 @@ export const useGetActiveChat = () => {
 };
 
 export const useCompleteWorkout = () => {
+    const queryClient = useQueryClient();
+
     return useMutation({
         mutationFn: ({ workoutId, visitedUserIds }: { workoutId: number; visitedUserIds: number[] }) => {
             return $api.put<TWorkout>(API_ENDPOINTS.COMPLETE_WORKOUT_BY_ID(workoutId), { visitedUserIds });
         },
-        mutationKey: [`user_${user.id}`],
         onError: () => {
             notifications.show({
                 withCloseButton: true,
@@ -86,12 +103,14 @@ export const useCompleteWorkout = () => {
                 message: 'Ошибка при завершении',
             });
         },
-        onSuccess: () => {
+        onSuccess: async () => {
             notifications.show({
                 withCloseButton: true,
                 autoClose: 5000,
                 message: 'Успешно',
             });
+
+            await queryClient.invalidateQueries({ queryKey: [`user_${user.id}_order`] });
         },
     });
 };

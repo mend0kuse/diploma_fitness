@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma, Profile } from '@prisma/client';
+import { Prisma, Profile, User } from '@prisma/client';
 import { excludeFields } from 'src/shared/lib/excludeFields';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { mapUserChat } from 'src/shared/lib/mapChat';
@@ -11,19 +11,6 @@ export class UserService {
 
     private include = {
         profile: true,
-        trainerWorkouts: {
-            include: {
-                orders: {
-                    include: {
-                        client: {
-                            include: {
-                                profile: true,
-                            },
-                        },
-                    },
-                },
-            },
-        },
         myReviews: {
             include: {
                 author: {
@@ -53,38 +40,24 @@ export class UserService {
                 },
             },
         },
-        orders: {
-            include: {
-                workout: {
-                    include: {
-                        trainer: {
-                            include: {
-                                profile: true,
+    };
+
+    async getUserOrders(user: User) {
+        if (user.role === 'user') {
+            return this.prisma.workoutOrder.findMany({
+                where: { clientId: user.id },
+                include: {
+                    workout: {
+                        include: {
+                            trainer: {
+                                include: {
+                                    profile: true,
+                                },
                             },
                         },
                     },
                 },
-            },
-        },
-    };
-
-    async getOne({ id, email }: { id?: number; email?: string }) {
-        const result = await this.prisma.user.findFirst({
-            where: { OR: [{ id: { equals: id } }, { email: { equals: email } }] },
-            include: {
-                ...this.include,
-                orders: { ...this.include.orders, orderBy: { workout: { dateStart: 'desc' } } },
-            },
-        });
-
-        if (!result) {
-            return null;
-        }
-
-        if (result.role !== 'admin') {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            return mapUserChat(result);
+            });
         }
 
         const workouts = await this.prisma.workout.findMany({
@@ -94,11 +67,23 @@ export class UserService {
                 orders: { include: { client: { include: { profile: true } } } },
             },
         });
-        const withMappedWorkouts = { ...result, adminWorkouts: workouts.map(calculateParticipants) };
+
+        return workouts.map(calculateParticipants);
+    }
+
+    async getOne({ id, email }: { id?: number; email?: string }) {
+        const result = await this.prisma.user.findFirst({
+            where: { OR: [{ id: { equals: id } }, { email: { equals: email } }] },
+            include: this.include,
+        });
+
+        if (!result) {
+            return null;
+        }
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return mapUserChat(withMappedWorkouts);
+        return mapUserChat(result);
     }
 
     async getMany(args: Prisma.UserFindManyArgs) {

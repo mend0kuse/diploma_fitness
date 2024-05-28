@@ -1,4 +1,4 @@
-import { useEditProfile, useGetActiveChat, useGetUser } from '@/pages/profile/profile-hooks';
+import { useEditProfile, useGetActiveChat, useGetUser, useGetUserOrders } from '@/pages/profile/profile-hooks';
 import { Container, Group, Loader, LoadingOverlay, Stack, Tabs, Text, Title } from '@mantine/core';
 import { CenteredLayout, Layout } from '@/layout';
 import { ProfileForm } from '@/entities/user';
@@ -30,6 +30,7 @@ export const ProfilePage = observer(() => {
     const [selectedChat, setSelectedChat] = useState<null | TChat>(null);
 
     const { data, isError, isLoading } = useGetUser();
+    const { data: userOrders, isLoading: isLoadingOrders } = useGetUserOrders();
 
     const { editProfile, isPending: isPendingEdit, error: errorEdit } = useEditProfile({});
 
@@ -47,7 +48,7 @@ export const ProfilePage = observer(() => {
         }
     }, [data]);
 
-    if (isLoading) {
+    if (isLoading || isLoadingOrders) {
         return (
             <CenteredLayout>
                 <Loader />
@@ -179,9 +180,13 @@ export const ProfilePage = observer(() => {
 
                         <Tabs.Panel value={TABS_SECTION.HISTORY}>
                             {user.isAdmin ? (
-                                <WorkoutsList workouts={data.adminWorkouts ?? []} />
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
+                                <WorkoutsList workouts={userOrders ?? []} />
                             ) : (
-                                <OrdersList orders={data.orders} />
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
+                                <OrdersList orders={userOrders ?? []} />
                             )}
                         </Tabs.Panel>
                     </Tabs>

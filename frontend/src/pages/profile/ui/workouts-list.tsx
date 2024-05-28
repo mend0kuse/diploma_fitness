@@ -16,6 +16,7 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
 
     const onFinish = () => {
         currentWorkout && mutate({ workoutId: currentWorkout?.id, visitedUserIds: userIds.map(Number) });
+        close();
     };
 
     return (

@@ -49,12 +49,14 @@ export const Header = observer(({ inverted }: { inverted: boolean }) => {
                         <Link className={linkClassName} to={ROUTES.PROFILE(user.id)}>
                             Профиль
                         </Link>
-                        <UnstyledButton
-                            className={linkClassName}
-                            onClick={() => createChat({ userIds: [user.id ?? -1] })}
-                        >
-                            Поддержка
-                        </UnstyledButton>
+                        {user.isClient && (
+                            <UnstyledButton
+                                className={linkClassName}
+                                onClick={() => createChat({ userIds: [user.id ?? -1] })}
+                            >
+                                Поддержка
+                            </UnstyledButton>
+                        )}
                     </>
                 )}
 

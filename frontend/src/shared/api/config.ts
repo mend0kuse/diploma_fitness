@@ -3,6 +3,7 @@ export const API_ENDPOINTS = {
     LOGIN: '/auth/signin',
 
     USER: (id: number) => `/user/${id}`,
+    USER_ORDERS: `/user/order`,
     EDIT_PROFILE: `/user/profile`,
     TRAINER: `/user/trainer`,
 

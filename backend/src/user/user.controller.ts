@@ -64,6 +64,12 @@ export class UserController {
         return this.userService.getMany({ where: { role: { equals: 'trainer' } } });
     }
 
+    @Get('order')
+    @UseGuards(AuthGuard)
+    async getUserOrders(@Req() { user }: RequestWithUser) {
+        return this.userService.getUserOrders(user);
+    }
+
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
         const found = await this.userService.getOne({ id });
