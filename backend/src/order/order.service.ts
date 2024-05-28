@@ -7,7 +7,7 @@ import { ORDER_STATUS } from './order';
 export class OrderService {
     constructor(private prismaService: PrismaService) {}
 
-    async createOrder(order: Omit<WorkoutOrder, 'id' | 'status'>) {
+    createOrder(order: Omit<WorkoutOrder, 'id' | 'status'>) {
         return this.prismaService.workoutOrder.create({
             data: {
                 ...order,
@@ -16,30 +16,38 @@ export class OrderService {
         });
     }
 
-    async getOrders() {
+    getUserOrderByWorkoutId(userId: number, workoutId: number) {
+        return this.prismaService.workoutOrder.findFirst({
+            where: {
+                AND: [{ workoutId }, { clientId: userId }],
+            },
+        });
+    }
+
+    getOrders() {
         return this.prismaService.workoutOrder.findMany();
     }
 
-    async getOrderById(id: number) {
+    getOrderById(id: number) {
         return this.prismaService.workoutOrder.findUnique({
             where: { id },
         });
     }
 
-    async getOrdersByUserId(userId: number) {
+    getOrdersByUserId(userId: number) {
         return this.prismaService.workoutOrder.findMany({
             where: { clientId: userId },
         });
     }
 
-    async editOrder(id: number, order: Partial<WorkoutOrder>) {
+    editOrder(id: number, order: Partial<WorkoutOrder>) {
         return this.prismaService.workoutOrder.update({
             where: { id },
             data: order,
         });
     }
 
-    async cancelOrder(id: number) {
+    cancelOrder(id: number) {
         return this.editOrder(id, { status: ORDER_STATUS.CANCELLED });
     }
 

@@ -42,10 +42,18 @@ export const useEditProfile = ({ onSuccess }: { onSuccess?: () => void }) => {
     return { editProfile: editProfile.mutate, ...editProfile };
 };
 
-export const useCreateChat = ({ onSuccess }: { onSuccess?: (chatId: number) => void }) => {
+export const useCreateChat = ({
+    onSuccess,
+    type = 'default',
+}: {
+    onSuccess?: (chatId: number) => void;
+    type?: 'default' | 'admin';
+}) => {
     const createChat = useMutation({
         mutationFn: ({ userIds }: { userIds: number[] }) => {
-            return $api.post<TChat>(API_ENDPOINTS.CHAT, { userIds });
+            const url = type === 'default' ? API_ENDPOINTS.CHAT : `${API_ENDPOINTS.CHAT}/admin`;
+
+            return $api.post<TChat>(url, { userIds });
         },
         mutationKey: [`user_${user.id}`],
         onSuccess: ({ data }) => {

@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
-async function main() {
+async function createUsers() {
     await prisma.user.create({
         data: {
             email: 'user@mail.ru',
@@ -10,7 +10,7 @@ async function main() {
             password: await bcrypt.hash('user1234', 10),
             profile: {
                 create: {
-                    name: 'Иван',
+                    name: 'Иван Петров',
                     status: 'Люблю спорт!',
                 },
             },
@@ -24,13 +24,28 @@ async function main() {
             password: await bcrypt.hash('trainer1234', 10),
             profile: {
                 create: {
-                    name: 'Артем',
+                    name: 'Артем Иванов',
                     status: 'Доведем вас до результата',
                 },
             },
         },
     });
 
+    return prisma.user.create({
+        data: {
+            email: 'admin@mail.ru',
+            role: 'admin',
+            password: await bcrypt.hash('admin1234', 10),
+            profile: {
+                create: {
+                    name: 'Виктор Торбосов',
+                },
+            },
+        },
+    });
+}
+
+async function createWorkouts() {
     await prisma.trainerReview.create({
         data: {
             rating: 5,
@@ -61,7 +76,7 @@ async function main() {
             sportType: 'Фитнес',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-25T16:00:00'),
+            dateStart: new Date('2024-05-30T16:00:00'),
             durationMinutes: 60,
         },
     });
@@ -78,7 +93,7 @@ async function main() {
             sportType: 'Йога',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-25T18:00:00'),
+            dateStart: new Date('2024-05-30T18:00:00'),
             durationMinutes: 60,
         },
     });
@@ -95,7 +110,7 @@ async function main() {
             sportType: 'Пилатес',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-25T14:00:00'),
+            dateStart: new Date('2024-05-30T14:00:00'),
             durationMinutes: 60,
         },
     });
@@ -112,7 +127,7 @@ async function main() {
             sportType: 'Фитнес',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-26T14:00:00'),
+            dateStart: new Date('2024-05-29T14:00:00'),
             durationMinutes: 60,
         },
     });
@@ -129,12 +144,12 @@ async function main() {
             sportType: 'Бокс',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-26T16:00:00'),
+            dateStart: new Date('2024-05-29T16:00:00'),
             durationMinutes: 60,
         },
     });
 
-    await prisma.workout.create({
+    return prisma.workout.create({
         data: {
             trainer: {
                 connect: {
@@ -146,10 +161,15 @@ async function main() {
             sportType: 'Йога',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-26T17:00:00'),
+            dateStart: new Date('2024-05-29T17:00:00'),
             durationMinutes: 120,
         },
     });
+}
+
+async function main() {
+    await createUsers();
+    await createWorkouts();
 }
 
 main()

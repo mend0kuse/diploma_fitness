@@ -40,7 +40,6 @@ export const WorkoutPage = observer(() => {
 
     const userOrder = workout.orders.find((order) => order.client.id === user.id && order.status !== 'CANCELLED');
     const isUserParticipant = !!userOrder;
-    const isOwner = workout.trainer.id === user.id;
 
     const createOrder = () => {
         if (!user.hasAccessToTraining) {
@@ -90,6 +89,7 @@ export const WorkoutPage = observer(() => {
                         <Stack gap={5}>
                             <Title order={3}>Участники</Title>
                             <AvatarGroup>
+                                {workout.participants.length === 0 && <Text>Никого нет</Text>}
                                 {workout.participants.map((participant) => {
                                     return (
                                         <Tooltip
@@ -107,7 +107,7 @@ export const WorkoutPage = observer(() => {
                             </AvatarGroup>
                         </Stack>
 
-                        {!isOwner && (
+                        {user.isClient && (
                             <>
                                 {isUserParticipant ? (
                                     <Button color='red' loading={isCancelPending} onClick={cancelOrder}>
@@ -115,7 +115,7 @@ export const WorkoutPage = observer(() => {
                                     </Button>
                                 ) : (
                                     <>
-                                        {availablePlaces > 0 && user.isAuthorized && (
+                                        {availablePlaces > 0 && user.isClient && (
                                             <Button loading={isCreatePending} onClick={createOrder}>
                                                 Записаться
                                             </Button>

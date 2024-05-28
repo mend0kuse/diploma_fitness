@@ -22,8 +22,8 @@ export const Chat = observer(({ chat }: { chat: TChat }) => {
     return (
         <ChatContainer>
             <ConversationHeader>
-                <Avatar size={'md'} src={oppositeUser.profile.avatar} />
-                <ConversationHeader.Content userName={oppositeUser.profile.name} />
+                <Avatar size={'md'} src={oppositeUser?.profile.avatar} />
+                <ConversationHeader.Content userName={oppositeUser?.profile.name ?? oppositeUser.email} />
             </ConversationHeader>
             <MessageList>
                 {messages.length > 0 &&

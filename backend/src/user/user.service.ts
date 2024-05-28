@@ -71,7 +71,10 @@ export class UserService {
     async getOne({ id, email }: { id?: number; email?: string }) {
         const result = await this.prisma.user.findFirst({
             where: { OR: [{ id: { equals: id } }, { email: { equals: email } }] },
-            include: this.include,
+            include: {
+                ...this.include,
+                orders: { ...this.include.orders, orderBy: { workout: { dateStart: 'desc' } } },
+            },
         });
 
         if (!result) {
@@ -152,5 +155,11 @@ export class UserService {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return excludeFields(mapUserChat(updated), ['password']);
+    }
+
+    findAdmin() {
+        return this.prisma.user.findFirst({
+            where: { role: 'admin' },
+        });
     }
 }

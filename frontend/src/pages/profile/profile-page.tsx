@@ -161,9 +161,9 @@ export const ProfilePage = observer(() => {
                                                         lastSenderName={
                                                             lastMessage?.user.profile.name ?? lastMessage?.user.email
                                                         }
-                                                        name={oppositeUser.profile.name ?? oppositeUser.email}
+                                                        name={oppositeUser?.profile.name ?? oppositeUser?.email}
                                                     >
-                                                        <Avatar src={oppositeUser.profile.avatar} />
+                                                        <Avatar src={oppositeUser?.profile.avatar} />
                                                     </Conversation>
                                                 );
                                             })}

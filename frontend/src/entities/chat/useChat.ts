@@ -14,7 +14,7 @@ export const useChat = ({ users, chat: { messages: initialMessages } }: { chat: 
     };
 
     useEffect(() => {
-        socketRef.current = io('http://localhost:8000');
+        socketRef.current = io('http://localhost:8000', { transports: ['websocket', 'polling', 'flashsocket'] });
         const socket = socketRef.current;
 
         socket.connect();
