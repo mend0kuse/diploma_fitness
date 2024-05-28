@@ -17,6 +17,7 @@ export const PaymentsList = ({ payments }: { payments: TPayment[] }) => {
 
     const confirmFreeze = () => {
         paymentToFrozeId && mutate({ paymentId: paymentToFrozeId });
+        close();
     };
 
     return (

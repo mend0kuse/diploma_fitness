@@ -132,11 +132,12 @@ export const useCompleteWorkout = () => {
 };
 
 export const useFreezePayment = () => {
+    const queryClient = useQueryClient();
+
     return useMutation({
         mutationFn: ({ paymentId }: { paymentId: string }) => {
             return $api.put<TPayment>(API_ENDPOINTS.PAYMENT_FREEZE_BY_PAYMENT_ID(paymentId));
         },
-        mutationKey: [`user_${user.id}`],
         onError: () => {
             notifications.show({
                 withCloseButton: true,
@@ -144,6 +145,15 @@ export const useFreezePayment = () => {
                 color: 'red',
                 message: 'Ошибка при заморозке',
             });
+        },
+        onSuccess: async () => {
+            notifications.show({
+                withCloseButton: true,
+                autoClose: 5000,
+                message: 'Успешно',
+            });
+
+            await queryClient.invalidateQueries({ queryKey: [`user_${user.id}`] });
         },
     });
 };
