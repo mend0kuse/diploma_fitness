@@ -4,6 +4,7 @@ export const API_ENDPOINTS = {
 
     USER: (id: number) => `/user/${id}`,
     USER_ORDERS: `/user/order`,
+    USER_STATS: `/user/stats`,
     EDIT_PROFILE: `/user/profile`,
     TRAINER: `/user/trainer`,
 

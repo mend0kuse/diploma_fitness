@@ -1,4 +1,10 @@
-import { useEditProfile, useGetActiveChat, useGetUser, useGetUserOrders } from '@/pages/profile/profile-hooks';
+import {
+    useEditProfile,
+    useGetActiveChat,
+    useGetUser,
+    useGetUserOrders,
+    useGetUserStats,
+} from '@/pages/profile/profile-hooks';
 import { Container, Group, Loader, LoadingOverlay, Stack, Tabs, Text, Title } from '@mantine/core';
 import { CenteredLayout, Layout } from '@/layout';
 import { ProfileForm } from '@/entities/user';
@@ -7,7 +13,14 @@ import { transformAxiosError } from '@/shared/lib/axios/transformAxiosError';
 import { convertToFormData } from '@/shared/lib/form/convertToFormData';
 import { observer } from 'mobx-react-lite';
 import { ProfileCard } from '@/pages/profile/ui/profile-card';
-import { AiFillDollarCircle, AiFillMessage, AiFillProfile, AiFillSchedule, AiOutlineWechat } from 'react-icons/ai';
+import {
+    AiFillDollarCircle,
+    AiFillMessage,
+    AiFillPieChart,
+    AiFillProfile,
+    AiFillSchedule,
+    AiOutlineWechat,
+} from 'react-icons/ai';
 import { OrdersList } from './ui/orders-list';
 import { Chat } from '@/entities/chat/chat';
 import { ConversationList, Conversation, Avatar, MainContainer, Sidebar } from '@chatscope/chat-ui-kit-react';
@@ -16,6 +29,7 @@ import { useEffect, useState } from 'react';
 import { ReviewsList } from './ui/reviews-list';
 import { PaymentsList } from './ui/payments-list';
 import { WorkoutsList } from './ui/workouts-list';
+import { Stats } from './ui/stats';
 
 const TABS_SECTION = {
     PROFILE: 'profile',
@@ -23,6 +37,7 @@ const TABS_SECTION = {
     HISTORY: 'history',
     REVIEWS: 'reviews',
     PAYMENTS: 'payments',
+    STATS: 'stats',
 } as const;
 
 export const ProfilePage = observer(() => {
@@ -31,6 +46,7 @@ export const ProfilePage = observer(() => {
 
     const { data, isError, isLoading } = useGetUser();
     const { data: userOrders, isLoading: isLoadingOrders } = useGetUserOrders();
+    const { data: userStats, isLoading: isLoadingStats } = useGetUserStats();
 
     const { editProfile, isPending: isPendingEdit, error: errorEdit } = useEditProfile({});
 
@@ -48,7 +64,7 @@ export const ProfilePage = observer(() => {
         }
     }, [data]);
 
-    if (isLoading || isLoadingOrders) {
+    if (isLoading || isLoadingOrders || isLoadingStats) {
         return (
             <CenteredLayout>
                 <Loader />
@@ -110,6 +126,11 @@ export const ProfilePage = observer(() => {
                             {isTrainerProfile && (
                                 <Tabs.Tab value={TABS_SECTION.REVIEWS} leftSection={<AiFillMessage size={25} />}>
                                     Отзывы
+                                </Tabs.Tab>
+                            )}
+                            {user.isClient && (
+                                <Tabs.Tab value={TABS_SECTION.STATS} leftSection={<AiFillPieChart size={25} />}>
+                                    Статистика
                                 </Tabs.Tab>
                             )}
                         </Tabs.List>
@@ -178,17 +199,21 @@ export const ProfilePage = observer(() => {
                             )}
                         </Tabs.Panel>
 
-                        <Tabs.Panel value={TABS_SECTION.HISTORY}>
-                            {user.isAdmin ? (
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                // @ts-ignore
-                                <WorkoutsList workouts={userOrders ?? []} />
-                            ) : (
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                // @ts-ignore
-                                <OrdersList orders={userOrders ?? []} />
-                            )}
-                        </Tabs.Panel>
+                        {!user.isTrainer && (
+                            <Tabs.Panel value={TABS_SECTION.HISTORY}>
+                                {user.isAdmin ? (
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-ignore
+                                    <WorkoutsList workouts={userOrders ?? []} />
+                                ) : (
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-ignore
+                                    <OrdersList orders={userOrders ?? []} />
+                                )}
+                            </Tabs.Panel>
+                        )}
+
+                        <Tabs.Panel value={TABS_SECTION.STATS}>{userStats && <Stats stats={userStats} />}</Tabs.Panel>
                     </Tabs>
                 )}
             </Container>

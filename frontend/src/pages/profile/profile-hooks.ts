@@ -9,6 +9,7 @@ import { TWorkout } from '@/entities/workout/workout-types';
 import { notifications } from '@mantine/notifications';
 import { TPayment } from '@/entities/payment/payments';
 import { TOrder } from '@/entities/order/order-types';
+import { TStats } from './ui/stats';
 
 export const useGetUser = () => {
     const { id } = useParams<{ id: string }>();
@@ -32,6 +33,21 @@ export const useGetUserOrders = () => {
         queryKey: [`user_${user.id}_order`],
         queryFn: async () => {
             const response = await $api.get<TOrder[] | TWorkout[]>(API_ENDPOINTS.USER_ORDERS);
+
+            return response.data;
+        },
+        enabled: idToNumber === user.id,
+    });
+};
+
+export const useGetUserStats = () => {
+    const { id } = useParams<{ id: string }>();
+    const idToNumber = Number(id);
+
+    return useQuery({
+        queryKey: [`user_${user.id}_stats`],
+        queryFn: async () => {
+            const response = await $api.get<TStats>(API_ENDPOINTS.USER_STATS);
 
             return response.data;
         },

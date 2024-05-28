@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma, Profile, User } from '@prisma/client';
+import { Prisma, Profile, User, Workout } from '@prisma/client';
 import { excludeFields } from 'src/shared/lib/excludeFields';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { mapUserChat } from 'src/shared/lib/mapChat';
 import { calculateParticipants } from 'src/shared/lib/calculateParticipants';
+import { ORDER_STATUS } from 'src/order/order';
 
 @Injectable()
 export class UserService {
@@ -146,5 +147,55 @@ export class UserService {
         return this.prisma.user.findFirst({
             where: { role: 'admin' },
         });
+    }
+
+    async getStats(user: User) {
+        const orders = await this.prisma.workoutOrder.findMany({
+            where: { clientId: user.id },
+            include: {
+                workout: true,
+            },
+        });
+
+        const completedWorkouts: Record<string, number> = {};
+
+        let completedWorkoutsCount = 0;
+        let missedWorkoutsCount = 0;
+        let canceledWorkoutsCount = 0;
+
+        orders.forEach((order) => {
+            if (order.status === ORDER_STATUS.COMPLETED) {
+                const sportType = order.workout.sportType;
+
+                if (!completedWorkouts[sportType]) {
+                    completedWorkouts[sportType] = 0;
+                }
+
+                completedWorkouts[sportType]++;
+                completedWorkoutsCount++;
+            }
+
+            if (order.status === ORDER_STATUS.MISSING) {
+                missedWorkoutsCount++;
+            }
+
+            if (order.status === ORDER_STATUS.CANCELLED) {
+                canceledWorkoutsCount++;
+            }
+        });
+
+        return {
+            workouts: Object.entries(completedWorkouts).map(([type, count]) => {
+                return {
+                    label: type,
+                    value: count,
+                };
+            }),
+            attendance: {
+                visited: completedWorkoutsCount,
+                missed: missedWorkoutsCount,
+                canceled: canceledWorkoutsCount,
+            },
+        };
     }
 }

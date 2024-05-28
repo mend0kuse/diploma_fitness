@@ -19,6 +19,10 @@ export const OrdersList = ({ orders }: { orders: TOrder[] }) => {
                 </Table.Thead>
                 <Table.Tbody>
                     {orders.map(({ status, id, workout }) => {
+                        if (!workout) {
+                            return null;
+                        }
+
                         return (
                             <Table.Tr key={id}>
                                 <Table.Td>

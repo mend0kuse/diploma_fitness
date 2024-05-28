@@ -70,6 +70,12 @@ export class UserController {
         return this.userService.getUserOrders(user);
     }
 
+    @Get('stats')
+    @UseGuards(AuthGuard)
+    async getUserStats(@Req() { user }: RequestWithUser) {
+        return this.userService.getStats(user);
+    }
+
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
         const found = await this.userService.getOne({ id });
