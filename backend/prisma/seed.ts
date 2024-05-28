@@ -127,7 +127,7 @@ async function createWorkouts() {
             sportType: 'Фитнес',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-29T14:00:00'),
+            dateStart: new Date('2024-05-25T14:00:00'),
             durationMinutes: 60,
         },
     });
@@ -144,7 +144,7 @@ async function createWorkouts() {
             sportType: 'Бокс',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-29T16:00:00'),
+            dateStart: new Date('2024-05-25T16:00:00'),
             durationMinutes: 60,
         },
     });
@@ -161,8 +161,58 @@ async function createWorkouts() {
             sportType: 'Йога',
             status: 'pending',
             maxPlaces: 10,
-            dateStart: new Date('2024-05-29T17:00:00'),
+            dateStart: new Date('2024-05-25T17:00:00'),
             durationMinutes: 120,
+        },
+    });
+}
+
+async function createOrders() {
+    await prisma.workoutOrder.create({
+        data: {
+            client: {
+                connect: {
+                    id: 1,
+                },
+            },
+            status: 'COMPLETED',
+            workout: {
+                connect: {
+                    id: 6,
+                },
+            },
+        },
+    });
+
+    await prisma.workoutOrder.create({
+        data: {
+            client: {
+                connect: {
+                    id: 1,
+                },
+            },
+            status: 'MISSING',
+            workout: {
+                connect: {
+                    id: 5,
+                },
+            },
+        },
+    });
+
+    return prisma.workoutOrder.create({
+        data: {
+            client: {
+                connect: {
+                    id: 1,
+                },
+            },
+            status: 'COMPLETED',
+            workout: {
+                connect: {
+                    id: 4,
+                },
+            },
         },
     });
 }
@@ -170,6 +220,7 @@ async function createWorkouts() {
 async function main() {
     await createUsers();
     await createWorkouts();
+    await createOrders();
 }
 
 main()
