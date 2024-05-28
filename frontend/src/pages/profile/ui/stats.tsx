@@ -16,13 +16,11 @@ export const Stats = ({ stats }: { stats: TStats }) => {
     return (
         <SimpleGrid spacing='xl' cols={3}>
             <Stack align='center'>
-                <Text fz='xs' mb='sm' ta='center'>
-                    Завершенные тренировки
-                </Text>
+                <Text ta={'center'}>Завершенные тренировки</Text>
 
-                <DonutChart
-                    withLabels
+                <PieChart
                     withTooltip
+                    strokeWidth={2}
                     size={300}
                     data={stats?.workouts?.map((workout) => {
                         return {
@@ -34,13 +32,11 @@ export const Stats = ({ stats }: { stats: TStats }) => {
                 />
             </Stack>
             <Stack align='center'>
-                <Text fz='xs' mb='sm' ta='center'>
-                    Посещаемость
-                </Text>
+                <Text ta={'center'}>Посещаемость</Text>
 
                 <PieChart
                     size={300}
-                    withLabels
+                    strokeWidth={2}
                     withTooltip
                     data={[
                         { name: 'Посещенные', value: stats?.attendance?.visited, color: 'blue' },
