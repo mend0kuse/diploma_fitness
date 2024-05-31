@@ -1,6 +1,8 @@
-frontend/.next
-backend/dist
+/**/*/.next
+/**/*/dist
 /**/*/.env
 /**/*/node_modules/
 
 workspace.xml
+/**/*/.idea
+/**/*/.DS_Store
