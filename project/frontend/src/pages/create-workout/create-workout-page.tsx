@@ -30,7 +30,7 @@ const initialValues: TWorkoutInput = {
     description: '',
     sportType: 'Фитнес',
 
-    dateStart: new Date(),
+    dateStart: dayjs().add(1, 'hour').toDate(),
     durationMinutes: dayjs.duration({ minutes: 60 }).asMinutes(),
 
     maxPlaces: 10,
@@ -44,6 +44,11 @@ export const CreateWorkoutPage = () => {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues,
+        validate: {
+            title: (value) => (value.length > 0 ? null : 'Обязательное поле'),
+            description: (value) => (value.length > 0 ? null : 'Обязательное поле'),
+            trainerId: (value) => (value ? null : 'Обязательное поле'),
+        },
     });
 
     const {
@@ -134,6 +139,7 @@ export const CreateWorkoutPage = () => {
                                 <Stack>
                                     <DateTimePicker
                                         {...form.getInputProps('dateStart')}
+                                        minDate={dayjs().add(1, 'hour').toDate()}
                                         label='Дата'
                                         placeholder='...'
                                     />
