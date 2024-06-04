@@ -38,6 +38,8 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                             const { sportType, participants, dateStart, durationMinutes, id, status, trainer } =
                                 workout;
 
+                            const isPassed = dayjs(dateStart).add(durationMinutes, 'minute').toDate() < new Date();
+
                             return (
                                 <Table.Tr key={id}>
                                     <Table.Td>
@@ -85,7 +87,7 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                                     <Table.Td>
                                         <Text>{status === 'pending' ? 'Предстоящая' : 'Завершена'}</Text>
                                     </Table.Td>
-                                    {status === 'pending' && (
+                                    {status === 'pending' && isPassed && (
                                         <Table.Td>
                                             <Button
                                                 onClick={() => {
