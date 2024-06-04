@@ -13,4 +13,5 @@ export type TMessage = {
     createdAt: string;
     userId: number;
     user: TUser;
+    seenAt: string | null;
 };

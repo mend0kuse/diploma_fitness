@@ -76,8 +76,10 @@ model Chat {
 }
 
 model ChatMessage {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime  @default(now())
+  seenAt    DateTime?
 
   message String @db.LongText
 

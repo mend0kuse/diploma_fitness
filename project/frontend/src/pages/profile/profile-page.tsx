@@ -42,7 +42,9 @@ const TABS_SECTION = {
 
 export const ProfilePage = observer(() => {
     const activeChatId = useGetActiveChat();
+
     const [selectedChat, setSelectedChat] = useState<null | TChat>(null);
+    const [selectedChatMap, setSelectedChatMap] = useState<Record<string, boolean>>({});
 
     const { data, isError, isLoading } = useGetUser();
     const { data: userOrders, isLoading: isLoadingOrders } = useGetUserOrders();
@@ -60,7 +62,12 @@ export const ProfilePage = observer(() => {
 
     useEffect(() => {
         if (data && activeChatId) {
-            setSelectedChat(data.chats.find((ch) => ch.id === Number(activeChatId)) ?? null);
+            const chat = data.chats.find((ch) => ch.id === Number(activeChatId));
+
+            if (chat) {
+                setSelectedChatMap((prev) => ({ ...prev, [chat.id]: true }));
+                setSelectedChat(chat);
+            }
         }
     }, [data]);
 
@@ -177,12 +184,25 @@ export const ProfilePage = observer(() => {
                                                 return (
                                                     <Conversation
                                                         active={selectedChat?.id === id}
-                                                        onClick={() => setSelectedChat(chat)}
+                                                        onClick={() => {
+                                                            setSelectedChatMap((prev) => ({
+                                                                ...prev,
+                                                                [chat.id]: true,
+                                                            }));
+                                                            return setSelectedChat(chat);
+                                                        }}
                                                         key={`conversation-${id}`}
                                                         info={lastMessage?.message ?? 'Сообщений нет'}
                                                         lastSenderName={
                                                             lastMessage?.user.profile.name ?? lastMessage?.user.email
                                                         }
+                                                        unreadDot={(() => {
+                                                            if (lastMessage?.user.id === user.id) {
+                                                                return false;
+                                                            }
+
+                                                            return !lastMessage?.seenAt && !selectedChatMap[id];
+                                                        })()}
                                                         name={oppositeUser?.profile.name ?? oppositeUser?.email}
                                                     >
                                                         <Avatar src={oppositeUser?.profile.avatar} />

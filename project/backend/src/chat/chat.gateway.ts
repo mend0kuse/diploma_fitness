@@ -17,7 +17,7 @@ export class ChatGateway {
     async join(
         @ConnectedSocket() client,
         @MessageBody()
-        { users }: { users: number[] }
+        { users, joinedUserId }: { users: number[]; joinedUserId: number }
     ) {
         const chat = await this.chatService.getChatByUserIds(users);
 
@@ -25,7 +25,12 @@ export class ChatGateway {
             return;
         }
 
-        this.answerWithRoom(client, chat.id);
+        await this.chatService.readChatMessages({ chatId: chat.id, userId: joinedUserId });
+
+        const room = chat.id.toString();
+
+        client.join(room);
+        this.server.to(room).emit('room', room);
     }
 
     @SubscribeMessage('message')
@@ -33,12 +38,5 @@ export class ChatGateway {
         const createdSMS = await this.chatService.createMessage({ chatId: Number(chatId), message, userId });
 
         this.server.to(chatId).emit('message', createdSMS);
-    }
-
-    private answerWithRoom(socket: any, roomId: number) {
-        const room = roomId.toString();
-
-        socket.join(room);
-        this.server.to(room).emit('room', room);
     }
 }

@@ -68,4 +68,15 @@ export class ChatService {
             include: this.chatInclude,
         });
     }
+
+    readChatMessages({ chatId, userId }: { chatId: number; userId: number }) {
+        return this.prismaService.chatMessage.updateMany({
+            where: {
+                AND: [{ chatId }, { seenAt: null }, { userId: { not: userId } }],
+            },
+            data: {
+                seenAt: new Date(),
+            },
+        });
+    }
 }

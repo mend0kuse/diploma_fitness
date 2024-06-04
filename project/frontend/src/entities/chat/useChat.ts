@@ -20,7 +20,7 @@ export const useChat = ({ users, chat: { messages: initialMessages } }: { chat: 
         socket.connect();
 
         socket.on('connect', () => {
-            socket.emit('join', { users: users.map((user) => user.id) });
+            socket.emit('join', { users: users.map((user) => user.id), joinedUserId: user.id });
         });
 
         socket.on('message', (message) => {
