@@ -8,6 +8,7 @@ import { WorkoutPage } from '@/pages/workout/workout-page';
 import { CreateWorkoutPage } from '@/pages/create-workout/create-workout-page';
 import { SchedulePage } from '@/pages/schedule/schedule-page';
 import { PaymentFinishPage } from '@/pages/payment-finish/payment-finish-page';
+import { WorkoutEditPage } from '@/pages/workout-edit/workout-edit-page';
 
 export const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
     {
         path: '/workout/:id',
         element: <WorkoutPage />,
+    },
+    {
+        path: '/workout-edit/:id',
+        element: <WorkoutEditPage />,
     },
     {
         path: ROUTES.CREATE_WORKOUT,

@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
     WORKOUT: '/workout',
     COMPLETE_WORKOUT_BY_ID: (id: number | string) => `/workout/complete/${id}`,
     WORKOUT_BY_ID: (id: number | string) => `/workout/${id}`,
+    WORKOUT_CANCEL_BY_ID: (id: number | string) => `/workout/cancel/${id}`,
 
     CHAT: `/chat`,
     CHAT_BY_ID: (id: number | string) => `/chat/${id}`,

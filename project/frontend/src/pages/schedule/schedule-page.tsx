@@ -63,11 +63,12 @@ export const SchedulePage = observer(() => {
                     title,
                     description,
                     orders,
+                    status,
                     trainer,
                 }) => {
                     const isFuture = new Date(dateStart) > new Date();
 
-                    if (!isFuture) {
+                    if (!isFuture || status === 'canceled') {
                         return;
                     }
 

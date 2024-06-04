@@ -94,6 +94,23 @@ export class WorkoutService {
         return this.prismaService.workout.update({ ...args, include: this.include });
     }
 
+    async cancelWorkout(id: number) {
+        await this.prismaService.workoutOrder.updateMany({
+            where: {
+                workoutId: id,
+            },
+            data: {
+                status: 'CANCELED_BY_ADMIN',
+            },
+        });
+
+        return this.prismaService.workout.update({
+            where: { id },
+            data: { status: 'canceled' },
+            include: this.include,
+        });
+    }
+
     private generateFindArguments({
         sort,
         dateStart,

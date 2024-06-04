@@ -37,13 +37,13 @@ export class WorkoutController {
         return this.workoutService.editWorkout({ where: { id }, data: { status: 'completed' } });
     }
 
-    @Delete(':id')
-    deleteWorkout(@Param('id') id: number) {
-        return this.workoutService.deleteWorkout(id);
+    @Put('/cancel/:id')
+    cancelWorkout(@Param('id', ParseIntPipe) id: number) {
+        return this.workoutService.cancelWorkout(id);
     }
 
     @Put(':id')
-    editWorkout(@Param('id') id: number, @Body() dto: Workout) {
+    editWorkout(@Param('id', ParseIntPipe) id: number, @Body() dto: Workout) {
         return this.workoutService.editWorkout({ where: { id }, data: dto });
     }
 }

@@ -13,6 +13,7 @@ import { useCreateOrder } from '@/pages/workout/lib/useCreateOrder';
 import { useCancelOrder } from './lib/useCancelOrder';
 import { notifications } from '@mantine/notifications';
 import { ROUTES } from '@/shared/routing/routes';
+import { useCancelWorkout } from './lib/useCancelWorkout';
 
 export const WorkoutPage = observer(() => {
     const { id } = useParams<{ id: string }>();
@@ -21,6 +22,7 @@ export const WorkoutPage = observer(() => {
     const { mutate: createOrderMutation, isPending: isCreatePending } = useCreateOrder(id);
 
     const { mutate: cancelOrderMutation, isPending: isCancelPending } = useCancelOrder();
+    const { mutate: cancelWorkoutMutation, isPending: isEditPending } = useCancelWorkout(id);
 
     if (isLoading) {
         return (
@@ -38,8 +40,13 @@ export const WorkoutPage = observer(() => {
         );
     }
 
-    const userOrder = workout.orders.find((order) => order.client.id === user.id && order.status !== 'CANCELLED');
-    const isUserParticipant = !!userOrder;
+    const userOrder = workout.orders.find((order) => order.client.id === user.id);
+    const isUserParticipant = !!userOrder && userOrder?.status !== 'CANCELLED';
+
+    const isPending = workout.status === 'pending';
+    const isCanceled = workout.status === 'canceled';
+
+    const availablePlaces = workout.maxPlaces - workout.participants.length;
 
     const createOrder = () => {
         if (!user.hasAccessToTraining) {
@@ -61,7 +68,9 @@ export const WorkoutPage = observer(() => {
         userOrder && cancelOrderMutation(userOrder.id.toString());
     };
 
-    const availablePlaces = workout.maxPlaces - workout.participants.length;
+    function cancelWorkout(): void {
+        cancelWorkoutMutation();
+    }
 
     return (
         <Layout>
@@ -71,6 +80,7 @@ export const WorkoutPage = observer(() => {
                         <ProfileCard user={workout.trainer} />
                     </Stack>
                     <Stack>
+                        {isCanceled && <Title c='red'>Отменено</Title>}
                         <Title>
                             {workout.sportType} - {workout.title}
                         </Title>
@@ -84,30 +94,32 @@ export const WorkoutPage = observer(() => {
                             </Group>
                         </Box>
 
-                        <Text>Свободные места - {availablePlaces}</Text>
+                        {isPending && <Text>Свободные места - {availablePlaces}</Text>}
 
-                        <Stack gap={5}>
-                            <Title order={3}>Участники</Title>
-                            <AvatarGroup>
-                                {workout.participants.length === 0 && <Text>Никого нет</Text>}
-                                {workout.participants.map((participant) => {
-                                    return (
-                                        <Tooltip
-                                            key={participant.id}
-                                            label={participant.profile?.name ?? participant.email}
-                                        >
-                                            <Avatar
-                                                component={Link}
-                                                to={ROUTES.PROFILE(participant.id)}
-                                                src={participant.profile?.avatar}
-                                            />
-                                        </Tooltip>
-                                    );
-                                })}
-                            </AvatarGroup>
-                        </Stack>
+                        {!isCanceled && (
+                            <Stack gap={5}>
+                                <Title order={3}>Участники</Title>
+                                <AvatarGroup>
+                                    {workout.participants.length === 0 && <Text>Никого нет</Text>}
+                                    {workout.participants.map((participant) => {
+                                        return (
+                                            <Tooltip
+                                                key={participant.id}
+                                                label={participant.profile?.name ?? participant.email}
+                                            >
+                                                <Avatar
+                                                    component={Link}
+                                                    to={ROUTES.PROFILE(participant.id)}
+                                                    src={participant.profile?.avatar}
+                                                />
+                                            </Tooltip>
+                                        );
+                                    })}
+                                </AvatarGroup>
+                            </Stack>
+                        )}
 
-                        {user.isClient && (
+                        {user.isClient && workout.status === 'pending' && (
                             <>
                                 {isUserParticipant ? (
                                     <Button color='red' loading={isCancelPending} onClick={cancelOrder}>
@@ -123,6 +135,19 @@ export const WorkoutPage = observer(() => {
                                     </>
                                 )}
                             </>
+                        )}
+
+                        {user.isAdmin && workout.status === 'pending' && (
+                            <Stack>
+                                <Title>Управление тренировкой</Title>
+                                <Button to={ROUTES.EDIT_WORKOUT(workout.id)} component={Link}>
+                                    Редактировать
+                                </Button>
+
+                                <Button color='red' loading={isEditPending} onClick={cancelWorkout}>
+                                    Отменить
+                                </Button>
+                            </Stack>
                         )}
                     </Stack>
                 </Group>

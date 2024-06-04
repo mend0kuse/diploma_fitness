@@ -7,6 +7,12 @@ import { ROUTES } from '@/shared/routing/routes';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 
+const WORKOUT_STATUS_TEXT = {
+    pending: 'Ожидание',
+    completed: 'Завершена',
+    canceled: 'Отменена',
+};
+
 export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
     const { mutate, isPending } = useCompleteWorkout();
 
@@ -85,7 +91,7 @@ export const WorkoutsList = ({ workouts }: { workouts: TWorkout[] }) => {
                                         <Text>{dayjs.duration(durationMinutes, 'minutes').format('HHч:mmм')}</Text>
                                     </Table.Td>
                                     <Table.Td>
-                                        <Text>{status === 'pending' ? 'Предстоящая' : 'Завершена'}</Text>
+                                        <Text>{WORKOUT_STATUS_TEXT[status]}</Text>
                                     </Table.Td>
                                     {status === 'pending' && isPassed && (
                                         <Table.Td>

@@ -16,6 +16,7 @@ export const ORDER_STATUS = {
     COMPLETED: 'COMPLETED',
     CANCELLED: 'CANCELLED',
     MISSING: 'MISSING',
+    CANCELED_BY_ADMIN: 'CANCELED_BY_ADMIN',
 } as const;
 
 export const ORDER_STATUS_TEXT: Record<TOrderStatus, string> = {
@@ -23,12 +24,14 @@ export const ORDER_STATUS_TEXT: Record<TOrderStatus, string> = {
     MISSING: 'Пропущено',
     COMPLETED: 'Проведено',
     CANCELLED: 'Отменено',
+    CANCELED_BY_ADMIN: 'Тренировка отменена',
 } as const;
 
 export const ORDER_STATUS_COLOR: Record<TOrderStatus, string> = {
     PENDING: 'gray',
     COMPLETED: 'green',
     CANCELLED: 'red',
+    CANCELED_BY_ADMIN: 'red',
     MISSING: 'red',
 } as const;
 
