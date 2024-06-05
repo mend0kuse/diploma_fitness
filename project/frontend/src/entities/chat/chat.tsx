@@ -4,7 +4,6 @@ import {
     MessageList,
     MessageInput,
     Message,
-    Avatar,
     MessageSeparator,
 } from '@chatscope/chat-ui-kit-react';
 import { user } from '../user';
@@ -12,6 +11,9 @@ import { TChat } from './chat-model';
 import { observer } from 'mobx-react-lite';
 import { useChat } from './useChat';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/shared/routing/routes';
+import { Text, Avatar, UnstyledButton } from '@mantine/core';
 
 export const Chat = observer(({ chat }: { chat: TChat }) => {
     const { users } = chat;
@@ -24,8 +26,16 @@ export const Chat = observer(({ chat }: { chat: TChat }) => {
     return (
         <ChatContainer>
             <ConversationHeader>
-                <Avatar size={'md'} src={oppositeUser?.profile.avatar} />
-                <ConversationHeader.Content userName={oppositeUser?.profile.name ?? oppositeUser.email} />
+                <ConversationHeader.Content>
+                    <UnstyledButton
+                        style={{ display: 'flex', alignItems: 'center', gap: 10 }}
+                        component={Link}
+                        to={ROUTES.PROFILE(oppositeUser.id)}
+                    >
+                        <Avatar size={'md'} src={oppositeUser?.profile.avatar} />
+                        <Text>{oppositeUser?.profile.name ?? oppositeUser.email}</Text>
+                    </UnstyledButton>
+                </ConversationHeader.Content>
             </ConversationHeader>
             <MessageList>
                 {messages.length > 0 &&
