@@ -5,18 +5,18 @@ const prisma = new PrismaClient();
 const users = [
     { email: 'user@mail.ru', role: 'user', password: 'user1234', name: 'Иван Петров', status: 'Люблю спорт!' },
     {
-        email: 'admin@mail.ru',
-        role: 'admin',
-        password: 'admin1234',
-        name: 'Виктор Торбосов',
-        status: 'Решу ваш вопрос',
-    },
-    {
         email: 'trainer@mail.ru',
         role: 'trainer',
         password: 'trainer1234',
         name: 'Артем Иванов',
         status: 'Доведем вас до результата',
+    },
+    {
+        email: 'admin@mail.ru',
+        role: 'admin',
+        password: 'admin1234',
+        name: 'Виктор Торбосов',
+        status: 'Решу ваш вопрос',
     },
 ];
 
@@ -26,7 +26,7 @@ const workouts = [
         title: 'Утренняя зарядка',
         description: 'Зарядка для улучшения общего самочувствия',
         sportType: 'Фитнес',
-        status: 'pending',
+        status: 'completed',
         maxPlaces: 10,
         dateStart: new Date('2024-05-30T16:00:00'),
         durationMinutes: 60,
@@ -36,7 +36,7 @@ const workouts = [
         title: 'Урок йоги для начинающих',
         description: 'Занятие для освоения базовых асан и элементов йоги',
         sportType: 'Йога',
-        status: 'pending',
+        status: 'canceled',
         maxPlaces: 10,
         dateStart: new Date('2024-05-30T18:00:00'),
         durationMinutes: 60,
@@ -46,9 +46,9 @@ const workouts = [
         title: 'Функциональный тренинг для сжигания жира',
         description: 'Интенсивная тренировка для ускорения обмена веществ и сжигания жира',
         sportType: 'Фитнес',
-        status: 'pending',
+        status: 'completed',
         maxPlaces: 10,
-        dateStart: new Date('2024-05-25T14:00:00'),
+        dateStart: new Date('2024-06-07T14:00:00'),
         durationMinutes: 60,
     },
     {
@@ -58,7 +58,7 @@ const workouts = [
         sportType: 'Пилатес',
         status: 'pending',
         maxPlaces: 10,
-        dateStart: new Date('2024-05-30T14:00:00'),
+        dateStart: new Date('2024-06-11T14:00:00'),
         durationMinutes: 60,
     },
     {
@@ -68,7 +68,7 @@ const workouts = [
         sportType: 'Бокс',
         status: 'pending',
         maxPlaces: 10,
-        dateStart: new Date('2024-05-25T16:00:00'),
+        dateStart: new Date('2024-06-10T16:00:00'),
         durationMinutes: 60,
     },
     {
@@ -78,7 +78,7 @@ const workouts = [
         sportType: 'Йога',
         status: 'pending',
         maxPlaces: 10,
-        dateStart: new Date('2024-05-25T17:00:00'),
+        dateStart: new Date('2024-06-10T17:00:00'),
         durationMinutes: 120,
     },
 ];
@@ -87,17 +87,17 @@ const orders = [
     {
         clientId: 1,
         status: 'COMPLETED',
-        workoutId: 6,
+        workoutId: 1,
+    },
+    {
+        clientId: 1,
+        status: 'CANCELED_BY_ADMIN',
+        workoutId: 2,
     },
     {
         clientId: 1,
         status: 'MISSING',
-        workoutId: 5,
-    },
-    {
-        clientId: 1,
-        status: 'COMPLETED',
-        workoutId: 4,
+        workoutId: 3,
     },
 ];
 
