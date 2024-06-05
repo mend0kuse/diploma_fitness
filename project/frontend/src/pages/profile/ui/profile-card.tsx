@@ -1,5 +1,5 @@
 import { Avatar, Text, Button, Paper, LoadingOverlay, Modal, Rating, Center, Stack } from '@mantine/core';
-import { TUser, user as userStore } from '@/entities/user';
+import { TUser, user, user as userStore } from '@/entities/user';
 import { observer } from 'mobx-react-lite';
 import { useCreateChat } from '../profile-hooks';
 import { useNavigate } from 'react-router-dom';
@@ -56,7 +56,7 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
 
                     {myReviews?.length > 0 && (
                         <Center>
-                            <Rating readOnly defaultValue={rating} fractions={3} />
+                            <Rating readOnly value={rating} fractions={3} />
                         </Center>
                     )}
 
@@ -67,13 +67,13 @@ export const ProfileCard = observer(({ user: { profile, email, role, id, myRevie
                             fullWidth
                             mt='md'
                         >
-                            Написать
+                            Чат
                         </Button>
                     )}
 
-                    {isTrainerProfile && !isOwnProfile && userStore.isAuthorized && (
+                    {isTrainerProfile && !isOwnProfile && user.isClient && (
                         <Button onClick={openReview} variant='default' fullWidth mt='md'>
-                            Написать отзыв
+                            Оставить отзыв
                         </Button>
                     )}
 

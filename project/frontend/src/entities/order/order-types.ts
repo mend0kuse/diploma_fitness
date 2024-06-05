@@ -21,9 +21,9 @@ export const ORDER_STATUS = {
 
 export const ORDER_STATUS_TEXT: Record<TOrderStatus, string> = {
     PENDING: 'Ожидание',
-    MISSING: 'Пропущено',
-    COMPLETED: 'Проведено',
-    CANCELLED: 'Отменено',
+    MISSING: 'Пропущена',
+    COMPLETED: 'Проведена',
+    CANCELLED: 'Отмена пользователем',
     CANCELED_BY_ADMIN: 'Тренировка отменена',
 } as const;
 
