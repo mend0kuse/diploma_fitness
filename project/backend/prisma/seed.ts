@@ -1,108 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { mockOrders, mockUsers, mockWorkouts } from './mock-data';
 import * as bcrypt from 'bcrypt';
+
 const prisma = new PrismaClient();
 
-const users = [
-    { email: 'user@mail.ru', role: 'user', password: 'user1234', name: 'Иван Петров', status: 'Люблю спорт!' },
-    {
-        email: 'trainer@mail.ru',
-        role: 'trainer',
-        password: 'trainer1234',
-        name: 'Артем Иванов',
-        status: 'Доведем вас до результата',
-    },
-    {
-        email: 'admin@mail.ru',
-        role: 'admin',
-        password: 'admin1234',
-        name: 'Виктор Торбосов',
-        status: 'Решу ваш вопрос',
-    },
-];
-
-const workouts = [
-    {
-        trainerId: 2,
-        title: 'Утренняя зарядка',
-        description: 'Зарядка для улучшения общего самочувствия',
-        sportType: 'Фитнес',
-        status: 'completed',
-        maxPlaces: 10,
-        dateStart: new Date('2024-05-30T16:00:00'),
-        durationMinutes: 60,
-    },
-    {
-        trainerId: 2,
-        title: 'Урок йоги для начинающих',
-        description: 'Занятие для освоения базовых асан и элементов йоги',
-        sportType: 'Йога',
-        status: 'canceled',
-        maxPlaces: 10,
-        dateStart: new Date('2024-05-30T18:00:00'),
-        durationMinutes: 60,
-    },
-    {
-        trainerId: 2,
-        title: 'Функциональный тренинг для сжигания жира',
-        description: 'Интенсивная тренировка для ускорения обмена веществ и сжигания жира',
-        sportType: 'Фитнес',
-        status: 'completed',
-        maxPlaces: 10,
-        dateStart: new Date('2024-06-07T14:00:00'),
-        durationMinutes: 60,
-    },
-    {
-        trainerId: 2,
-        title: 'Пилатес для укрепления мышц спины',
-        description: 'Тренировка направлена на укрепление мышц спины и коррекцию осанки',
-        sportType: 'Пилатес',
-        status: 'pending',
-        maxPlaces: 10,
-        dateStart: new Date('2024-06-11T14:00:00'),
-        durationMinutes: 60,
-    },
-    {
-        trainerId: 2,
-        title: 'Техника ударов в боксе',
-        description: 'Обучение корректной технике ударов и блокировок в боксе',
-        sportType: 'Бокс',
-        status: 'pending',
-        maxPlaces: 10,
-        dateStart: new Date('2024-06-10T16:00:00'),
-        durationMinutes: 60,
-    },
-    {
-        trainerId: 2,
-        title: 'Повышение гибкости через йогу',
-        description: 'Урок для развития гибкости и укрепления тела через позы йоги',
-        sportType: 'Йога',
-        status: 'pending',
-        maxPlaces: 10,
-        dateStart: new Date('2024-06-10T17:00:00'),
-        durationMinutes: 120,
-    },
-];
-
-const orders = [
-    {
-        clientId: 1,
-        status: 'COMPLETED',
-        workoutId: 1,
-    },
-    {
-        clientId: 1,
-        status: 'CANCELED_BY_ADMIN',
-        workoutId: 2,
-    },
-    {
-        clientId: 1,
-        status: 'MISSING',
-        workoutId: 3,
-    },
-];
-
 async function createUsers() {
-    for (const user of users) {
+    for (const user of mockUsers) {
         await prisma.user.create({
             data: {
                 email: user.email,
@@ -112,6 +15,7 @@ async function createUsers() {
                     create: {
                         name: user.name,
                         status: user.status,
+                        avatar: user.avatar,
                     },
                 },
             },
@@ -138,7 +42,7 @@ async function createWorkouts() {
         },
     });
 
-    for (const workout of workouts) {
+    for (const workout of mockWorkouts) {
         await prisma.workout.create({
             data: {
                 trainer: {
@@ -159,7 +63,7 @@ async function createWorkouts() {
 }
 
 async function createOrders() {
-    for (const order of orders) {
+    for (const order of mockOrders) {
         await prisma.workoutOrder.create({
             data: {
                 client: {

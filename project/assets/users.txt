@@ -1,5 +1,5 @@
 --- User
-Email: user@mail.ru
+Email: user0@mail.ru
 Password: user1234
 
 --- Trainer
